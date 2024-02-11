@@ -1,10 +1,16 @@
 //Lakshya Gour 
 //Dhruv Shidhaye 
-
 package chess;
-
+//imports 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+
+public class Inputs() {
+
+}
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -36,8 +42,9 @@ class ReturnPlay {
 	ArrayList<ReturnPiece> piecesOnBoard;
 	Message message;
 }
+public class Chess { 
 
-public class Chess {
+	static ArrayList<ReturnPiece> chessPieces = new ArrayList
 	
 	enum Player { white, black }
 	
@@ -66,5 +73,7 @@ public class Chess {
 	public static void start() {
 		/* FILL IN THIS METHOD */
 
+		//setBoard();
+		//
 	}
 }
