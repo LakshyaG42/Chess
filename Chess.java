@@ -61,6 +61,12 @@ class ReturnPiece {
 
 class Pawn extends ReturnPiece {
 	int timesMoved; // added by us
+	public Pawn() {
+		this.pieceType = WP;
+        this.pieceFile = PieceFile(a);
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
     public Pawn(PieceFile file, int rank, boolean isWhite) {
         if(isWhite) {
 			this.PieceType = WP;
