@@ -39,6 +39,10 @@ public abstract class ChessPiece {
     public void moveTo(FileRank moveTo) {
         if(this.isValid(moveTo)) {
             board[curPos.Row][curPos.Col] = null;
+            if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
+                ChessPiece killed = board[moveTo.Row][moveTo.Col];
+                System.out.println("CHESSPIECE" + toString(killed) +  "WAS KILLED by:" + toString(this));
+            }
             board[moveTo.Row][moveTo.Col] = this;
             curPos = new FileRank(moveTo.Col, moveTo.Row);
             timesMoved++;
