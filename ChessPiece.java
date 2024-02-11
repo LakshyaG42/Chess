@@ -41,9 +41,10 @@ public abstract class ChessPiece {
             board[curPos.Row][curPos.Col] = null;
             board[moveTo.Row][moveTo.Col] = this;
             curPos = new FileRank(moveTo.Col, moveTo.Row);
+            timesMoved++;
         }
     }
-    public abstract void isValid();
+    public abstract boolean isValid(FileRank moveTo);
     
 }
 class Pawn extends ChessPiece {
