@@ -216,7 +216,7 @@ public class Chess {
 			ReturnPiece WP1 = new ReturnPiece(); 
 
 			WP1.pieceType = PieceType.WP; 
-			WP1.pieceFile = PieceType.a; 
+			WP1.pieceFile = PieceFile.a; 
 			WP1.pieceRank = 2;
 
 			chessPieces.add(WP1); 
@@ -225,7 +225,7 @@ public class Chess {
 			ReturnPiece WP2 = new ReturnPiece(); 
 
 			WP2.pieceType = PieceType.WP; 
-			WP2.pieceFile = PieceType.b; 
+			WP2.pieceFile = PieceFile.b; 
 			WP2.pieceRank = 2;
 
 			chessPieces.add(WP2); 
@@ -234,7 +234,7 @@ public class Chess {
 			ReturnPiece WP3 = new ReturnPiece(); 
 
 			WP3.pieceType = PieceType.WP; 
-			WP3.pieceFile = PieceType.c; 
+			WP3.pieceFile = PieceFile.c; 
 			WP3.pieceRank = 2;
 
 			chessPieces.add(WP3); 
@@ -243,7 +243,7 @@ public class Chess {
 			ReturnPiece WP4 = new ReturnPiece(); 
 
 			WP4.pieceType = PieceType.WP; 
-			WP4.pieceFile = PieceType.d; 
+			WP4.pieceFile = PieceFile.d; 
 			WP4.pieceRank = 2;
 			
 			chessPieces.add(WP4); 
@@ -252,7 +252,7 @@ public class Chess {
 			ReturnPiece WP5 = new ReturnPiece(); 
 
 			WP5.pieceType = PieceType.WP; 
-			WP5.pieceFile = PieceType.e; 
+			WP5.pieceFile = PieceFile.e; 
 			WP5.pieceRank = 2;
 						
 			chessPieces.add(WP5); 
@@ -261,7 +261,7 @@ public class Chess {
 			ReturnPiece WP6 = new ReturnPiece(); 
 
 			WP6.pieceType = PieceType.WP; 
-			WP6.pieceFile = PieceType.f; 
+			WP6.pieceFile = PieceFile.f; 
 			WP6.pieceRank = 2;
 									
 			chessPieces.add(WP6); 
@@ -270,7 +270,7 @@ public class Chess {
 			ReturnPiece WP7 = new ReturnPiece(); 
 
 			WP7.pieceType = PieceType.WP; 
-			WP7.pieceFile = PieceType.g; 
+			WP7.pieceFile = PieceFile.g; 
 			WP7.pieceRank = 2;
 												
 			chessPieces.add(WP7); 
@@ -279,7 +279,7 @@ public class Chess {
 			ReturnPiece WP8 = new ReturnPiece(); 
 
 			WP8.pieceType = PieceType.WP; 
-			WP8.pieceFile = PieceType.h; 
+			WP8.pieceFile = PieceFile.h; 
 			WP8.pieceRank = 2;
 															
 			chessPieces.add(WP8); 
@@ -288,7 +288,7 @@ public class Chess {
 			ReturnPiece BP1 = new ReturnPiece(); 
 
 			BP1.pieceType = PieceType.BP; 
-			BP1.pieceFile = PieceType.a; 
+			BP1.pieceFile = PieceFile.a; 
 			BP1.pieceRank = 7;
 	
 			chessPieces.add(BP1); 
@@ -297,7 +297,7 @@ public class Chess {
 			ReturnPiece BP2 = new ReturnPiece(); 
 	
 			BP2.pieceType = PieceType.BP; 
-			BP2.pieceFile = PieceType.b; 
+			BP2.pieceFile = PieceFile.b; 
 			BP2.pieceRank = 7;
 	
 			chessPieces.add(BP2); 
@@ -306,7 +306,7 @@ public class Chess {
 			ReturnPiece BP3 = new ReturnPiece(); 
 	
 			BP3.pieceType = PieceType.BP; 
-			BP3.pieceFile = PieceType.c; 
+			BP3.pieceFile = PieceFile.c; 
 			BP3.pieceRank = 7;
 	
 			chessPieces.add(BP3); 
@@ -315,7 +315,7 @@ public class Chess {
 			ReturnPiece BP4 = new ReturnPiece(); 
 	
 			BP4.pieceType = PieceType.BP; 
-			BP4.pieceFile = PieceType.d; 
+			BP4.pieceFile = PieceFile.d; 
 			BP4.pieceRank = 7;
 				
 			chessPieces.add(BP4); 
@@ -324,7 +324,7 @@ public class Chess {
 			ReturnPiece BP5 = new ReturnPiece(); 
 	
 			BP5.pieceType = PieceType.BP; 
-			BP5.pieceFile = PieceType.e; 
+			BP5.pieceFile = PieceFile.e; 
 			BP5.pieceRank = 7;
 							
 			chessPieces.add(BP5); 
@@ -333,7 +333,7 @@ public class Chess {
 			ReturnPiece BP6 = new ReturnPiece(); 
 	
 			BP6.pieceType = PieceType.BP; 
-			BP6.pieceFile = PieceType.f; 
+			BP6.pieceFile = PieceFile.f; 
 			BP6.pieceRank = 7;
 										
 			chessPieces.add(BP6); 
@@ -342,7 +342,7 @@ public class Chess {
 			ReturnPiece BP7 = new ReturnPiece(); 
 	
 			BP7.pieceType = PieceType.BP; 
-			BP7.pieceFile = PieceType.g; 
+			BP7.pieceFile = PieceFile.g; 
 			BP7.pieceRank = 7;
 													
 			chessPieces.add(BP7); 
@@ -351,7 +351,7 @@ public class Chess {
 			ReturnPiece BP8 = new ReturnPiece(); 
 	
 			BP8.pieceType = PieceType.BP; 
-			BP8.pieceFile = PieceType.h; 
+			BP8.pieceFile = PieceFile.h; 
 			BP8.pieceRank = 7;
 																
 			chessPieces.add(BP8); 
