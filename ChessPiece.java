@@ -38,6 +38,15 @@ public abstract class ChessPiece {
     public boolean isWhite() {
         return isWhite;
     }
+    public void moveTo(FileRank moveTo) {
+        if(this.isValid(moveTo)) {
+            board[curPos.Row][curPos.Col] = null;
+            board[moveTo.Row][moveTo.Col] = this;
+            curPos = new FileRank(moveTo.Col, moveTo.Row);
+            timesMoved++;
+        }
+    }
+    public abstract boolean isValid(FileRank moveTo);
     
 }
 class Pawn extends ChessPiece {
@@ -46,34 +55,33 @@ class Pawn extends ChessPiece {
         this.isWhite = isWhite;
         timesMoved = 0;
     }
-
     public boolean isValid(FileRank moveTo) {
-        
+        //attempt 2 will calculate the difference in the moves and if the algo is right it will be valid
         if(isWhite()) {
             int vertical = moveTo.Row-curPos.Row; //positive for white
             int horizontal = moveTo.Col-curPos.Col;
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if((vertical == 1 && horizontal == 0)) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if(vertical == 1 && horizontal == 1) {
-                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
                     return true;
                 }
             }
             if(vertical == 1 && horizontal == -1) {
-                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
                     return true;
                 }
             }
@@ -82,27 +90,27 @@ class Pawn extends ChessPiece {
             int vertical = moveTo.Col-curPos.Col; //negative for black
             int horizontal = moveTo.Col-curPos.Col;
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if((vertical == -1 && horizontal == 0) && timesMoved == 0) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if((vertical == -1 && horizontal == 0)) {
-                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                if(board[moveTo.Row][moveTo.Col].isEmpty) {
                     return true;
                 }
             }
             if(vertical == -1 && horizontal == 1) {
-                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
                     return true;
                 }
             }
             if(vertical == -1 && horizontal == -1) {
-                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
                     return true;
                 }
             }
@@ -163,7 +171,9 @@ class Pawn extends ChessPiece {
             }
         }
         */
-        
+    }
+    public moveTo(FileRank moveTo) {
+
     }
     
 } 
