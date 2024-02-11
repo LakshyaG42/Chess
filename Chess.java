@@ -1,3 +1,6 @@
+//Lakshya Gour 
+//Dhruv Shidhaye 
+
 package chess;
 
 import java.util.ArrayList;
