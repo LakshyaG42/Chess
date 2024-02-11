@@ -199,10 +199,10 @@ public class Chess {
 
 		//setBoard();
 		//Hold peices
-			ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
+	ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
 
 	//White Pawn 1 ex (do for all 16 lol): 
-	Pawn WP1 = new Pawn(); 
+	ReturnPiece WP1 = new Pawn(); 
 
 	WP1.pieceType = PieceType.WP; 
 	WP1.pieceFile = PieceFile.a; 
@@ -211,7 +211,7 @@ public class Chess {
 	chessPieces.add(WP1); 
 
 	//White Pawn 2
-	Pawn WP2 = new Pawn(); 
+	ReturnPiece WP2 = new Pawn(); 
 
 	WP2.pieceType = PieceType.WP; 
 	WP2.pieceFile = PieceFile.b; 
@@ -220,7 +220,7 @@ public class Chess {
 	chessPieces.add(WP1); 
 
 	//White Pawn 3
-	Pawn WP3 = new Pawn(); 
+	ReturnPiece WP3 = new Pawn(); 
 
 	WP3.pieceType = PieceType.WP; 
 	WP3.pieceFile = PieceFile.c; 
@@ -229,7 +229,7 @@ public class Chess {
 	chessPieces.add(WP3); 
 
 	//White Pawn 4
-	Pawn WP4 = new Pawn(); 
+	ReturnPiece WP4 = new Pawn(); 
 
 	WP4.pieceType = PieceType.WP; 
 	WP4.pieceFile = PieceFile.d; 
@@ -238,7 +238,7 @@ public class Chess {
 	chessPieces.add(WP4); 
 
 	//White Pawn 5
-	Pawn WP5 = new Pawn(); 
+	ReturnPiece WP5 = new Pawn(); 
 
 	WP5.pieceType = PieceType.WP; 
 	WP5.pieceFile = PieceFile.e; 
@@ -247,7 +247,7 @@ public class Chess {
 	chessPieces.add(WP5); 
 
 	//White Pawn 6
-	Pawn WP6 = new Pawn(); 
+	ReturnPiece WP6 = new Pawn(); 
 
 	WP6.pieceType = PieceType.WP; 
 	WP6.pieceFile = PieceFile.f; 
@@ -256,7 +256,7 @@ public class Chess {
 	chessPieces.add(WP6); 
 
 	//White Pawn 7
-	Pawn WP7 = new Pawn(); 
+	ReturnPiece WP7 = new Pawn(); 
 
 	WP7.pieceType = PieceType.WP; 
 	WP7.pieceFile = PieceFile.g; 
@@ -265,7 +265,7 @@ public class Chess {
 	chessPieces.add(WP7); 
 
 	//White Pawn 7
-	Pawn WP8 = new Pawn(); 
+	ReturnPiece WP8 = new Pawn(); 
 
 	WP8.pieceType = PieceType.WP; 
 	WP8.pieceFile = PieceFile.h; 
@@ -274,7 +274,7 @@ public class Chess {
 	chessPieces.add(WP8); 
 
 	//Black Pawn 1  
-	Pawn BP1 = new Pawn(); 
+	ReturnPiece BP1 = new Pawn(); 
 
 	BP1.pieceType = PieceType.BP; 
 	BP1.pieceFile = PieceFile.a; 
@@ -284,7 +284,7 @@ public class Chess {
 	chessPieces.add(BP1); 
 
 	//Black Pawn 2
-	Pawn BP2 = new Pawn(); 
+	ReturnPiece BP2 = new Pawn(); 
 
 	BP2.pieceType = PieceType.BP; 
 	BP2.pieceFile = PieceFile.b; 
@@ -293,7 +293,7 @@ public class Chess {
 	chessPieces.add(BP1); 
 
 	//Black Pawn 3
-	Pawn BP3 = new Pawn(); 
+	ReturnPiece BP3 = new Pawn(); 
 
 	BP3.pieceType = PieceType.BP; 
 	BP3.pieceFile = PieceFile.c; 
@@ -302,7 +302,7 @@ public class Chess {
 	chessPieces.add(BP3); 
 
 	//Black Pawn 4
-	Pawn BP4 = new Pawn(); 
+	ReturnPiece BP4 = new Pawn(); 
 
 	BP4.pieceType = PieceType.BP; 
 	BP4.pieceFile = PieceFile.d; 
@@ -311,7 +311,7 @@ public class Chess {
 	chessPieces.add(BP4); 
 
 	//Black Pawn 5
-	Pawn BP5 = new Pawn(); 
+	ReturnPiece BP5 = new Pawn(); 
 
 	BP5.pieceType = PieceType.BP; 
 	BP5.pieceFile = PieceFile.e; 
@@ -320,7 +320,7 @@ public class Chess {
 	chessPieces.add(BP5); 
 
 	//Black Pawn 6
-	Pawn BP6 = new Pawn(); 
+	ReturnPiece BP6 = new Pawn(); 
 
 	BP6.pieceType = PieceType.BP; 
 	BP6.pieceFile = PieceFile.f; 
@@ -329,7 +329,7 @@ public class Chess {
 	chessPieces.add(BP6); 
 
 	//Black Pawn 7
-	Pawn BP7 = new Pawn(); 
+	ReturnPiece BP7 = new Pawn(); 
 
 	BP7.pieceType = PieceType.BP; 
 	BP7.pieceFile = PieceFile.g; 
@@ -338,7 +338,7 @@ public class Chess {
 	chessPieces.add(BP7); 
 
 	//Black Pawn 8
-	Pawn BP8 = new Pawn(); 
+	ReturnPiece BP8 = new Pawn(); 
 
 	BP8.pieceType = PieceType.BP; 
 	BP8.pieceFile = PieceFile.h; 
