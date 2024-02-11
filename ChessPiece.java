@@ -1,6 +1,7 @@
 package chess; 
 
 import java.util.ArrayList;
+/*
 public class FileRank {
     int Col;
     int Row;
@@ -31,6 +32,7 @@ public class FileRank {
         return file == fileRank.file && rank == fileRank.rank;
     }
 }
+
 public abstract class ChessPiece {
     String type;
     FileRank curPos; //data for current position
@@ -57,8 +59,9 @@ public abstract class ChessPiece {
     public abstract boolean isValid(FileRank moveTo);
     
 }
-class Pawn extends ChessPiece {
-    public Pawn(FileRank curPos, boolean isWhite) {
+ */
+class Pawn extends ReturnPiece {
+    public Pawn(PieceFile file, PieceRank rank, boolean isWhite) {
         this.type = "Pawn";
         this.curPos = curPos;
         this.isWhite = isWhite;

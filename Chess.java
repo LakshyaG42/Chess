@@ -25,6 +25,9 @@ class ReturnPiece {
 	PieceType pieceType;
 	PieceFile pieceFile;
 	int pieceRank;  // 1..8
+
+	int timesMoved; // added by us
+	
 	public String toString() {
 		return ""+pieceFile+pieceRank+":"+pieceType;
 	}
@@ -37,7 +40,124 @@ class ReturnPiece {
 				pieceFile == otherPiece.pieceFile &&
 				pieceRank == otherPiece.pieceRank;
 	}
+
+
+	public void moveTo(PieceFile file, int rank) {
+        if(this.isValid(file, rank)) {
+            board[pieceRank][pieceFile] = null;
+            if(!(board[pieceRank][pieceFile].isEmpty)) {
+                ChessPiece killed = board[rank][file];
+                System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
+            }
+            board[rank][file] = this;
+            this.pieceFile = file;
+			this.pieceRank = rank;
+            timesMoved++;
+        }
+    }
+    public boolean isValid(PieceFile file, int rank) {
+		return false; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
+	}
+	
 }
+
+class Pawn extends ReturnPiece {
+    public Pawn(PieceFile file, int rank, boolean isWhite) {
+        if(isWhite) {
+			this.PieceType = WP;
+		} else {this.PieceType = BP;}
+        this.pieceFile = file;
+		this.pieceRank = rank;
+        this.timesMoved = 0;
+    }
+    public boolean isValid(PieceFile file, int rank) {
+        //attempt 2 will calculate the difference in the moves and if the algo is right it will be valid
+        if(this.pieceType == WP) {
+            int vertical = rank - this.pieceRank; //positive for white
+            int horizontal = file-this.pieceFile; //fix horizontal
+            if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == 1 && horizontal == 0)) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if(vertical == 1 && horizontal == 1) {
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
+            }
+            if(vertical == 1 && horizontal == -1) {
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            int vertical = rank - this.pieceRank; //negative for black
+            int horizontal = file-this.pieceFile;
+            if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == -1 && horizontal == 0) && timesMoved == 0) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == -1 && horizontal == 0)) {
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
+            }
+            if(vertical == -1 && horizontal == 1) {
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
+            }
+            if(vertical == -1 && horizontal == -1) {
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ReturnPlay {
 	enum Message {ILLEGAL_MOVE, DRAW, 
