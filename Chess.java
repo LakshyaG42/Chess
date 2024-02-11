@@ -48,7 +48,7 @@ class ReturnPlay {
 }
 public class Chess { 
 
-	static ArrayList<ReturnPiece> chessPieces = new ArrayList
+	static ArrayList<ReturnPiece> chessPieces = new ArrayList;
 	
 	enum Player { white, black }
 	
