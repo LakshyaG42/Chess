@@ -1,9 +1,14 @@
 package chess; 
 
-public class ChessPiece {
+public class FileRank {
+    char FileCol;
+    int RankRow;
+
+}
+public abstract class ChessPiece {
+    FileRank curPos; //data for current position
+    boolean isWhite; //checks privilege 
+}
+public class Pawn extends ChessPiece {
     
-//check white or black 
-
-private boolean white = true; 
-
 }
