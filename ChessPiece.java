@@ -7,58 +7,161 @@ public class FileRank {
         this.Row = Row;
         
     }
-    public String toString() {
-        String str = "Not Implemented Yet";
-        return str;
+    public int getFile() {
+        return file;
+    }
+    
+    public void setFile(int file) {
+        this.file = file;
+    }
+    
+    public int getRank() {
+        return rank;
+    }
+    
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileRank fileRank = (FileRank) o;
+        return file == fileRank.file && rank == fileRank.rank;
     }
 }
 public abstract class ChessPiece {
     FileRank curPos; //data for current position
     boolean isWhite; //checks privilege 
+    int timesMoved;
     public boolean isWhite() {
         return isWhite;
     }
+    
 }
 class Pawn extends ChessPiece {
-    Arraylist<FileRank> whitePawnStarts = new ArrayList<>();
-    Arraylist<FileRank> blackPawnStarts = new ArrayList<>();
-    for (int i = 0; i <= 7; i++) {
-        FileRank pos = new FileRank(i, 1);
-        whitePawnStarts.add(pos);
-        FileRank blackpos = new FileRank(i, 6);
-        blackPawnStarts.add(blackpos);
+    public Pawn(FileRank curPos, boolean isWhite) {
+        this.curPos = curPos;
+        this.isWhite = isWhite;
+        timesMoved = 0;
     }
 
-    public void createAllowedMoves() {
-        Arraylist<FileRank> AllowedMoves = new ArrayList<>();
+    public boolean isValid(FileRank moveTo) {
         
+        if(isWhite()) {
+            int vertical = moveTo.Row-curPos.Row; //positive for white
+            int horizontal = moveTo.Col-curPos.Col;
+            if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == 1 && horizontal == 0)) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if(vertical == 1 && horizontal == 1) {
+                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                    return true;
+                }
+            }
+            if(vertical == 1 && horizontal == -1) {
+                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            int vertical = moveTo.Col-curPos.Col; //negative for black
+            int horizontal = moveTo.Col-curPos.Col;
+            if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == -1 && horizontal == 0) && timesMoved == 0) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if((vertical == -1 && horizontal == 0)) {
+                if(Board[moveTo.Row][moveTo.Col].isEmpty) {
+                    return true;
+                }
+            }
+            if(vertical == -1 && horizontal == 1) {
+                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                    return true;
+                }
+            }
+            if(vertical == -1 && horizontal == -1) {
+                if(!(Board[moveTo.Row][moveTo.Col].isEmpty)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /* 
+        //Creates an Arraylist of allowed moves
+        Arraylist<FileRank> AllowedMoves = new ArrayList<>();
         if(this.isWhite) {
-            if(whitePawnStarts.contains(curPos)) {
-                //allowed moves
-                FileRank move1 = new FileRank(curPos.Col,curPos.Row+1);
-                FileRank move2 = new FileRank(curPos.Col,curPos.Row+2);
-                AllowedMoves.add(move1);
-                AllowedMoves.add(move2);
+            if(timesMoved == 0) {
+                if(Board[curPos.Row+1][curPos.Col].isEmpty()) {
+                    AllowedMoves.add(new FileRank(curPos.Col,curPos.Row+1));
+                }
+                if(Board[curPos.Row+2][curPos.Col].isEmpty()) {
+                    AllowedMoves.add(new FileRank(curPos.Col,curPos.Row+2));
+                }
             } else {
-                FileRank move1 = new FileRank(curPos.Col,curPos.Row+1);
-                AllowedMoves.add(move1);
+                if(!(curPos.Row+1 > 7)) {
+                    if(Board[curPos.Col][curPos.Row+1].isEmpty()) {
+                        AllowedMoves.add(new FileRank(curPos.Col,curPos.Row+1));
+                    }
+                }
+            }
+            if((0 <= curPos.Row+1 && curPos.Row+1 <= 7) && (0 <= curPos.Col+1 && curPos.Col+1 <= 7)) {
+                if(!(Board[curPos.Row+1][curPos.Col+1].isEmpty())){
+                    AllowedMoves.add(new FileRank(curPos.Col+1,curPos.Row+1));
+                }
+            }
+            if((0 <= curPos.Row+1 && curPos.Row+1 <= 7) && (0 <= curPos.Col-1 && curPos.Col-1 <= 7)) {
+                if(!(Board[curPos.Row+1][curPos.Col-1].isEmpty())){
+                    AllowedMoves.add(new FileRank(curPos.Col-1,curPos.Row+1));
+                }
             }
         } else {
-            if(blackPawnStarts.contains(curPos)) {
-                //allowed moves
-                FileRank move1 = new FileRank(curPos.Col,curPos.Row-1);
-                FileRank move2 = new FileRank(curPos.Col,curPos.Row-2);
-                AllowedMoves.add(move1);
-                AllowedMoves.add(move2);
-            } else {
-                FileRank move1 = new FileRank(curPos.Col,curPos.Row+1);
-                if(Board[move1.Row][move1.Col].isEmpty()) {
-                    AllowedMoves.add(move1);
+            if(timesMoved == 0) {
+                if(Board[curPos.Row-1][curPos.Col].isEmpty()) {
+                    AllowedMoves.add(new FileRank(curPos.Col,curPos.Row-1));
                 }
-                
+                if(Board[curPos.Row-2][curPos.Col].isEmpty()) {
+                    AllowedMoves.add(new FileRank(curPos.Col,curPos.Row-2));
+                }
+            } else {
+                if(!(curPos.Row-1 < 0)) {
+                    if(Board[curPos.Col][curPos.Row-1].isEmpty()) {
+                        AllowedMoves.add(new FileRank(curPos.Col,curPos.Row-1));
+                    }
+                }
             }
-            
+            if((0 <= curPos.Row-1 && curPos.Row-1 <= 7) && (0 <= curPos.Col+1 && curPos.Col+1 <= 7)) {
+                if(!(Board[curPos.Row-1][curPos.Col+1].isEmpty())){
+                    AllowedMoves.add(new FileRank(curPos.Col+1,curPos.Row-1));
+                }
+            }
+            if((0 <= curPos.Row-1 && curPos.Row-1 <= 7) && (0 <= curPos.Col-1 && curPos.Col-1 <= 7)) {
+                if(!(Board[curPos.Row-1][curPos.Col-1].isEmpty())){
+                    AllowedMoves.add(new FileRank(curPos.Col-1,curPos.Row-1));
+                }
+            }
         }
+        */
+        
     }
     
 } 
