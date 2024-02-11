@@ -32,18 +32,22 @@ public class FileRank {
     }
 }
 public abstract class ChessPiece {
+    String type;
     FileRank curPos; //data for current position
     boolean isWhite; //checks privilege 
     int timesMoved;
     public boolean isWhite() {
         return isWhite;
     }
+    public string toString() {
+        return type;
+    }
     public void moveTo(FileRank moveTo) {
         if(this.isValid(moveTo)) {
             board[curPos.Row][curPos.Col] = null;
             if(!(board[moveTo.Row][moveTo.Col].isEmpty)) {
                 ChessPiece killed = board[moveTo.Row][moveTo.Col];
-                System.out.println("CHESSPIECE" + toString(killed) +  "WAS KILLED by:" + toString(this));
+                System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
             }
             board[moveTo.Row][moveTo.Col] = this;
             curPos = new FileRank(moveTo.Col, moveTo.Row);
@@ -55,6 +59,7 @@ public abstract class ChessPiece {
 }
 class Pawn extends ChessPiece {
     public Pawn(FileRank curPos, boolean isWhite) {
+        this.type = "Pawn";
         this.curPos = curPos;
         this.isWhite = isWhite;
         timesMoved = 0;
@@ -175,9 +180,6 @@ class Pawn extends ChessPiece {
             }
         }
         */
-    }
-    public moveTo(FileRank moveTo) {
-
     }
     
 } 
