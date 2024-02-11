@@ -11,7 +11,7 @@ import java.util.Scanner;
 import chess.ReturnPiece.PieceType;
 
 public class GlobalClass {
-    // Static field
+    // Static field to contain inputs
     public static string startpos;
 	public static string endpos;
 	public static string thirdword;
@@ -26,7 +26,6 @@ class ReturnPiece {
 	PieceFile pieceFile;
 	int pieceRank;  // 1..8
 
-	int timesMoved; // added by us
 	
 	public String toString() {
 		return ""+pieceFile+pieceRank+":"+pieceType;
@@ -41,7 +40,7 @@ class ReturnPiece {
 				pieceRank == otherPiece.pieceRank;
 	}
 
-
+	//below is added by us
 	public void moveTo(PieceFile file, int rank) {
         if(this.isValid(file, rank)) {
             board[pieceRank][pieceFile] = null;
@@ -52,7 +51,6 @@ class ReturnPiece {
             board[rank][file] = this;
             this.pieceFile = file;
 			this.pieceRank = rank;
-            timesMoved++;
         }
     }
     public boolean isValid(PieceFile file, int rank) {
@@ -62,6 +60,7 @@ class ReturnPiece {
 }
 
 class Pawn extends ReturnPiece {
+	int timesMoved; // added by us
     public Pawn(PieceFile file, int rank, boolean isWhite) {
         if(isWhite) {
 			this.PieceType = WP;
@@ -74,7 +73,7 @@ class Pawn extends ReturnPiece {
         //attempt 2 will calculate the difference in the moves and if the algo is right it will be valid
         if(this.pieceType == WP) {
             int vertical = rank - this.pieceRank; //positive for white
-            int horizontal = file-this.pieceFile; //fix horizontal
+            int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
                 if(board[rank][file].isEmpty) {
                     return true;
@@ -103,7 +102,7 @@ class Pawn extends ReturnPiece {
             return false;
         } else {
             int vertical = rank - this.pieceRank; //negative for black
-            int horizontal = file-this.pieceFile;
+            int horizontal = file.ordinal()-this.pieceFile.ordinal();
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
                 if(board[rank][file].isEmpty) {
                     return true;
@@ -131,30 +130,12 @@ class Pawn extends ReturnPiece {
             }
             return false;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
+	public void moveTo(PieceFile file, int rank) {
+        super.moveTo(file, rank);
+		timesMoved++;
+    }
+}
 
 
 
