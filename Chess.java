@@ -193,15 +193,150 @@ public class Chess {
 		//setBoard();
 		//Hold peices
 			ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
-		//Pawn 1 ex (do for all 16 lol): 
+		//White Pawn 1 ex (do for all 16 lol): 
 			ReturnPiece WP1 = new ReturnPiece(); 
 
 			WP1.pieceType = PieceType.WP; 
 			WP1.pieceFile = PieceType.a; 
-			wp1.pieceRank = 2;
+			WP1.pieceRank = 2;
 
 			chessPieces.add(WP1); 
 
+			//White Pawn 2
+			ReturnPiece WP2 = new ReturnPiece(); 
+
+			WP2.pieceType = PieceType.WP; 
+			WP2.pieceFile = PieceType.b; 
+			WP2.pieceRank = 2;
+
+			chessPieces.add(WP2); 
+
+			//White Pawn 3
+			ReturnPiece WP3 = new ReturnPiece(); 
+
+			WP3.pieceType = PieceType.WP; 
+			WP3.pieceFile = PieceType.c; 
+			WP3.pieceRank = 2;
+
+			chessPieces.add(WP3); 
+
+			//White Pawn 4
+			ReturnPiece WP4 = new ReturnPiece(); 
+
+			WP4.pieceType = PieceType.WP; 
+			WP4.pieceFile = PieceType.d; 
+			WP4.pieceRank = 2;
+			
+			chessPieces.add(WP4); 
+
+			//White Pawn 5
+			ReturnPiece WP5 = new ReturnPiece(); 
+
+			WP5.pieceType = PieceType.WP; 
+			WP5.pieceFile = PieceType.e; 
+			WP5.pieceRank = 2;
+						
+			chessPieces.add(WP5); 
+
+			//White Pawn 6
+			ReturnPiece WP6 = new ReturnPiece(); 
+
+			WP6.pieceType = PieceType.WP; 
+			WP6.pieceFile = PieceType.f; 
+			WP6.pieceRank = 2;
+									
+			chessPieces.add(WP6); 
+
+			//White Pawn 7
+			ReturnPiece WP7 = new ReturnPiece(); 
+
+			WP7.pieceType = PieceType.WP; 
+			WP7.pieceFile = PieceType.g; 
+			WP7.pieceRank = 2;
+												
+			chessPieces.add(WP7); 
+
+			//White Pawn 7
+			ReturnPiece WP8 = new ReturnPiece(); 
+
+			WP8.pieceType = PieceType.WP; 
+			WP8.pieceFile = PieceType.h; 
+			WP8.pieceRank = 2;
+															
+			chessPieces.add(WP8); 
+
+			//Black Pawn 1  
+			ReturnPiece BP1 = new ReturnPiece(); 
+
+			BP1.pieceType = PieceType.BP; 
+			BP1.pieceFile = PieceType.a; 
+			BP1.pieceRank = 7;
+	
+			chessPieces.add(BP1); 
+	
+			//Black Pawn 2
+			ReturnPiece BP2 = new ReturnPiece(); 
+	
+			BP2.pieceType = PieceType.BP; 
+			BP2.pieceFile = PieceType.b; 
+			BP2.pieceRank = 7;
+	
+			chessPieces.add(BP2); 
+	
+			//Black Pawn 3
+			ReturnPiece BP3 = new ReturnPiece(); 
+	
+			BP3.pieceType = PieceType.BP; 
+			BP3.pieceFile = PieceType.c; 
+			BP3.pieceRank = 7;
+	
+			chessPieces.add(BP3); 
+	
+			//Black Pawn 4
+			ReturnPiece BP4 = new ReturnPiece(); 
+	
+			BP4.pieceType = PieceType.BP; 
+			BP4.pieceFile = PieceType.d; 
+			BP4.pieceRank = 7;
+				
+			chessPieces.add(BP4); 
+	
+			//Black Pawn 5
+			ReturnPiece BP5 = new ReturnPiece(); 
+	
+			BP5.pieceType = PieceType.BP; 
+			BP5.pieceFile = PieceType.e; 
+			BP5.pieceRank = 7;
+							
+			chessPieces.add(BP5); 
+	
+			//Black Pawn 6
+			ReturnPiece BP6 = new ReturnPiece(); 
+	
+			BP6.pieceType = PieceType.BP; 
+			BP6.pieceFile = PieceType.f; 
+			BP6.pieceRank = 7;
+										
+			chessPieces.add(BP6); 
+	
+			//Black Pawn 7
+			ReturnPiece BP7 = new ReturnPiece(); 
+	
+			BP7.pieceType = PieceType.BP; 
+			BP7.pieceFile = PieceType.g; 
+			BP7.pieceRank = 7;
+													
+			chessPieces.add(BP7); 
+	
+			//Black Pawn 8
+			ReturnPiece BP8 = new ReturnPiece(); 
+	
+			BP8.pieceType = PieceType.BP; 
+			BP8.pieceFile = PieceType.h; 
+			BP8.pieceRank = 7;
+																
+			chessPieces.add(BP8); 
+			
 		//readInputs();
 		//check if the move is valid then readinputs again. Make sure to check 
 	}
