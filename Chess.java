@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import chess.ReturnPiece.PieceType;
+
 public class GlobalClass {
     // Static field
     public static string startpos;
@@ -86,7 +88,19 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
+
 		//setBoard();
+		//Hold peices
+			Arraylis<ReturnPiece> chessPieces = new ArrayList<>();
+		//Pawn 1 Example: 
+			ReturnPiece WP1 = new ReturnPiece(); 
+
+			WP1.pieceType = PieceType.WP; 
+			WP1.pieceFile = PieceType.a; 
+			wp1.pieceRank = 2;
+			
+			chessPieces.add(WP1); 
+
 		//readInputs();
 		//check if the move is valid then readinputs again. Make sure to check 
 	}
