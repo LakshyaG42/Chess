@@ -6,11 +6,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-
-public class Inputs() {
-
+public class GlobalClass {
+    // Static field
+    public static string startpos;
+	public static string endpos;
+	public static string thirdword;
 }
+
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -64,13 +68,26 @@ public class Chess {
 		return null;
 	}
 	
-	
+	public static void readInputs() {
+		Scanner inputs = new Scanner(System.in);
+		System.out.print("What's the move!?: "); //asks for input
+		String line = scanner.nextLine();
+		Scanner lineScan = new Scanner(line);
+		int count = 0; 
+		String word = lineScanner.next();
+        GlobalClass.startpos = word;
+    	if(lineScanner.hasNext()) {word = lineScanner.next(); GlobalClass.endpos = word;} // if there is a second word it will read it
+		if(lineScanner.hasNext()) {word = lineScanner.next(); GlobalClass.thirdword = word;} //if asks for a draw 
+		scanner.close();
+        lineScanner.close();
+	}
 	/**
 	 * This method should reset the game, and start from scratch.
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
 		//setBoard();
-		//
+		//readInputs();
+		//check if the move is valid then readinputs again. Make sure to check 
 	}
 }
