@@ -91,7 +91,7 @@ public class Chess {
 
 		//setBoard();
 		//Hold peices
-			Arraylis<ReturnPiece> chessPieces = new ArrayList<>();
+			ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
 		//Pawn 1 ex (do for all 16 lol): 
 			ReturnPiece WP1 = new ReturnPiece(); 
 
