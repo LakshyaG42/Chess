@@ -91,14 +91,14 @@ public class Chess {
 
 		//setBoard();
 		//Hold peices
-			Arraylis<ReturnPiece> chessPieces = new ArrayList<>();
-		//Pawn 1 Example: 
+			ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
+		//Pawn 1 ex (do for all 16 lol): 
 			ReturnPiece WP1 = new ReturnPiece(); 
 
 			WP1.pieceType = PieceType.WP; 
 			WP1.pieceFile = PieceType.a; 
 			wp1.pieceRank = 2;
-			
+
 			chessPieces.add(WP1); 
 
 		//readInputs();
