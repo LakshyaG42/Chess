@@ -200,150 +200,151 @@ public class Chess {
 		//setBoard();
 		//Hold peices
 			ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
-			
-//White Pawn 1 ex (do for all 16 lol): 
-			Pawn WP1 = new Pawn(); 
 
-			WP1.pieceType = PieceType.WP; 
-			WP1.pieceFile = PieceFile.a; 
-			WP1.pieceRank = 2;
+	//White Pawn 1 ex (do for all 16 lol): 
+	Pawn WP1 = new Pawn(); 
 
-			chessPieces.add(WP1); 
+	WP1.pieceType = PieceType.WP; 
+	WP1.pieceFile = PieceFile.a; 
+	WP1.pieceRank = 1;
 
-			//White Pawn 2
-			Pawn WP2 = new Pawn(); 
+	chessPieces.add(WP1); 
 
-			WP2.pieceType = PieceType.WP; 
-			WP2.pieceFile = PieceFile.b; 
-			WP2.pieceRank = 2;
+	//White Pawn 2
+	Pawn WP2 = new Pawn(); 
 
-			chessPieces.add(WP2); 
+	WP2.pieceType = PieceType.WP; 
+	WP2.pieceFile = PieceFile.b; 
+	WP2.pieceRank = 1;
 
-			//White Pawn 3
-			Pawn WP3 = new Pawn(); 
+	chessPieces.add(WP1); 
 
-			WP3.pieceType = PieceType.WP; 
-			WP3.pieceFile = PieceFile.c; 
-			WP3.pieceRank = 2;
+	//White Pawn 3
+	Pawn WP3 = new Pawn(); 
 
-			chessPieces.add(WP3); 
+	WP3.pieceType = PieceType.WP; 
+	WP3.pieceFile = PieceFile.c; 
+	WP3.pieceRank = 1;
 
-			//White Pawn 4
-			Pawn WP4 = new Pawn(); 
+	chessPieces.add(WP3); 
 
-			WP4.pieceType = PieceType.WP; 
-			WP4.pieceFile = PieceFile.d; 
-			WP4.pieceRank = 2;
-			
-			chessPieces.add(WP4); 
+	//White Pawn 4
+	Pawn WP4 = new Pawn(); 
 
-			//White Pawn 5
-			Pawn WP5 = new Pawn(); 
-
-			WP5.pieceType = PieceType.WP; 
-			WP5.pieceFile = PieceFile.e; 
-			WP5.pieceRank = 2;
-						
-			chessPieces.add(WP5); 
-
-			//White Pawn 6
-			Pawn WP6 = new Pawn(); 
-
-			WP6.pieceType = PieceType.WP; 
-			WP6.pieceFile = PieceFile.f; 
-			WP6.pieceRank = 2;
-									
-			chessPieces.add(WP6); 
-
-			//White Pawn 7
-			Pawn WP7 = new Pawn(); 
-
-			WP7.pieceType = PieceType.WP; 
-			WP7.pieceFile = PieceFile.g; 
-			WP7.pieceRank = 2;
-												
-			chessPieces.add(WP7); 
-
-			//White Pawn 7
-			Pawn WP8 = new Pawn(); 
-
-			WP8.pieceType = PieceType.WP; 
-			WP8.pieceFile = PieceFile.h; 
-			WP8.pieceRank = 2;
-															
-			chessPieces.add(WP8); 
-
-			//Black Pawn 1  
-			Pawn BP1 = new Pawn(); 
-
-			BP1.pieceType = PieceType.BP; 
-			BP1.pieceFile = PieceFile.a; 
-			BP1.pieceRank = 7;
+	WP4.pieceType = PieceType.WP; 
+	WP4.pieceFile = PieceFile.d; 
+	WP4.pieceRank = 1;
 	
-			chessPieces.add(BP1); 
-	
-			//Black Pawn 2
-			Pawn BP2 = new Pawn(); 
-	
-			BP2.pieceType = PieceType.BP; 
-			BP2.pieceFile = PieceFile.b; 
-			BP2.pieceRank = 7;
-	
-			chessPieces.add(BP2); 
-	
-			//Black Pawn 3
-			Pawn BP3 = new Pawn(); 
-	
-			BP3.pieceType = PieceType.BP; 
-			BP3.pieceFile = PieceFile.c; 
-			BP3.pieceRank = 7;
-	
-			chessPieces.add(BP3); 
-	
-			//Black Pawn 4
-			Pawn BP4 = new Pawn(); 
-	
-			BP4.pieceType = PieceType.BP; 
-			BP4.pieceFile = PieceFile.d; 
-			BP4.pieceRank = 7;
+	chessPieces.add(WP4); 
+
+	//White Pawn 5
+	Pawn WP5 = new Pawn(); 
+
+	WP5.pieceType = PieceType.WP; 
+	WP5.pieceFile = PieceFile.e; 
+	WP5.pieceRank = 1;
 				
-			chessPieces.add(BP4); 
-	
-			//Black Pawn 5
-			Pawn BP5 = new Pawn(); 
-	
-			BP5.pieceType = PieceType.BP; 
-			BP5.pieceFile = PieceFile.e; 
-			BP5.pieceRank = 7;
+	chessPieces.add(WP5); 
+
+	//White Pawn 6
+	Pawn WP6 = new Pawn(); 
+
+	WP6.pieceType = PieceType.WP; 
+	WP6.pieceFile = PieceFile.f; 
+	WP6.pieceRank = 1;
 							
-			chessPieces.add(BP5); 
-	
-			//Black Pawn 6
-			Pawn BP6 = new Pawn(); 
-	
-			BP6.pieceType = PieceType.BP; 
-			BP6.pieceFile = PieceFile.f; 
-			BP6.pieceRank = 7;
+	chessPieces.add(WP6); 
+
+	//White Pawn 7
+	Pawn WP7 = new Pawn(); 
+
+	WP7.pieceType = PieceType.WP; 
+	WP7.pieceFile = PieceFile.g; 
+	WP7.pieceRank = 1;
 										
-			chessPieces.add(BP6); 
-	
-			//Black Pawn 7
-			Pawn BP7 = new Pawn(); 
-	
-			BP7.pieceType = PieceType.BP; 
-			BP7.pieceFile = PieceFile.g; 
-			BP7.pieceRank = 7;
+	chessPieces.add(WP7); 
+
+	//White Pawn 7
+	Pawn WP8 = new Pawn(); 
+
+	WP8.pieceType = PieceType.WP; 
+	WP8.pieceFile = PieceFile.h; 
+	WP8.pieceRank = 1;
 													
-			chessPieces.add(BP7); 
-	
-			//Black Pawn 8
-			Pawn BP8 = new Pawn(); 
-	
-			BP8.pieceType = PieceType.BP; 
-			BP8.pieceFile = PieceFile.h; 
-			BP8.pieceRank = 7;
-																
-			chessPieces.add(BP8);
+	chessPieces.add(WP8); 
+
+	//Black Pawn 1  
+	Pawn BP1 = new Pawn(); 
+
+	BP1.pieceType = PieceType.BP; 
+	BP1.pieceFile = PieceFile.a; 
+	BP1.pieceRank = 6;
+;
+
+	chessPieces.add(BP1); 
+
+	//Black Pawn 2
+	Pawn BP2 = new Pawn(); 
+
+	BP2.pieceType = PieceType.BP; 
+	BP2.pieceFile = PieceFile.b; 
+	BP2.pieceRank = 6;
+
+	chessPieces.add(BP1); 
+
+	//Black Pawn 3
+	Pawn BP3 = new Pawn(); 
+
+	BP3.pieceType = PieceType.BP; 
+	BP3.pieceFile = PieceFile.c; 
+	BP3.pieceRank = 6;
+
+	chessPieces.add(BP3); 
+
+	//Black Pawn 4
+	Pawn BP4 = new Pawn(); 
+
+	BP4.pieceType = PieceType.BP; 
+	BP4.pieceFile = PieceFile.d; 
+	BP4.pieceRank = 6;
+		
+	chessPieces.add(BP4); 
+
+	//Black Pawn 5
+	Pawn BP5 = new Pawn(); 
+
+	BP5.pieceType = PieceType.BP; 
+	BP5.pieceFile = PieceFile.e; 
+	BP5.pieceRank = 6;
+					
+	chessPieces.add(BP5); 
+
+	//Black Pawn 6
+	Pawn BP6 = new Pawn(); 
+
+	BP6.pieceType = PieceType.BP; 
+	BP6.pieceFile = PieceFile.f; 
+	BP6.pieceRank = 6;
+								
+	chessPieces.add(BP6); 
+
+	//Black Pawn 7
+	Pawn BP7 = new Pawn(); 
+
+	BP7.pieceType = PieceType.BP; 
+	BP7.pieceFile = PieceFile.g; 
+	BP7.pieceRank = 6;
+											
+	chessPieces.add(BP7); 
+
+	//Black Pawn 8
+	Pawn BP8 = new Pawn(); 
+
+	BP8.pieceType = PieceType.BP; 
+	BP8.pieceFile = PieceFile.h; 
+	BP8.pieceRank = 6;
+														
+	chessPieces.add(BP8);
 			
 		//readInputs();
 		//check if the move is valid then readinputs again. Make sure to check 
