@@ -142,7 +142,71 @@ class Pawn extends ReturnPiece {
 	}
 	public void moveTo(PieceFile file, int rank) {
         super.moveTo(file, rank);
-		timesMoved++;
+		this.timesMoved++;
+    }
+}
+
+class Rook extends ReturnPiece {
+	public Rook() {
+		this.pieceType = WR;
+        this.pieceFile = PieceFile(a);
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
+    public Rook(PieceFile file, int rank, boolean isWhite) {
+        if(isWhite) {
+			this.PieceType = WR;
+		} else {this.PieceType = BR;}
+        this.pieceFile = file;
+		this.pieceRank = rank;
+        this.timesMoved = 0;
+    }
+	public boolean isValid(PieceFile file, int rank) {
+		int vertical = rank - this.pieceRank; 
+        int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
+		if(horizontal == 0 && vertical != 0){
+			return true;
+		}
+		if(vertical == 0 && horizontal != 0){
+			return true;
+		}
+		return false;
+	}
+	public void moveTo(PieceFile file, int rank) {
+        super.moveTo(file, rank);
+		this.timesMoved++;
+    }
+}
+
+class Knight extends ReturnPiece {
+	public Knight() {
+		this.pieceType = WR;
+        this.pieceFile = PieceFile(a);
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
+    public Knight(PieceFile file, int rank, boolean isWhite) {
+        if(isWhite) {
+			this.PieceType = WR;
+		} else {this.PieceType = BR;}
+        this.pieceFile = file;
+		this.pieceRank = rank;
+        this.timesMoved = 0;
+    }
+	public boolean isValid(PieceFile file, int rank) {
+		int vertical = rank - this.pieceRank; 
+        int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
+		if((vertical == 3 || vertical == -3) && (horizontal==1 || horizontal ==-1)) {
+			return true;
+		}
+		if((horizontal == 3 || horizontal == -3) && (vertical==1 || vertical==-1)) {
+			return true;
+		}
+		return false;
+	}
+	public void moveTo(PieceFile file, int rank) {
+        super.moveTo(file, rank);
+		this.timesMoved++;
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
