@@ -40,8 +40,10 @@ class ReturnPiece {
 				pieceFile == otherPiece.pieceFile &&
 				pieceRank == otherPiece.pieceRank;
 	}
+}
 
-	//below is added by us
+//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
+class ChessPiece extends ReturnPiece {
 	public void moveTo(PieceFile file, int rank) {
         if(this.isValid(file, rank)) {
             board[pieceRank][pieceFile] = null;
@@ -57,12 +59,9 @@ class ReturnPiece {
     public boolean isValid(PieceFile file, int rank) {
 		return false; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
 	}
-	
 }
 
-//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
-
-class Pawn extends ReturnPiece {
+class Pawn extends ChessPiece {
 	int timesMoved; // added by us
 	public Pawn() {
 		this.pieceType = WP;
@@ -146,7 +145,7 @@ class Pawn extends ReturnPiece {
     }
 }
 
-class Rook extends ReturnPiece {
+class Rook extends ChessPiece {
 	public Rook() {
 		this.pieceType = WR;
         this.pieceFile = PieceFile(a);
@@ -178,7 +177,7 @@ class Rook extends ReturnPiece {
     }
 }
 
-class Knight extends ReturnPiece {
+class Knight extends ChessPiece {
 	public Knight() {
 		this.pieceType = WR;
         this.pieceFile = PieceFile(a);
