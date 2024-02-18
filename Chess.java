@@ -242,7 +242,9 @@ public class Chess {
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
 		return null;
 	}
-	
+	/**
+	 * The readInputs method below was implemented by us
+	 */
 	public static void readInputs() {
 		Scanner inputs = new Scanner(System.in);
 		System.out.print("What's the move!?: "); //asks for input
@@ -411,6 +413,78 @@ public class Chess {
 														
 	chessPieces.add(BP8);
 			 
+	//White Rook 1
+	ReturnPiece WR1 = new Rook(); 
+
+	WR1.pieceType = PieceType.WR; 
+	WR1.pieceFile = PieceFile.a; 
+	WR1.pieceRank = 0;
+														
+	chessPieces.add(WR1);
+
+	//White Rook 2
+	ReturnPiece WR2 = new Rook(); 
+
+	WR2.pieceType = PieceType.WR; 
+	WR2.pieceFile = PieceFile.h; 
+	WR2.pieceRank = 0;
+														
+	chessPieces.add(WR2);
+
+	//Black Rook 1
+	ReturnPiece BR1 = new Rook(); 
+
+	BR1.pieceType = PieceType.BR; 
+	BR1.pieceFile = PieceFile.a; 
+	BR1.pieceRank = 7;
+														
+	chessPieces.add(BR1);
+
+	//Black Rook 2
+	ReturnPiece BR2 = new Rook(); 
+
+	BR2.pieceType = PieceType.BR; 
+	BR2.pieceFile = PieceFile.h; 
+	BR2.pieceRank = 7;
+														
+	chessPieces.add(BR2);
+
+	//White Knight 1
+	ReturnPiece WK1 = new Knight(); 
+
+	WK1.pieceType = PieceType.WK; 
+	WK1.pieceFile = PieceFile.b; 
+	WK1.pieceRank = 0;
+														
+	chessPieces.add(WK1);
+
+	//White Knight 2
+	ReturnPiece WK2 = new Knight(); 
+
+	WK2.pieceType = PieceType.WK; 
+	WK2.pieceFile = PieceFile.g; 
+	WK2.pieceRank = 0;
+														
+	chessPieces.add(WK2);
+
+	//Black Knight 1
+	ReturnPiece BK1 = new Knight(); 
+
+	BK1.pieceType = PieceType.BK; 
+	BK1.pieceFile = PieceFile.b; 
+	BK1.pieceRank = 7;
+														
+	chessPieces.add(BK1);
+	//Black Knight 2
+	ReturnPiece BK2 = new Knight(); 
+
+	BK2.pieceType = PieceType.BK; 
+	BK2.pieceFile = PieceFile.g; 
+	BK2.pieceRank = 7;
+														
+	chessPieces.add(BK2);
+
+
 		//readInputs();
 		//check if the move is valid then readinputs again. Make sure to check 
 	}
