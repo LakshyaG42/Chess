@@ -13,7 +13,7 @@ import chess.ReturnPiece.PieceType;
 
 public static class StorageBoard {
     // Static field to contain inputs
-    static ReturnPiece[][] storageBoard; 
+    static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 
 }
 
@@ -43,6 +43,7 @@ class ReturnPiece {
 
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
+	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
         if(this.isValid(file, rank)) {
             StorageBoard.storageBoard[pieceRank][pieceFile] = null;
@@ -61,7 +62,6 @@ class ChessPiece extends ReturnPiece {
 }
 
 class Pawn extends ChessPiece {
-	int timesMoved; // added by us
 	public Pawn() {
 		this.pieceType = PieceType.WP;
         this.pieceFile = PieceFile.a;
@@ -83,7 +83,7 @@ class Pawn extends ChessPiece {
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
                 return true;
-            }
+            } 
             if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
                 return true;
             }
@@ -534,7 +534,10 @@ public class Chess {
 	BK2.pieceRank = 7;
 														
 	chessPieces.add(BK2);
-
+	
+	for(ReturnPiece piece : chessPieces) {
+		StorageBoard.storageBoard[piece.pieceRank][piece.PieceFile.ordinal()] = piece;
+	}
 	
 
 		//readInputs();
