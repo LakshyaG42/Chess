@@ -34,7 +34,7 @@ class ReturnPiece {
 				pieceRank == otherPiece.pieceRank;
 	}
 }
-public class StorageBoard {
+class StorageBoard {
     // Static field to contain inputs
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 
@@ -157,7 +157,7 @@ public class Bishop extends ChessPiece {
     }
 }
 
-public class Queen extends ChessPiece {
+class Queen extends ChessPiece {
 
 	public Queen() {
 		this.pieceType = PieceType.WR;
@@ -235,8 +235,8 @@ class Knight extends ChessPiece {
     }
     public Knight(PieceFile file, int rank, boolean isWhite) {
         if(isWhite) {
-			this.pieceType = PieceFile.WK;
-		} else {this.pieceType = PieceFile.BK;}
+			this.pieceType = PieceType.WK;
+		} else {this.pieceType = PieceType.BK;}
         this.pieceFile = file;
 		this.pieceRank = rank;
         this.timesMoved = 0;
@@ -322,7 +322,7 @@ public class Chess {
 
 	WP1.pieceType = PieceType.WP; 
 	WP1.pieceFile = PieceFile.a; 
-	WP1.pieceRank = 1;
+	WP1.pieceRank = 2;
 
 	chessPieces.add(WP1); 
 
@@ -331,7 +331,7 @@ public class Chess {
 
 	WP2.pieceType = PieceType.WP; 
 	WP2.pieceFile = PieceFile.b; 
-	WP2.pieceRank = 1;
+	WP2.pieceRank = 2;
 
 	chessPieces.add(WP1); 
 
@@ -340,7 +340,7 @@ public class Chess {
 
 	WP3.pieceType = PieceType.WP; 
 	WP3.pieceFile = PieceFile.c; 
-	WP3.pieceRank = 1;
+	WP3.pieceRank = 2;
 
 	chessPieces.add(WP3); 
 
@@ -349,7 +349,7 @@ public class Chess {
 
 	WP4.pieceType = PieceType.WP; 
 	WP4.pieceFile = PieceFile.d; 
-	WP4.pieceRank = 1;
+	WP4.pieceRank = 2;
 	
 	chessPieces.add(WP4); 
 
@@ -358,7 +358,7 @@ public class Chess {
 
 	WP5.pieceType = PieceType.WP; 
 	WP5.pieceFile = PieceFile.e; 
-	WP5.pieceRank = 1;
+	WP5.pieceRank = 2;
 				
 	chessPieces.add(WP5); 
 
@@ -367,7 +367,7 @@ public class Chess {
 
 	WP6.pieceType = PieceType.WP; 
 	WP6.pieceFile = PieceFile.f; 
-	WP6.pieceRank = 1;
+	WP6.pieceRank = 2;
 							
 	chessPieces.add(WP6); 
 
@@ -376,7 +376,7 @@ public class Chess {
 
 	WP7.pieceType = PieceType.WP; 
 	WP7.pieceFile = PieceFile.g; 
-	WP7.pieceRank = 1;
+	WP7.pieceRank = 2;
 										
 	chessPieces.add(WP7); 
 
@@ -385,7 +385,7 @@ public class Chess {
 
 	WP8.pieceType = PieceType.WP; 
 	WP8.pieceFile = PieceFile.h; 
-	WP8.pieceRank = 1;
+	WP8.pieceRank = 2;
 													
 	chessPieces.add(WP8); 
 
@@ -394,7 +394,7 @@ public class Chess {
 
 	BP1.pieceType = PieceType.BP; 
 	BP1.pieceFile = PieceFile.a; 
-	BP1.pieceRank = 6;
+	BP1.pieceRank = 7;
 ;
 
 	chessPieces.add(BP1); 
@@ -404,7 +404,7 @@ public class Chess {
 
 	BP2.pieceType = PieceType.BP; 
 	BP2.pieceFile = PieceFile.b; 
-	BP2.pieceRank = 6;
+	BP2.pieceRank = 7;
 
 	chessPieces.add(BP1); 
 
@@ -413,7 +413,7 @@ public class Chess {
 
 	BP3.pieceType = PieceType.BP; 
 	BP3.pieceFile = PieceFile.c; 
-	BP3.pieceRank = 6;
+	BP3.pieceRank = 7;
 
 	chessPieces.add(BP3); 
 
@@ -422,7 +422,7 @@ public class Chess {
 
 	BP4.pieceType = PieceType.BP; 
 	BP4.pieceFile = PieceFile.d; 
-	BP4.pieceRank = 6;
+	BP4.pieceRank = 7;
 		
 	chessPieces.add(BP4); 
 
@@ -431,7 +431,7 @@ public class Chess {
 
 	BP5.pieceType = PieceType.BP; 
 	BP5.pieceFile = PieceFile.e; 
-	BP5.pieceRank = 6;
+	BP5.pieceRank = 7;
 					
 	chessPieces.add(BP5); 
 
@@ -440,7 +440,7 @@ public class Chess {
 
 	BP6.pieceType = PieceType.BP; 
 	BP6.pieceFile = PieceFile.f; 
-	BP6.pieceRank = 6;
+	BP6.pieceRank = 7;
 								
 	chessPieces.add(BP6); 
 
@@ -449,7 +449,7 @@ public class Chess {
 
 	BP7.pieceType = PieceType.BP; 
 	BP7.pieceFile = PieceFile.g; 
-	BP7.pieceRank = 6;
+	BP7.pieceRank = 7;
 											
 	chessPieces.add(BP7); 
 
@@ -458,7 +458,7 @@ public class Chess {
 
 	BP8.pieceType = PieceType.BP; 
 	BP8.pieceFile = PieceFile.h; 
-	BP8.pieceRank = 6;
+	BP8.pieceRank = 7;
 														
 	chessPieces.add(BP8);
 			 
@@ -467,7 +467,7 @@ public class Chess {
 
 	WR1.pieceType = PieceType.WR; 
 	WR1.pieceFile = PieceFile.a; 
-	WR1.pieceRank = 0;
+	WR1.pieceRank = 1;
 														
 	chessPieces.add(WR1);
 
@@ -476,7 +476,7 @@ public class Chess {
 
 	WR2.pieceType = PieceType.WR; 
 	WR2.pieceFile = PieceFile.h; 
-	WR2.pieceRank = 0;
+	WR2.pieceRank = 1;
 														
 	chessPieces.add(WR2);
 
@@ -485,7 +485,7 @@ public class Chess {
 
 	BR1.pieceType = PieceType.BR; 
 	BR1.pieceFile = PieceFile.a; 
-	BR1.pieceRank = 7;
+	BR1.pieceRank = 8;
 														
 	chessPieces.add(BR1);
 
@@ -494,7 +494,7 @@ public class Chess {
 
 	BR2.pieceType = PieceType.BR; 
 	BR2.pieceFile = PieceFile.h; 
-	BR2.pieceRank = 7;
+	BR2.pieceRank = 8;
 														
 	chessPieces.add(BR2);
 
@@ -503,7 +503,7 @@ public class Chess {
 
 	WK1.pieceType = PieceType.WK; 
 	WK1.pieceFile = PieceFile.b; 
-	WK1.pieceRank = 0;
+	WK1.pieceRank = 1;
 														
 	chessPieces.add(WK1);
 
@@ -512,7 +512,7 @@ public class Chess {
 
 	WK2.pieceType = PieceType.WK; 
 	WK2.pieceFile = PieceFile.g; 
-	WK2.pieceRank = 0;
+	WK2.pieceRank = 1;
 														
 	chessPieces.add(WK2);
 
@@ -521,7 +521,7 @@ public class Chess {
 
 	BK1.pieceType = PieceType.BK; 
 	BK1.pieceFile = PieceFile.b; 
-	BK1.pieceRank = 7;
+	BK1.pieceRank = 8;
 														
 	chessPieces.add(BK1);
 	//Black Knight 2
@@ -529,7 +529,7 @@ public class Chess {
 
 	BK2.pieceType = PieceType.BK; 
 	BK2.pieceFile = PieceFile.g; 
-	BK2.pieceRank = 7;
+	BK2.pieceRank = 8;
 														
 	chessPieces.add(BK2);
 	
