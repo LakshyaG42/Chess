@@ -1,6 +1,7 @@
 //Lakshya Gour 
 //Dhruv Shidhaye 
 package chess;
+
 //imports 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,7 +47,7 @@ class ChessPiece extends ReturnPiece {
         StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
         if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
 			//was set to type chesspiece but we cant initialize for static using subclass silly 
-            ReturnPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
+            ChessPiece killed = (ChessPiece)StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
 			//toString if shit goes wrong       
 			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
