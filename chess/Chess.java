@@ -15,6 +15,7 @@ import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 import chess.Chess.ReturnPlay.Message;
 import chess.Chess.Player;
+
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
