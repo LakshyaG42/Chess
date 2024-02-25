@@ -11,11 +11,10 @@ import java.util.Scanner;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 
-public class GlobalClass {
+public static class StorageBoard {
     // Static field to contain inputs
-    public static string startpos;
-	public static string endpos;
-	public static string thirdword;
+    static ReturnPiece[][] storageBoard; 
+
 }
 
 class ReturnPiece {
@@ -83,7 +82,7 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(board[rank][file].isEmpty) {
+                if(StorageBoard.storageBoard[rank][file].isEmpty) {
                     return true;
                 }
             }
