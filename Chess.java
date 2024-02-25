@@ -213,9 +213,35 @@ class Rook extends ChessPiece {
 		int vertical = rank - this.pieceRank; 
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
 		if(horizontal == 0 && vertical != 0){
+			if(vertical > 0) {
+				for (int i = this.pieceRank - 1; i < rank - 1; i++) {
+					if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1].isEmpty())) {
+						return false;
+					}
+				}
+			} else {
+				for (int i = this.pieceRank; i > rank - 1; i--) {
+					if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1].isEmpty())) {
+						return false;
+					}
+				}
+			}
 			return true;
 		}
 		if(vertical == 0 && horizontal != 0){
+			if(horizontal > 0) {
+				for (int i = this.pieceFile.ordinal() - 1; i < file.ordinal() - 1; i++) {
+					if(!(StorageBoard.storageBoard[this.pieceRank - 1][i].isEmpty())) {
+						return false;
+					}
+				}
+			} else {
+				for (int i = this.pieceFile.ordinal() - 1; i > file.ordinal() - 1; i--) {
+					if(!(StorageBoard.storageBoard[this.pieceRank - 1][i].isEmpty())) {
+						return false;
+					}
+				}
+			}
 			return true;
 		}
 		return false;
@@ -576,7 +602,7 @@ public class Chess {
 	chessPieces.add(BK2);
 	
 	for(ReturnPiece piece : chessPieces) {
-		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()] = piece;
+		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()-1] = piece;
 	}
 	
 
