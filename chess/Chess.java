@@ -1007,11 +1007,11 @@ public class Chess {
 			}
 			if(pawnPromo) {
 				char c = third.charAt(0);
-				Storage.pawnPromotion(c);
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], c);
 			}
 		} else{
 			if(pawnPromo){
-				Storage.pawnPromotion('Q');
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], 'Q');
 			}
 		}
 		
