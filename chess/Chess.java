@@ -1062,7 +1062,7 @@ public class Chess {
 	WP2.pieceFile = PieceFile.b; 
 	WP2.pieceRank = 2;
 
-	chessPieces.add(WP1); 
+	chessPieces.add(WP2); 
 
 	//White Pawn 3
 	ReturnPiece WP3 = new Pawn(); 
@@ -1135,7 +1135,7 @@ public class Chess {
 	BP2.pieceFile = PieceFile.b; 
 	BP2.pieceRank = 7;
 
-	chessPieces.add(BP1); 
+	chessPieces.add(BP2); 
 
 	//Black Pawn 3
 	ReturnPiece BP3 = new Pawn(); 
