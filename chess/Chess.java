@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
-import chess.ReturnPlay.Message;
+import chess.Chess.ReturnPlay.Message;
 import chess.Chess.Player;
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
@@ -84,6 +84,7 @@ class Storage {
 	static int blackrank;
 	static PieceFile attackFile;
 	static int attackRank;
+
 	public static boolean isChecked() {
 		for (int i = 0; i < storageBoard.length; i++) {
 			for (int j = 0; j < storageBoard.length; j++) {
@@ -263,6 +264,66 @@ class Storage {
 			}
 		}
 		return false;
+	}
+	////REVIEW
+	public static boolean simulateMovetoCheck() {
+
+    boolean isInCheckBeforeMove = isChecked(Storage.currPlayer);
+    if (!isInCheckBeforeMove) {
+        return false;
+    }
+
+    for (int i = 0; i < Storage.storageBoard.length; i++) {
+        for (int j = 0; j < Storage.storageBoard[i].length; j++) {
+
+			//grab current board spot
+            ChessPiece piece = (ChessPiece)Storage.storageBoard[i][j];
+
+			//check if board spot is piece 
+            if (piece != null && ((Storage.currPlayer == Player.white && Storage.isWhite(piece)) ||
+                                  (Storage.currPlayer == Player.black && !Storage.isWhite(piece)))) {
+            
+
+				//test all possible moves
+                for (PieceFile file : PieceFile.values()) {
+                    for (int rank = 1; rank <= 8; rank++) {
+
+						//piece original pos
+                        int originalRank = piece.pieceRank;
+                        PieceFile originalFile = piece.pieceFile;
+                        
+						//simulate moves
+                        if (piece.isValid(file, rank)) {
+
+							//move piece
+                            ChessPiece targetPiece = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];
+                            Storage.storageBoard[originalRank-1][originalFile.ordinal()] = null;
+                            Storage.storageBoard[rank-1][file.ordinal()] = piece;
+                            piece.pieceRank = rank;
+                            piece.pieceFile = file;
+                            
+                            //isChecked? 
+                            boolean isInCheckAfterMove = isChecked(Storage.currPlayer);
+                            
+                            //put piece back to og pos
+                            piece.pieceFile = originalFile;
+                            piece.pieceRank = originalRank;
+                            Storage.storageBoard[originalRank-1][originalFile.ordinal()] = piece;
+                            Storage.storageBoard[rank-1][file.ordinal()] = targetPiece;
+                            
+                            if (!isInCheckAfterMove) {
+                                //not a checkmate we good 
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    //uh oh update the checkmate status
+    return true;
 	}
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
