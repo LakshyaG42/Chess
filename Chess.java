@@ -43,12 +43,12 @@ class StorageBoard {
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
-        StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
-        if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile].isEmpty)) {
-            ChessPiece killed = StorageBoard.storageBoard[rank-1][file];                
+        StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
+        if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1].isEmpty)) {
+            ChessPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];                
 			System.out.println("CHESSPIECE: " + toString(killed) +  "WAS KILLED by: " + toString(this));
             }
-        StorageBoard.storageBoard[rank-1][file] = this;
+        StorageBoard.storageBoard[rank-1][file.ordinal()-1] = this;
         this.pieceFile = file;
 		this.pieceRank = rank;
     }
