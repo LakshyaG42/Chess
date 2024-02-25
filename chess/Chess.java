@@ -514,13 +514,12 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 		/* FILL IN THIS METHOD */
+		ReturnPlay ret = new ReturnPlay();
 		if(move == "resign") {  // Check for resign and return if it is
 			if(Storage.currPlayer == Player.white) {
-				ReturnPlay ret = new ReturnPlay();
 				ret.message = Message.RESIGN_BLACK_WINS;
 				return ret;
 			} else {
-				ReturnPlay ret = new ReturnPlay();
 				ret.message = Message.RESIGN_WHITE_WINS;
 				return ret;
 			}
@@ -534,12 +533,35 @@ public class Chess {
 
 		PieceFile end_file = Storage.fileMap.get(second[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
 		int end_rank = (int) second[1] - '0'; //Way to convert char into an integer
+		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1];
+		/* 
+		// for the method below we will have to definitely change it quite a bit after we figure how to 
+		figure out when to check if its checked and how to check for checkmate; at least for now I completed 
+		reading the inputs, fixed the King check check, added an isWhite method.
+		The main problem for check mate check is the problem of figuring out if any of your own pieces 
+		moves can either position themselves between the king and the attack piece, but that would require 
+		us logging which piece is the attack piece and then checking if there are any pieces that can take 
+		out the attacking piece. If there are no pieces that can get the attacking piece, we can then try and simulate
+		the possible moves of the king and see if they also get checked using the same isValid method <-- for the second part
+		we can just use the existing isvalid method
+		*/
 
-		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1]
 		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
 			Storage.simulateMovetoCheck() // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
-
+			if(activePiece.isValid(end_file, end_rank)) {
+				activePiece.moveTo(end_file, end_rank);
+				if(Storage.CheckM8()) { //checks if a checkmate is done
+					if(Storage.currPlayer == Player.white) {
+						ret.message = Message.CHECKMATE_WHITE_WINS;
+					} else {
+						ret.message = Message.CHECKMATE_BLACK_WINS;
+					}
+				}//checks if there is currently a check mate
+			} else {
+				ret.message = Message.ILLEGAL_MOVE;
+			}
+			
 		}
 
 
