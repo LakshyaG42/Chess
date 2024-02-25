@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
-
+//IF COLLISSION CHECK DOESNT WORK DO IT DHRUVS WAY
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -236,14 +236,14 @@ class Queen extends ChessPiece {
 			//rook code
 			if(horizontal == 0 && vertical != 0){
 				if(vertical > 0) {
-					for (int i = this.pieceRank - 1; i < rank - 1; i++) {
-						if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+					for (int i = 1; i < vertical; i++) {
+						if(!(StorageBoard.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
 							return false;
 						}
 					}
 				} else {
-					for (int i = this.pieceRank; i > rank - 1; i--) {
-						if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+					for (int i = 1; i < Math.abs(vertical); i++) {
+						if(!(StorageBoard.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
 							return false;
 						}
 					}
@@ -252,14 +252,14 @@ class Queen extends ChessPiece {
 			}
 			if(vertical == 0 && horizontal != 0){
 				if(horizontal > 0) {
-					for (int i = this.pieceFile.ordinal() - 1; i < file.ordinal() - 1; i++) {
-						if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+					for (int i =1 - 1; i < horizontal; i++) {
+						if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
 							return false;
 						}
 					}
 				} else {
-					for (int i = this.pieceFile.ordinal() - 1; i > file.ordinal() - 1; i--) {
-						if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+					for (int i =1 - 1; i < Math.abs(horizontal); i++) {
+						if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
 							return false;
 						}
 					}
@@ -267,8 +267,7 @@ class Queen extends ChessPiece {
 				return true;
 			}
 		}
-
-        return isDiagonalMove || isStraightMove;
+		return false;
     }
 
     public void moveTo(PieceFile file, int rank) {
@@ -301,14 +300,14 @@ class Rook extends ChessPiece {
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
 		if(horizontal == 0 && vertical != 0){
 			if(vertical > 0) {
-				for (int i = this.pieceRank - 1; i < rank - 1; i++) {
-					if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+				for (int i = 1; i < vertical; i++) {
+					if(!(StorageBoard.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
 						return false;
 					}
 				}
 			} else {
-				for (int i = this.pieceRank; i > rank - 1; i--) {
-					if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+				for (int i = 1; i < Math.abs(vertical); i++) {
+					if(!(StorageBoard.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
 						return false;
 					}
 				}
@@ -317,14 +316,14 @@ class Rook extends ChessPiece {
 		}
 		if(vertical == 0 && horizontal != 0){
 			if(horizontal > 0) {
-				for (int i = this.pieceFile.ordinal() - 1; i < file.ordinal() - 1; i++) {
-					if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+				for (int i =1 - 1; i < horizontal; i++) {
+					if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
 						return false;
 					}
 				}
 			} else {
-				for (int i = this.pieceFile.ordinal() - 1; i > file.ordinal() - 1; i--) {
-					if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+				for (int i =1 - 1; i < Math.abs(horizontal); i++) {
+					if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
 						return false;
 					}
 				}
