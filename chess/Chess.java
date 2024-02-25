@@ -105,14 +105,161 @@ class Storage {
 			for (ReturnPiece returnPiece : row) {
 				ChessPiece CP = (ChessPiece)returnPiece;
 				if(currPlayer == Player.white) {
-					if(CP.isValid(whitefile, whiterank)) { //CHECK CONDITION
+					if(CP.isValid(whitefile, whiterank) && !(isWhite(returnPiece))) { //CHECK CONDITION
+						attackFile = CP.pieceFile;
+						attackRank = CP.pieceRank;
 						return true;
 					}
 				} else {
-					if(CP.isValid(blackfile, blackrank)) { //CHECK CONDITION
+					if(CP.isValid(blackfile, blackrank) && (isWhite(returnPiece))) { //CHECK CONDITION
+						attackFile = CP.pieceFile;
+						attackRank = CP.pieceRank;
 						return true;
 					}
 				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean CheckM8() {
+		if(isChecked()) {
+			if(currPlayer == Player.white) {
+				// WHITE
+				// first checks if the king can move anywhere
+				ChessPiece king = (ChessPiece)storageBoard[whiterank - 1][whitefile.ordinal() - 1];
+				if(storageBoard[whiterank][whitefile.ordinal() - 1] == null) { //up
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank)) {return true;}
+				}
+				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1] == null) { //down
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)) {return true;}
+				}
+				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 - 1] == null) { //left
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1)){return true;}
+				}
+				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 + 1] == null) { //right
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1)){return true;}	
+				}
+				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 + 1] == null) { //topright
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank)){return true;}	
+				}
+				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 - 1] == null) { //topleft
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank)){return true;}	
+				}
+				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 + 1] == null) { //bottomright
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1-1)){return true;}	
+				}
+				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 - 1] == null) { //bottomleft
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1-1)){return true;}	
+				}
+				//checks if any of the current players pieces can get rid of the attacking player
+				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
+				ArrayList<int[]> attackMoves = new ArrayList<>();
+				int horizontal = whiterank - attackRank;
+				int vertical = whitefile.ordinal() - attackFile.ordinal();
+				if(Storage.isWhite(attacker)) {
+					//pawn nothing
+					//knight nothing
+					//rook
+					if(attacker.pieceType == PieceType.WR) {
+						if(horizontal == 0 && vertical != 0){	
+							if(vertical > 0) {
+								for (int i = 1; i < vertical; i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1 + i;
+									arr[1] = attackFile.ordinal()-1;
+									attackMoves.add(arr);
+								}
+							} else {
+								for (int i = 1; i < Math.abs(vertical); i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1 - i;
+									arr[1] = attackFile.ordinal()-1;
+									attackMoves.add(arr);
+								}
+							}
+						}
+						if(horizontal != 0 && vertical == 0){	
+							if(horizontal > 0) {
+								for (int i = 1; i < horizontal; i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1;
+									arr[1] = attackFile.ordinal()-1 + i;
+									attackMoves.add(arr);
+								}
+							} else {
+								for (int i = 1; i < Math.abs(vertical); i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1;
+									arr[1] = attackFile.ordinal()-1 - i;
+									attackMoves.add(arr);
+								}
+							}
+						}
+					}
+					//bishop
+					//queen
+					
+					
+				} else {
+					//black populating code
+				}
+				for (ReturnPiece[] row : Storage.storageBoard) {
+					for (ReturnPiece returnPiece : row) {
+						ChessPiece CP = (ChessPiece)returnPiece;
+						if(CP.isValid(attackFile, attackRank) && (isWhite(returnPiece))) { //CHECK CONDITION
+							return false;
+						}
+						if(CP.pieceType != PieceType.WK) {
+
+						}
+						
+					}
+				}
+				
+				
+				//check if any of the current players pieces can get in between 
+
+
+			} else {
+
+				// BLACK
+				ChessPiece king = (ChessPiece)storageBoard[blackrank - 1][blackfile.ordinal() - 1];
+				if(storageBoard[blackrank][blackfile.ordinal() - 1] == null) { //up
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank)) {return true;}
+				}
+				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1] == null) { //down
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank-1-1)) {return true;}
+				}
+				if(storageBoard[blackrank-1][blackfile.ordinal() - 1 - 1] == null) { //left
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank-1)){return true;}
+				}
+				if(storageBoard[blackrank-1][blackfile.ordinal() - 1 + 1] == null) { //right
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank-1)){return true;}	
+				}
+				if(storageBoard[blackrank-1+1][blackfile.ordinal() - 1 + 1] == null) { //topright
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank)){return true;}	
+				}
+				if(storageBoard[blackrank-1+1][blackfile.ordinal() - 1 - 1] == null) { //topleft
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank)){return true;}	
+				}
+				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1 + 1] == null) { //bottomright
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank-1-1)){return true;}	
+				}
+				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1 - 1] == null) { //bottomleft
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank-1-1)){return true;}	
+				}
+
+				//checks if any of the current players pieces can get rid of the attacking player
+				for (ReturnPiece[] row : Storage.storageBoard) {
+					for (ReturnPiece returnPiece : row) {
+						ChessPiece CP = (ChessPiece)returnPiece;
+							if(CP.isValid(attackFile, attackRank) && !(isWhite(returnPiece))) { //CHECK CONDITION
+								return false;
+							}
+					}
+				}
+
 			}
 		}
 		return false;
