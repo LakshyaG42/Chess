@@ -159,7 +159,7 @@ class Storage {
 				ArrayList<int[]> attackMoves = new ArrayList<>();
 				int horizontal = whiterank - attackRank;
 				int vertical = whitefile.ordinal() - attackFile.ordinal();
-				if(Storage.isWhite(attacker)) {
+				if(!(Storage.isWhite(attacker))) {
 					//pawn nothing
 					//knight nothing
 					//rook
@@ -190,7 +190,7 @@ class Storage {
 									attackMoves.add(arr);
 								}
 							} else {
-								for (int i = 1; i < Math.abs(vertical); i++) {
+								for (int i = 1; i < Math.abs(horizontal); i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1;
 									arr[1] = attackFile.ordinal()-1 - i;
@@ -203,9 +203,7 @@ class Storage {
 					//queen
 					
 					
-				} else {
-					//black populating code
-				}
+				} 
 				for (ReturnPiece[] row : Storage.storageBoard) {
 					for (ReturnPiece returnPiece : row) {
 						ChessPiece CP = (ChessPiece)returnPiece;
@@ -256,12 +254,69 @@ class Storage {
 					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank-1-1)){return true;}	
 				}
 
+
+				//populate black array:
+				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
+				ArrayList<int[]> attackMoves = new ArrayList<>();
+				int horizontal = whiterank - attackRank;
+				int vertical = whitefile.ordinal() - attackFile.ordinal();
+				if(Storage.isWhite(attacker)) {
+					//rook
+					if(attacker.pieceType == PieceType.WR) {
+						if(horizontal == 0 && vertical != 0){	
+							if(vertical > 0) {
+								for (int i = 1; i < vertical; i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1 + i;
+									arr[1] = attackFile.ordinal()-1;
+									attackMoves.add(arr);
+								}
+							} else {
+								for (int i = 1; i < Math.abs(vertical); i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1 - i;
+									arr[1] = attackFile.ordinal()-1;
+									attackMoves.add(arr);
+								}
+							}
+						}
+						if(horizontal != 0 && vertical == 0){	
+							if(horizontal > 0) {
+								for (int i = 1; i < horizontal; i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1;
+									arr[1] = attackFile.ordinal()-1 + i;
+									attackMoves.add(arr);
+								}
+							} else {
+								for (int i = 1; i < Math.abs(horizontal); i++) {
+									int[] arr = new int[2];
+									arr[0] = attackRank-1;
+									arr[1] = attackFile.ordinal()-1 - i;
+									attackMoves.add(arr);
+								}
+							}
+						}
+					}
+					//bishop
+					//queen
+					
+				}
+				
 				//checks if any of the current players pieces can get rid of the attacking player
 				for (ReturnPiece[] row : Storage.storageBoard) {
 					for (ReturnPiece returnPiece : row) {
 						ChessPiece CP = (ChessPiece)returnPiece;
 							if(CP.isValid(attackFile, attackRank) && !(isWhite(returnPiece))) { //CHECK CONDITION
 								return false;
+							}
+							if(CP.pieceType != PieceType.BK) {
+								for (int i = 0; i < attackMoves.size(); i++) {
+									int[] arr = attackMoves.get(i);
+									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
+										return false;
+									}
+								}
 							}
 					}
 				}
@@ -781,10 +836,10 @@ public class Chess {
 		ReturnPlay ret = new ReturnPlay();
 		if(move == "resign") {  // Check for resign and return if it is
 			if(Storage.currPlayer == Player.white) {
-				ret.message = Message.RESIGN_BLACK_WINS;
+				ret.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
 				return ret;
 			} else {
-				ret.message = Message.RESIGN_WHITE_WINS;
+				ret.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
 				return ret;
 			}
 		}
