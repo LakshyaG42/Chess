@@ -200,9 +200,32 @@ class Storage {
 						}
 					}
 					//bishop
+					if (attacker.pieceType == PieceType.BB || attacker.pieceType == PieceType.BQ) {
 
-					
-					
+						int diagonalDistance = Math.abs(attackRank - whiterank);
+						for (int i = 1; i < diagonalDistance; i++) {
+							// Top-right diagonal
+							if (attackRank < whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 + i};
+								attackMoves.add(arr);
+							}
+							// Top-left diagonal
+							else if (attackRank < whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 - i};
+								attackMoves.add(arr);
+							}
+							// Bottom-right diagonal
+							else if (attackRank > whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 + i};
+								attackMoves.add(arr);
+							}
+							// Bottom-left diagonal
+							else if (attackRank > whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 - i};
+								attackMoves.add(arr);
+							}
+						}
+					}
 					//queen
 					
 					
