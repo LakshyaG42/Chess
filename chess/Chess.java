@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
-import chess.Chess.ReturnPlay.Message;
 import chess.Chess.Player;
 
 class ReturnPiece {
@@ -921,19 +920,19 @@ public class Chess {
 		*/
 
 		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
-			Storage.simulateMovetoCheck() // method that will make a copy of the board at current state and try and do move to check if the check is gone
+			Storage.simulateMovetoCheck(); // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
 			if(activePiece.isValid(end_file, end_rank)) {
 				activePiece.moveTo(end_file, end_rank);
 				if(Storage.CheckM8()) { //checks if a checkmate is done
 					if(Storage.currPlayer == Player.white) {
-						ret.message = Message.CHECKMATE_WHITE_WINS;
+						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
 					} else {
-						ret.message = Message.CHECKMATE_BLACK_WINS;
+						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
 					}
 				}//checks if there is currently a check mate
 			} else {
-				ret.message = Message.ILLEGAL_MOVE;
+				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			}
 			
 		}
