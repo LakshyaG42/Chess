@@ -200,6 +200,9 @@ class Storage {
 						}
 					}
 					//bishop
+
+					
+					
 					//queen
 					
 					
