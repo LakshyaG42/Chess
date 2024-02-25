@@ -484,6 +484,8 @@ public class Chess {
 	 */
 	public static ReturnPlay play(String move) {
 
+		ReturnPlay message = new ReturnPlay(); 
+		
 		/* FILL IN THIS METHOD */
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
