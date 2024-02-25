@@ -144,6 +144,26 @@ public class Bishop extends ChessPiece {
     }
 }
 
+public class Queen extends ChessPiece {
+    public Queen(PieceFile file, int rank, boolean isWhite) {
+        super();
+        this.pieceFile = file;
+        this.pieceRank = rank;
+        this.pieceType = isWhite ? PieceType.WQ : PieceType.BQ;
+    }
+
+	public boolean isValid(PieceFile file, int rank) {
+        int verticalMove = Math.abs(rank - this.pieceRank);
+        int horizontalMove = Math.abs(file.ordinal() - this.pieceFile.ordinal());
+        
+        boolean isDiagonalMove = verticalMove == horizontalMove;
+        boolean isStraightMove = verticalMove == 0 || horizontalMove == 0;
+
+        return isDiagonalMove || isStraightMove;
+    }
+}
+
+
 class Rook extends ChessPiece {
 	public Rook() {
 		this.pieceType = WR;
