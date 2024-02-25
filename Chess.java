@@ -400,9 +400,9 @@ class King extends ChessPiece {
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
             StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
-			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile].isEmpty)) {
-				ChessPiece killed = StorageBoard.storageBoard[rank-1][file];                
-				System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
+			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile] == null)) {
+				ReturnPiece killed = StorageBoard.storageBoard[rank-1][file];                
+				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
 				}
 			StorageBoard.storageBoard[rank-1][file] = this;
 			this.pieceFile = file;
