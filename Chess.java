@@ -530,8 +530,46 @@ public class Chess {
 	BK2.pieceType = PieceType.BK; 
 	BK2.pieceFile = PieceFile.g; 
 	BK2.pieceRank = 8;
-														
+
 	chessPieces.add(BK2);
+
+	//Black Bishop 1
+	ReturnPiece BB1 = new Bishop(); 
+
+	BK1.pieceType = PieceType.BB; 
+	BK1.pieceFile = PieceFile.c; 		
+	BK1.pieceRank = 8;
+															
+	chessPieces.add(BB1);
+
+	//Black Bishop 2
+	ReturnPiece BB2 = new Bishop(); 
+	
+	BK2.pieceType = PieceType.BB; 
+	BK2.pieceFile = PieceFile.f; 
+	BK2.pieceRank = 8;
+
+	chessPieces.add(BB2);
+
+	//White Bishop 1
+	ReturnPiece WB1 = new Bishop(); 
+
+	BK1.pieceType = PieceType.WB; 
+	BK1.pieceFile = PieceFile.c; 		
+	BK1.pieceRank = 1;
+															
+	chessPieces.add(BB1);
+
+	//White Bishop 2
+	ReturnPiece WB2 = new Bishop(); 
+	
+	BK2.pieceType = PieceType.WB; 
+	BK2.pieceFile = PieceFile.f; 
+	BK2.pieceRank = 1;
+
+	chessPieces.add(BB2);
+	
+													
 	
 	for(ReturnPiece piece : chessPieces) {
 		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()] = piece;
