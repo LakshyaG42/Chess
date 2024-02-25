@@ -181,6 +181,48 @@ class Queen extends ChessPiece {
         boolean isDiagonalMove = verticalMove == horizontalMove;
         boolean isStraightMove = verticalMove == 0 || horizontalMove == 0;
 
+		//collision check below: 
+		int vertical = rank - this.pieceRank; 
+        int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
+		if(isDiagonalMove){
+			//bishop code
+		}
+		if(isStraightMove){
+			//rook code
+			if(horizontal == 0 && vertical != 0){
+				if(vertical > 0) {
+					for (int i = this.pieceRank - 1; i < rank - 1; i++) {
+						if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+							return false;
+						}
+					}
+				} else {
+					for (int i = this.pieceRank; i > rank - 1; i--) {
+						if(!(StorageBoard.storageBoard[i][this.pieceFile.ordinal()-1] == null)) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			if(vertical == 0 && horizontal != 0){
+				if(horizontal > 0) {
+					for (int i = this.pieceFile.ordinal() - 1; i < file.ordinal() - 1; i++) {
+						if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+							return false;
+						}
+					}
+				} else {
+					for (int i = this.pieceFile.ordinal() - 1; i > file.ordinal() - 1; i--) {
+						if(!(StorageBoard.storageBoard[this.pieceRank - 1][i] == null)) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+		}
+
         return isDiagonalMove || isStraightMove;
     }
 
