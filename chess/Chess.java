@@ -388,7 +388,8 @@ class King extends ChessPiece {
 		if(timesMoved == 0){ //castling
 			if(horizontal > 1) { //right
 				if(this.pieceType == PieceType.WK) {
-					if((ChessPiece)StorageBoard.storageBoard[0][7].timesMoved == 0) {
+					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[0][7];
+					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[0][3+i] != null) {
 								return false;
@@ -396,7 +397,8 @@ class King extends ChessPiece {
 						}
 					}
 				} else {
-					if((ChessPiece)StorageBoard.storageBoard[7][7].timesMoved == 0) {
+					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[7][7];
+					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[7][4+i] != null) {
 								return false;
@@ -407,7 +409,8 @@ class King extends ChessPiece {
 			}
 			if(horizontal < -1) { //left
 				if(this.pieceType == PieceType.WK) {
-					if((ChessPiece)StorageBoard.storageBoard[0][0].timesMoved == 0) {
+					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[0][0];
+					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[0][3-i] != null) {
 								return false;
@@ -415,7 +418,8 @@ class King extends ChessPiece {
 						}
 					}
 				} else {
-					if((ChessPiece)StorageBoard.storageBoard[7][0].timesMoved == 0) {
+					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[7][0];
+					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[7][4-i] != null) {
 								return false;
@@ -427,16 +431,16 @@ class King extends ChessPiece {
 		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
 			for (ReturnPiece[] row : StorageBoard.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
-					if(returnPiece.isValid(file, rank)) {
+					ChessPiece CP = (ChessPiece)returnPiece;
+					if(CP.isValid(file, rank)) { //CHECK CONDITION
 						return false;
 					}
 				}
 			}
 			return true;
 		}
-		
-		return false;
 		}
+		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
