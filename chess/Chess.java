@@ -6,6 +6,7 @@ package chess;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -63,7 +64,13 @@ class Storage {
         fileMap2.put(7, PieceFile.h);
     }
 		
-
+	public static void switchPlayer() {
+		if(currPlayer == Player.black) {
+			currPlayer = Player.white;
+		} else {
+			currPlayer = Player.black;
+		}
+	}
 
 	static ArrayList<PieceType> whites = new ArrayList<>();
 	static {
@@ -376,7 +383,26 @@ class Storage {
 		return false;
 	}
 	public static boolean quickSimulate(PieceFile startFile, int startRank, PieceFile endFile, int endRank) {
-
+		if(!Storage.isChecked()) {
+			return true;
+		}
+		ChessPiece p = (ChessPiece) Storage.storageBoard[startRank-1][startFile.ordinal()-1];
+		int ogTimesMoved = p.timesMoved;
+		if(p.isValid(endFile, endRank)){
+			if(storageBoard[endRank-1][endFile.ordinal()-1] != null) {
+				if(storageBoard[endRank-1][endFile.ordinal()-1] == storageBoard[attackRank-1][attackFile.ordinal()-1]) {
+					return true;
+				}
+			} else {
+				p.moveTo(endFile, endRank);
+				if(!isChecked()) {
+					p.moveTo(startFile, startRank);
+					p.timesMoved = ogTimesMoved;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 
@@ -961,36 +987,48 @@ public class Chess {
 			}
 		}
 		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
-			if(Storage.quickSimulate(start_file, start_rank, end_file, end_rank)){
+			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.black))){
+				if(Storage.quickSimulate(start_file, start_rank, end_file, end_rank)){
+					if(activePiece.isValid(end_file, end_rank)) {
+						activePiece.moveTo(end_file, end_rank);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+							}
+						}//checks if there is currently a check mate
+					} else {
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+					}
+					} else {
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+					}
+			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
+		} else {
+			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.black))) {
 				if(activePiece.isValid(end_file, end_rank)) {
 					activePiece.moveTo(end_file, end_rank);
+					Storage.switchPlayer();
+					if(Storage.isChecked()) {
+						ret.message = ReturnPlay.Message.CHECK;
+					}
 					if(Storage.CheckM8()) { //checks if a checkmate is done
 						if(Storage.currPlayer == Player.white) {
 							ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
 						} else {
 							ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
 						}
+
 					}//checks if there is currently a check mate
 				} else {
 					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 				}
-			} else {
-				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
-			}// method that will make a copy of the board at current state and try and do move to check if the check is gone
-		} else {
-			if(activePiece.isValid(end_file, end_rank)) {
-				activePiece.moveTo(end_file, end_rank);
-				if(Storage.CheckM8()) { //checks if a checkmate is done
-					if(Storage.currPlayer == Player.white) {
-						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-					} else {
-						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-					}
-				}//checks if there is currently a check mate
-			} else {
-				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			}
-			
 		}
 		//if the move doesnt work out then the code below will not run
 		if(ret.message == ReturnPlay.Message.ILLEGAL_MOVE) {
@@ -1005,10 +1043,32 @@ public class Chess {
 			if(pawnPromo) {
 				char c = third.charAt(0);
 				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], c);
+				if(Storage.isChecked()) {
+					ret.message = ReturnPlay.Message.CHECK;
+				}
+				if(Storage.CheckM8()) { //checks if a checkmate is done
+					if(Storage.currPlayer == Player.white) {
+						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+					} else {
+						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+					}
+
+				}//checks if there is currently a check mate
 			}
 		} else{
 			if(pawnPromo){
 				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], 'Q');
+				if(Storage.isChecked()) {
+					ret.message = ReturnPlay.Message.CHECK;
+				}
+				if(Storage.CheckM8()) { //checks if a checkmate is done
+					if(Storage.currPlayer == Player.white) {
+						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+					} else {
+						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+					}
+
+				}//checks if there is currently a check mate
 			}
 		}
 		
@@ -1060,7 +1120,7 @@ public class Chess {
 	WP2.pieceFile = PieceFile.b; 
 	WP2.pieceRank = 2;
 
-	chessPieces.add(WP1); 
+	chessPieces.add(WP2); 
 
 	//White Pawn 3
 	ReturnPiece WP3 = new Pawn(); 
@@ -1133,7 +1193,7 @@ public class Chess {
 	BP2.pieceFile = PieceFile.b; 
 	BP2.pieceRank = 7;
 
-	chessPieces.add(BP1); 
+	chessPieces.add(BP2); 
 
 	//Black Pawn 3
 	ReturnPiece BP3 = new Pawn(); 
