@@ -122,7 +122,7 @@ class Pawn extends ChessPiece {
     }
 }
 
-public class Bishop extends ChessPiece {
+class Bishop extends ChessPiece {
 
 	public Bishop() {
 		this.pieceType = PieceType.WR;
@@ -140,22 +140,65 @@ public class Bishop extends ChessPiece {
     }
 
     public boolean isValid(PieceFile file, int rank) {
-        int vertical = rank - this.pieceRank;
-        int horizontal = file.ordinal() - this.pieceFile.ordinal();
-        
+    	int vertical = rank - this.pieceRank;
+    	int horizontal = file.ordinal() - this.pieceFile.ordinal();
+
+    /* 
         if (Math.abs(vertical) == Math.abs(horizontal)) {
             return true;
         }
         return false;
-    }
+	*/
+	
+		if (Math.abs(horizontal) == Math.abs(vertical)) {
+			if (horizontal > 0 && vertical > 0) {
 
+				// Top-right diagonal
+				for (int i = 1; i < horizontal; i++) {
+					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
+						return false;
+					}
+				}
+
+			} else if (horizontal < 0 && vertical > 0) {
+				// Top-left diagonal
+				for (int i = 1; i < Math.abs(horizontal); i++) {
+					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 - i] != null) {
+						return false;
+					}
+				}
+
+			} else if (horizontal > 0 && vertical < 0) {
+				// Bottom-right diagonal
+				for (int i = 1; i < horizontal; i++) {
+					if (StorageBoard.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 + i] != null) {
+						return false;
+					}
+				}
+
+			} else if (horizontal < 0 && vertical < 0) {
+				// Bottom-left diagonal
+				for (int i = 1; i < Math.abs(horizontal); i++) {
+					if (StorageBoard.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 - i] != null) {
+						return false;
+					}
+				}
+				
+			}
+			return true; // clear path
+		}
+		return false; // boo not clear
+	}
+	
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
             super.moveTo(file, rank); 
             this.timesMoved++;
         }
     }
-}
+
+    }
+
 
 class Queen extends ChessPiece {
 
