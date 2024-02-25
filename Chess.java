@@ -382,7 +382,46 @@ class King extends ChessPiece {
 	public boolean isValid(PieceFile file, int rank) {
 		int vertical = rank - this.pieceRank; 
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
-		if(((vertical == 1 || vertical == -1) || (horizontal == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
+		if(timesMoved == 0){ //castling
+			if(horizontal > 1) { //right
+				if(this.pieceType == PieceType.WK) {
+					if(StorageBoard.storageBoard[0][7].timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(StorageBoard.storageBoard[0][3+i] != null) {
+								return false;
+							}
+						}
+					}
+				} else {
+					if(StorageBoard.storageBoard[7][7].timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(StorageBoard.storageBoard[7][4+i] != null) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+			if(horizontal < -1) { //left
+				if(this.pieceType == PieceType.WK) {
+					if(StorageBoard.storageBoard[0][0].timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(StorageBoard.storageBoard[0][3-i] != null) {
+								return false;
+							}
+						}
+					}
+				} else {
+					if(StorageBoard.storageBoard[7][0].timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(StorageBoard.storageBoard[7][4-i] != null) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
 			for (ReturnPiece[] row : StorageBoard.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
 					if(returnPiece.isValid(file, rank)) {
@@ -394,6 +433,7 @@ class King extends ChessPiece {
 		}
 		
 		return false;
+		}
 	}
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
