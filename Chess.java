@@ -43,19 +43,17 @@ public class StorageBoard {
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
-        if(this.isValid(file, rank)) {
-            StorageBoard.storageBoard[pieceRank][pieceFile] = null;
-            if(!(StorageBoard.storageBoard[pieceRank][pieceFile].isEmpty)) {
-                ChessPiece killed = StorageBoard.storageBoard[rank][file];
-                System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
+        StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
+        if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile].isEmpty)) {
+            ChessPiece killed = StorageBoard.storageBoard[rank-1][file];                
+			System.out.println("CHESSPIECE: " + toString(killed) +  "WAS KILLED by: " + toString(this));
             }
-            StorageBoard.storageBoard[rank][file] = this;
-            this.pieceFile = file;
-			this.pieceRank = rank;
-        }
+        StorageBoard.storageBoard[rank-1][file] = this;
+        this.pieceFile = file;
+		this.pieceRank = rank;
     }
     public boolean isValid(PieceFile file, int rank) {
-		return false; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
+		return true; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
 	}
 }
 
@@ -117,8 +115,10 @@ class Pawn extends ChessPiece {
         }
 	}
 	public void moveTo(PieceFile file, int rank) {
-        super.moveTo(file, rank);
-		this.timesMoved++;
+        if (this.isValid(file, rank)) {
+            super.moveTo(file, rank); 
+            this.timesMoved++;
+        }
     }
 }
 
@@ -221,8 +221,10 @@ class Rook extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        super.moveTo(file, rank);
-		this.timesMoved++;
+        if (this.isValid(file, rank)) {
+            super.moveTo(file, rank); 
+            this.timesMoved++;
+        }
     }
 }
 
@@ -253,8 +255,48 @@ class Knight extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        super.moveTo(file, rank);
-		this.timesMoved++;
+        if (this.isValid(file, rank)) {
+            super.moveTo(file, rank); 
+            this.timesMoved++;
+        }
+    }
+}
+
+class King extends ChessPiece {
+	public King() {
+		this.pieceType = PieceType.WK;
+        this.pieceFile = PieceFile.b;
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
+	public boolean isValid(PieceFile file, int rank) {
+		int vertical = rank - this.pieceRank; 
+        int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
+		if(((vertical == 1 || vertical == -1) || (horizontal == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
+			for (ReturnPiece[] row : StorageBoard.storageBoard) {
+				for (ReturnPiece returnPiece : row) {
+					if(returnPiece.isValid(file, rank)) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		return false;
+	}
+	public void moveTo(PieceFile file, int rank) {
+        if (this.isValid(file, rank)) {
+            StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
+			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile].isEmpty)) {
+				ChessPiece killed = StorageBoard.storageBoard[rank-1][file];                
+				System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
+				}
+			StorageBoard.storageBoard[rank-1][file] = this;
+			this.pieceFile = file;
+			this.pieceRank = rank;
+            this.timesMoved++;
+        }
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
