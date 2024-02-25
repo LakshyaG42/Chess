@@ -492,7 +492,7 @@ public class Chess {
 	}
 	/**
 	 * The readInputs method below was implemented by us
-	 */
+	 
 	public static void readInputs() {
 		Scanner inputs = new Scanner(System.in);
 		System.out.print("What's the move!?: "); //asks for input
@@ -500,12 +500,14 @@ public class Chess {
 		Scanner lineScan = new Scanner(line);
 		int count = 0; 
 		String word = lineScan.next();
-        GlobalClass.startpos = word;
+        StorageBoard.startpos = word;
     	if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.endpos = word;} // if there is a second word it will read it
 		if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.thirdword = word;} //if asks for a draw 
 		inputs.close();
         lineScan.close();
 	}
+	*/
+
 	/**
 	 * This method should reset the game, and start from scratch.
 	 */
@@ -771,7 +773,7 @@ public class Chess {
 													
 	
 	for(ReturnPiece piece : chessPieces) {
-		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()-1] = piece;
+		StorageBoard.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()-1] = piece;
 	}
 	
 
