@@ -440,7 +440,7 @@ class Storage {
     return false;
 	}
 
-	public static void pawnPromotion(ChessPiece piece, char promotionChar) {
+	public static void pawnPromotion(ReturnPiece piece, char promotionChar) {
 
 		// last rank and better be a pawn homie
 		if ((piece instanceof Pawn) && ((piece.pieceRank == 1 && piece.pieceType == PieceType.BP) ||
@@ -470,7 +470,6 @@ class Storage {
 			piece.pieceType = newType;
 		}
 	}
-	
 	
 	}
 	
