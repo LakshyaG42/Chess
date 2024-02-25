@@ -565,9 +565,6 @@ public class Chess {
 		}
 
 
-
-
-
 		if(moves.length > 2) { //Third can either be pawn promotion or draw?
 			third = moves[2];
 			if(third == "draw?") {
