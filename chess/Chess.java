@@ -163,7 +163,7 @@ class Storage {
 					//pawn nothing
 					//knight nothing
 					//rook
-					if(attacker.pieceType == PieceType.WR) {
+					if(attacker.pieceType == PieceType.BR || attacker.pieceType == PieceType.BQ) {
 						if(horizontal == 0 && vertical != 0){	
 							if(vertical > 0) {
 								for (int i = 1; i < vertical; i++) {
@@ -288,7 +288,7 @@ class Storage {
 				int vertical = whitefile.ordinal() - attackFile.ordinal();
 				if(Storage.isWhite(attacker)) {
 					//rook
-					if(attacker.pieceType == PieceType.WR) {
+					if(attacker.pieceType == PieceType.WR || attacker.pieceType == PieceType.WQ) {
 						if(horizontal == 0 && vertical != 0){	
 							if(vertical > 0) {
 								for (int i = 1; i < vertical; i++) {
@@ -325,8 +325,6 @@ class Storage {
 						}
 					}
 					//bishop
-					//queen
-					
 				}
 				
 				//checks if any of the current players pieces can get rid of the attacking player
