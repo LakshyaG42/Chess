@@ -439,7 +439,7 @@ class Storage {
 	}
 
 	public static void pawnPromotion(ChessPiece piece, char promotionChar) {
-		
+
 		// last rank and better be a pawn homie
 		if ((piece instanceof Pawn) && ((piece.pieceRank == 1 && piece.pieceType == PieceType.BP) ||
 										(piece.pieceRank == 8 && piece.pieceType == PieceType.WP))) {
