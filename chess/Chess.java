@@ -130,28 +130,28 @@ class Storage {
 				// first checks if the king can move anywhere
 				ChessPiece king = (ChessPiece)storageBoard[whiterank - 1][whitefile.ordinal() - 1];
 				if(storageBoard[whiterank][whitefile.ordinal() - 1] == null) { //up
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank)) {return true;}
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank)) {return false;}
 				}
 				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1] == null) { //down
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)) {return true;}
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)) {return false;}
 				}
 				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 - 1] == null) { //left
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1)){return true;}
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1)){return false;}
 				}
 				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 + 1] == null) { //right
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1)){return true;}	
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1)){return false;}	
 				}
 				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 + 1] == null) { //topright
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank)){return true;}	
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank)){return false;}	
 				}
 				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 - 1] == null) { //topleft
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank)){return true;}	
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank)){return false;}	
 				}
 				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 + 1] == null) { //bottomright
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1-1)){return true;}	
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1-1)){return false;}	
 				}
 				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 - 1] == null) { //bottomleft
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1-1)){return true;}	
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1-1)){return false;}	
 				}
 				//checks if any of the current players pieces can get rid of the attacking player
 				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
@@ -212,13 +212,17 @@ class Storage {
 							return false;
 						}
 						if(CP.pieceType != PieceType.WK) {
-
+							for (int i = 0; i < attackMoves.size(); i++) {
+								int[] arr = attackMoves.get(i);
+								if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
+									return false;
+								}
+							}
 						}
 						
 					}
 				}
-				
-				
+				return true;
 				//check if any of the current players pieces can get in between 
 
 
