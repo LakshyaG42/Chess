@@ -377,7 +377,7 @@ class Storage {
 	}
 
 	////REVIEW
-	 
+	
 	public static boolean simulateMovetoCheck() {
 
     boolean isInCheckBeforeMove = Storage.isChecked();
@@ -437,7 +437,43 @@ class Storage {
     //uh oh update the checkmate status
     return false;
 	}
-}
+
+	public static void pawnPromotion(ChessPiece piece, char promotionChar) {
+		
+		// last rank and better be a pawn homie
+		if ((piece instanceof Pawn) && ((piece.pieceRank == 1 && piece.pieceType == PieceType.BP) ||
+										(piece.pieceRank == 8 && piece.pieceType == PieceType.WP))) {
+			// promo piecetype
+			PieceType newType = null;
+
+			switch (promotionChar) {
+				case 'q':
+					newType = (piece.pieceType == PieceType.WP) ? PieceType.WQ : PieceType.BQ;
+					break;
+				case 'r':
+					newType = (piece.pieceType == PieceType.WP) ? PieceType.WR : PieceType.BR;
+					break;
+				case 'b':
+					newType = (piece.pieceType == PieceType.WP) ? PieceType.WB : PieceType.BB;
+					break;
+				case 'n':
+					newType = (piece.pieceType == PieceType.WP) ? PieceType.WN : PieceType.BN;
+					break;
+				default:
+					newType = (piece.pieceType == PieceType.WP) ? PieceType.WQ : PieceType.BQ;
+					break;
+			}
+	
+			// promote
+			piece.pieceType = newType;
+		}
+	}
+	
+	
+	}
+	
+
+
 
 
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
