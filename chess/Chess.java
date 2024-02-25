@@ -299,8 +299,6 @@ class Storage {
 						}
 					}
 					//bishop
-					//queen
-					
 				}
 				
 				//checks if any of the current players pieces can get rid of the attacking player
