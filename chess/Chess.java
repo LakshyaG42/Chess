@@ -375,7 +375,9 @@ class Storage {
 		}
 		return false;
 	}
+	public static boolean quickSimulate(PieceFile startFile, int startRank, PieceFile endFile, int endRank) {
 
+	}
 	////REVIEW
 	
 	public static boolean simulateMovetoCheck() {
@@ -952,9 +954,32 @@ public class Chess {
 		the possible moves of the king and see if they also get checked using the same isValid method <-- for the second part
 		we can just use the existing isvalid method
 		*/
-
+		Boolean pawnPromo = false;
+		if(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1].pieceType == PieceType.WP || Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1].pieceType == PieceType.BP) {
+			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1]) && end_rank == 7) {
+				pawnPromo = true;
+			}
+			if(!(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1])) && end_rank == 0) {
+				pawnPromo = true;
+			}
+		}
 		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
-			Storage.simulateMovetoCheck(); // method that will make a copy of the board at current state and try and do move to check if the check is gone
+			if(Storage.quickSimulate(start_file, start_rank, end_file, end_rank)){
+				if(activePiece.isValid(end_file, end_rank)) {
+					activePiece.moveTo(end_file, end_rank);
+					if(Storage.CheckM8()) { //checks if a checkmate is done
+						if(Storage.currPlayer == Player.white) {
+							ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+						} else {
+							ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+						}
+					}//checks if there is currently a check mate
+				} else {
+					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				}
+			} else {
+				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			}// method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
 			if(activePiece.isValid(end_file, end_rank)) {
 				activePiece.moveTo(end_file, end_rank);
@@ -970,19 +995,29 @@ public class Chess {
 			}
 			
 		}
-
+		//if the move doesnt work out then the code below will not run
+		if(ret.message == ReturnPlay.Message.ILLEGAL_MOVE) {
+			return ret;
+		}
 
 		if(moves.length > 2) { //Third can either be pawn promotion or draw?
 			third = moves[2];
 			if(third == "draw?") {
-
+				ret.message = ReturnPlay.Message.DRAW;
+			}
+			if(pawnPromo) {
+				char c = third.charAt(0);
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], c);
+			}
+		} else{
+			if(pawnPromo){
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], 'Q');
 			}
 		}
-
-
+		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
+		return ret;
 	}
 	/**
 	 * The readInputs method below was implemented by us
