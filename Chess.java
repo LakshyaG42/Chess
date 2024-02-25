@@ -151,8 +151,8 @@ class Bishop extends ChessPiece {
 	*/
 	
 		if (Math.abs(horizontal) == Math.abs(vertical)) {
-			if (horizontal > 0 && vertical > 0) {
 
+			if (horizontal > 0 && vertical > 0) {
 				// Top-right diagonal
 				for (int i = 1; i < horizontal; i++) {
 					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
