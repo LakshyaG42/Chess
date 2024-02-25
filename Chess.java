@@ -11,12 +11,6 @@ import java.util.Scanner;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 
-public class StorageBoard {
-    // Static field to contain inputs
-    static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
-
-}
-
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -40,7 +34,11 @@ class ReturnPiece {
 				pieceRank == otherPiece.pieceRank;
 	}
 }
+public class StorageBoard {
+    // Static field to contain inputs
+    static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 
+}
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
@@ -536,7 +534,7 @@ public class Chess {
 	chessPieces.add(BK2);
 	
 	for(ReturnPiece piece : chessPieces) {
-		StorageBoard.storageBoard[piece.pieceRank][piece.PieceFile.ordinal()] = piece;
+		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()] = piece;
 	}
 	
 
