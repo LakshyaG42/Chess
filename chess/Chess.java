@@ -645,8 +645,7 @@ class Queen extends ChessPiece {
 				} else {
 					for (int i = 1; i < Math.abs(vertical); i++) {
 						if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
-							return false;
-						}
+							return false;						}
 					}
 				}
 				return true;
@@ -678,7 +677,6 @@ class Queen extends ChessPiece {
         }
     }
 }
-
 
 
 class Rook extends ChessPiece {
