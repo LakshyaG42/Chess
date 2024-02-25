@@ -325,6 +325,33 @@ class Storage {
 						}
 					}
 					//bishop
+					if (attacker.pieceType == PieceType.WB || attacker.pieceType == PieceType.WQ) {
+
+						int diagonalDistance = Math.abs(attackRank - whiterank);
+						for (int i = 1; i < diagonalDistance; i++) {
+							// Top-right diagonal
+							if (attackRank < whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 + i};
+								attackMoves.add(arr);
+							}
+							// Top-left diagonal
+							else if (attackRank < whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 - i};
+								attackMoves.add(arr);
+							}
+							// Bottom-right diagonal
+							else if (attackRank > whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 + i};
+								attackMoves.add(arr);
+							}
+							// Bottom-left diagonal
+							else if (attackRank > whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 - i};
+								attackMoves.add(arr);
+							}
+						}
+					}
+
 				}
 				
 				//checks if any of the current players pieces can get rid of the attacking player
