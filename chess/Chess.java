@@ -11,7 +11,8 @@ import java.util.Scanner;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
-//IF COLLISSION CHECK DOESNT WORK DO IT DHRUVS WAY
+
+import chess.Chess.Player;
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -35,23 +36,23 @@ class ReturnPiece {
 				pieceRank == otherPiece.pieceRank;
 	}
 }
-class StorageBoard {
+class Storage {
     // Static field to contain inputs
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
-
+	static Player currPlayer = Player.white;
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
-        StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
-        if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
+        Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
+        if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
 			//was set to type chesspiece but we cant initialize for static using subclass silly 
-            ChessPiece killed = (ChessPiece)StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
+            ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()-1];         
 			//toString if shit goes wrong       
 			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
-        StorageBoard.storageBoard[rank-1][file.ordinal()-1] = this;
+        Storage.storageBoard[rank-1][file.ordinal()-1] = this;
         this.pieceFile = file;
 		this.pieceRank = rank;
     }
@@ -81,7 +82,7 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(!(StorageBoard.storageBoard[this.pieceRank-1+1][this.pieceFile.ordinal()-1] == null)) {
+                if(!(Storage.storageBoard[this.pieceRank-1+1][this.pieceFile.ordinal()-1] == null)) {
 					return false;
 				}
 				return true;
@@ -100,7 +101,7 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //negative for black
             int horizontal = file.ordinal()-this.pieceFile.ordinal();
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                if(!(StorageBoard.storageBoard[this.pieceRank-1-1][this.pieceFile.ordinal()-1] == null)) {
+                if(!(Storage.storageBoard[this.pieceRank-1-1][this.pieceFile.ordinal()-1] == null)) {
 					return false;
 				}
 				return true;
@@ -158,7 +159,7 @@ class Bishop extends ChessPiece {
 			if (horizontal > 0 && vertical > 0) {
 				// Top-right diagonal
 				for (int i = 1; i < horizontal; i++) {
-					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
 						return false;
 					}
 				}
@@ -166,7 +167,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal < 0 && vertical > 0) {
 				// Top-left diagonal
 				for (int i = 1; i < Math.abs(horizontal); i++) {
-					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 - i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 - i] != null) {
 						return false;
 					}
 				}
@@ -174,7 +175,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal > 0 && vertical < 0) {
 				// Bottom-right diagonal
 				for (int i = 1; i < horizontal; i++) {
-					if (StorageBoard.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 + i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 + i] != null) {
 						return false;
 					}
 				}
@@ -182,7 +183,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal < 0 && vertical < 0) {
 				// Bottom-left diagonal
 				for (int i = 1; i < Math.abs(horizontal); i++) {
-					if (StorageBoard.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 - i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 - i] != null) {
 						return false;
 					}
 				}
@@ -238,13 +239,13 @@ class Queen extends ChessPiece {
 			if(horizontal == 0 && vertical != 0){
 				if(vertical > 0) {
 					for (int i = 1; i < vertical; i++) {
-						if(!(StorageBoard.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
 							return false;
 						}
 					}
 				} else {
 					for (int i = 1; i < Math.abs(vertical); i++) {
-						if(!(StorageBoard.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
 							return false;
 						}
 					}
@@ -254,13 +255,13 @@ class Queen extends ChessPiece {
 			if(vertical == 0 && horizontal != 0){
 				if(horizontal > 0) {
 					for (int i =1 - 1; i < horizontal; i++) {
-						if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
 							return false;
 						}
 					}
 				} else {
 					for (int i =1 - 1; i < Math.abs(horizontal); i++) {
-						if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
 							return false;
 						}
 					}
@@ -302,13 +303,13 @@ class Rook extends ChessPiece {
 		if(horizontal == 0 && vertical != 0){
 			if(vertical > 0) {
 				for (int i = 1; i < vertical; i++) {
-					if(!(StorageBoard.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
 						return false;
 					}
 				}
 			} else {
 				for (int i = 1; i < Math.abs(vertical); i++) {
-					if(!(StorageBoard.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
 						return false;
 					}
 				}
@@ -318,13 +319,13 @@ class Rook extends ChessPiece {
 		if(vertical == 0 && horizontal != 0){
 			if(horizontal > 0) {
 				for (int i =1 - 1; i < horizontal; i++) {
-					if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
 						return false;
 					}
 				}
 			} else {
 				for (int i =1 - 1; i < Math.abs(horizontal); i++) {
-					if(!(StorageBoard.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
 						return false;
 					}
 				}
@@ -388,19 +389,19 @@ class King extends ChessPiece {
 		if(timesMoved == 0){ //castling
 			if(horizontal > 1) { //right
 				if(this.pieceType == PieceType.WK) {
-					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[0][7];
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][7];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(StorageBoard.storageBoard[0][3+i] != null) {
+							if(Storage.storageBoard[0][3+i] != null) {
 								return false;
 							}
 						}
 					}
 				} else {
-					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[7][7];
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[7][7];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(StorageBoard.storageBoard[7][4+i] != null) {
+							if(Storage.storageBoard[7][4+i] != null) {
 								return false;
 							}
 						}
@@ -409,19 +410,19 @@ class King extends ChessPiece {
 			}
 			if(horizontal < -1) { //left
 				if(this.pieceType == PieceType.WK) {
-					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[0][0];
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][0];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(StorageBoard.storageBoard[0][3-i] != null) {
+							if(Storage.storageBoard[0][3-i] != null) {
 								return false;
 							}
 						}
 					}
 				} else {
-					ChessPiece piece = (ChessPiece)StorageBoard.storageBoard[7][0];
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[7][0];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(StorageBoard.storageBoard[7][4-i] != null) {
+							if(Storage.storageBoard[7][4-i] != null) {
 								return false;
 							}
 						}
@@ -429,7 +430,7 @@ class King extends ChessPiece {
 				}
 			}
 		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
-			for (ReturnPiece[] row : StorageBoard.storageBoard) {
+			for (ReturnPiece[] row : Storage.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
 					ChessPiece CP = (ChessPiece)returnPiece;
 					if(CP.isValid(file, rank)) { //CHECK CONDITION
@@ -444,12 +445,12 @@ class King extends ChessPiece {
 	}
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
-            StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
-			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
-				ChessPiece killed = (ChessPiece)StorageBoard.storageBoard[rank-1][file.ordinal()-1];                
+            Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
+			if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
+				ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()-1];                
 				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
 				}
-			StorageBoard.storageBoard[rank-1][file.ordinal()-1] = this;
+			Storage.storageBoard[rank-1][file.ordinal()-1] = this;
 			this.pieceFile = file;
 			this.pieceRank = rank;
             this.timesMoved++;
@@ -500,9 +501,9 @@ public class Chess {
 		Scanner lineScan = new Scanner(line);
 		int count = 0; 
 		String word = lineScan.next();
-        StorageBoard.startpos = word;
-    	if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.endpos = word;} // if there is a second word it will read it
-		if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.thirdword = word;} //if asks for a draw 
+        Storage.startpos = word;
+    	if(lineScan.hasNext()) {word = lineScan.next(); Storage.endpos = word;} // if there is a second word it will read it
+		if(lineScan.hasNext()) {word = lineScan.next(); Storage.thirdword = word;} //if asks for a draw 
 		inputs.close();
         lineScan.close();
 	}
@@ -811,7 +812,7 @@ public class Chess {
 													
 	
 	for(ReturnPiece piece : chessPieces) {
-		StorageBoard.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()-1] = piece;
+		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()-1] = piece;
 	}
 	
 
