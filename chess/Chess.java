@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
-
+import chess.ReturnPlay.Message;
 import chess.Chess.Player;
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
@@ -40,6 +42,30 @@ class Storage {
     // Static field to contain inputs
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 	static Player currPlayer = Player.white;
+	public static HashMap<Character, PieceFile> fileMap = new HashMap<>();
+    static {
+        fileMap.put('a', PieceFile.a);
+        fileMap.put('b', PieceFile.b);
+        fileMap.put('c', PieceFile.c);
+        fileMap.put('d', PieceFile.d);
+        fileMap.put('e', PieceFile.e);
+        fileMap.put('f', PieceFile.f);
+        fileMap.put('g', PieceFile.g);
+        fileMap.put('h', PieceFile.h);
+    }
+	static ArrayList<PieceType> whites = new ArrayList<>();
+	static {
+		whites.add(PieceType.WP);
+        whites.add(PieceType.WR);
+        whites.add(PieceType.WN);
+        whites.add(PieceType.WB);
+        whites.add(PieceType.WQ);
+        whites.add(PieceType.WK);
+	}
+	
+	public static boolean isWhite(ReturnPiece rp){
+		return whites.contains(rp.pieceType);
+	}
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
@@ -433,9 +459,12 @@ class King extends ChessPiece {
 			for (ReturnPiece[] row : Storage.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
 					ChessPiece CP = (ChessPiece)returnPiece;
-					if(CP.isValid(file, rank)) { //CHECK CONDITION
-						return false;
+					if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
+						if(CP.isValid(file, rank)) { //CHECK CONDITION
+							return false;
+						}
 					}
+
 				}
 			}
 			return true;
@@ -484,9 +513,47 @@ public class Chess {
 	 *         the contents of the returned ReturnPlay instance.
 	 */
 	public static ReturnPlay play(String move) {
-
 		/* FILL IN THIS METHOD */
-		
+		if(move == "resign") {  // Check for resign and return if it is
+			if(Storage.currPlayer == Player.white) {
+				ReturnPlay ret = new ReturnPlay();
+				ret.message = Message.RESIGN_BLACK_WINS;
+				return ret;
+			} else {
+				ReturnPlay ret = new ReturnPlay();
+				ret.message = Message.RESIGN_WHITE_WINS;
+				return ret;
+			}
+		}
+		String[] moves = move.split(" "); //Splitting string into words
+		char[] first = moves[0].toCharArray();
+		char[] second = moves[1].toCharArray();
+		String third;
+		PieceFile start_file = Storage.fileMap.get(first[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
+		int start_rank = (int) first[1] - '0'; //Way to convert char into an integer
+
+		PieceFile end_file = Storage.fileMap.get(second[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
+		int end_rank = (int) second[1] - '0'; //Way to convert char into an integer
+
+		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1]
+		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
+			Storage.simulateMovetoCheck() // method that will make a copy of the board at current state and try and do move to check if the check is gone
+		} else {
+
+		}
+
+
+
+
+
+		if(moves.length > 2) { //Third can either be pawn promotion or draw?
+			third = moves[2];
+			if(third == "draw?") {
+
+			}
+		}
+
+
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
 		return null;
