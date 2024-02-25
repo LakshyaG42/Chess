@@ -236,7 +236,7 @@ class Storage {
 						if(CP.isValid(attackFile, attackRank) && (isWhite(returnPiece))) { //CHECK CONDITION
 							return false;
 						}
-						if(CP.pieceType != PieceType.WK) {
+						if(CP.pieceType != PieceType.WK && (isWhite(CP))) {
 							for (int i = 0; i < attackMoves.size(); i++) {
 								int[] arr = attackMoves.get(i);
 								if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
@@ -334,7 +334,7 @@ class Storage {
 							if(CP.isValid(attackFile, attackRank) && !(isWhite(returnPiece))) { //CHECK CONDITION
 								return false;
 							}
-							if(CP.pieceType != PieceType.BK) {
+							if(CP.pieceType != PieceType.BK && !(isWhite(CP))) {
 								for (int i = 0; i < attackMoves.size(); i++) {
 									int[] arr = attackMoves.get(i);
 									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
@@ -344,7 +344,7 @@ class Storage {
 							}
 					}
 				}
-
+				return true;
 			}
 		}
 		return false;
