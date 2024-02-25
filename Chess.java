@@ -126,6 +126,13 @@ class Pawn extends ChessPiece {
 
 public class Bishop extends ChessPiece {
 
+	public Bishop() {
+		this.pieceType = PieceType.WR;
+        this.pieceFile = PieceFile.a;
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
+
     public Bishop(PieceFile file, int rank, boolean isWhite) {
         super(); 
         this.pieceFile = file;
@@ -153,7 +160,14 @@ public class Bishop extends ChessPiece {
 }
 
 public class Queen extends ChessPiece {
-    
+
+	public Queen() {
+		this.pieceType = PieceType.WR;
+        this.pieceFile = PieceFile.a;
+		this.pieceRank = 0;
+        this.timesMoved = 0;
+    }
+
     public Queen(PieceFile file, int rank, boolean isWhite) {
         super(); 
         this.pieceFile = file;
@@ -185,7 +199,7 @@ public class Queen extends ChessPiece {
 class Rook extends ChessPiece {
 	public Rook() {
 		this.pieceType = PieceType.WR;
-        this.pieceFile = PieceFile(a);
+        this.pieceFile = PieceFile.a;
 		this.pieceRank = 0;
         this.timesMoved = 0;
     }
@@ -216,15 +230,15 @@ class Rook extends ChessPiece {
 
 class Knight extends ChessPiece {
 	public Knight() {
-		this.pieceType = WR;
-        this.pieceFile = PieceFile(a);
+		this.pieceType = PieceType.WK;
+        this.pieceFile = PieceFile.b;
 		this.pieceRank = 0;
         this.timesMoved = 0;
     }
     public Knight(PieceFile file, int rank, boolean isWhite) {
         if(isWhite) {
-			this.PieceType = WR;
-		} else {this.PieceType = BR;}
+			this.pieceType = PieceFile.WK;
+		} else {this.pieceType = PieceFile.BK;}
         this.pieceFile = file;
 		this.pieceRank = rank;
         this.timesMoved = 0;
