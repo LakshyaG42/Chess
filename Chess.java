@@ -45,12 +45,12 @@ class ReturnPiece {
 class ChessPiece extends ReturnPiece {
 	public void moveTo(PieceFile file, int rank) {
         if(this.isValid(file, rank)) {
-            board[pieceRank][pieceFile] = null;
-            if(!(board[pieceRank][pieceFile].isEmpty)) {
-                ChessPiece killed = board[rank][file];
+            StorageBoard.storageBoard[pieceRank][pieceFile] = null;
+            if(!(StorageBoard.storageBoard[pieceRank][pieceFile].isEmpty)) {
+                ChessPiece killed = StorageBoard.storageBoard[rank][file];
                 System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
             }
-            board[rank][file] = this;
+            StorageBoard.storageBoard[rank][file] = this;
             this.pieceFile = file;
 			this.pieceRank = rank;
         }
@@ -82,58 +82,38 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(StorageBoard.storageBoard[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
-                if(board[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if((vertical == 1 && horizontal == 0)) {
-                if(board[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if(vertical == 1 && horizontal == 1) {
-                if(!(board[rank][file].isEmpty)) {
-                    return true;
-                }
+                return true;
             }
             if(vertical == 1 && horizontal == -1) {
-                if(!(board[rank][file].isEmpty)) {
-                    return true;
-                }
+                return true;
             }
             return false;
         } else {
             int vertical = rank - this.pieceRank; //negative for black
             int horizontal = file.ordinal()-this.pieceFile.ordinal();
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                if(board[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if((vertical == -1 && horizontal == 0) && timesMoved == 0) {
-                if(board[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if((vertical == -1 && horizontal == 0)) {
-                if(board[rank][file].isEmpty) {
-                    return true;
-                }
+                return true;
             }
             if(vertical == -1 && horizontal == 1) {
-                if(!(board[rank][file].isEmpty)) {
-                    return true;
-                }
+                return true;
             }
             if(vertical == -1 && horizontal == -1) {
-                if(!(board[rank][file].isEmpty)) {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
