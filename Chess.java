@@ -148,7 +148,7 @@ class Pawn extends ChessPiece {
 public class Bishop extends ChessPiece {
 
     public Bishop(PieceFile file, int rank, boolean isWhite) {
-        super(); // Initialize the superclass (if necessary, based on ChessPiece implementation)
+        super(); 
         this.pieceFile = file;
         this.pieceRank = rank;
         this.pieceType = isWhite ? PieceType.WB : PieceType.BB;
