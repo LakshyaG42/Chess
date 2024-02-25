@@ -45,8 +45,10 @@ class ChessPiece extends ReturnPiece {
 	public void moveTo(PieceFile file, int rank) {
         StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
         if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
-            ChessPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];                
-			System.out.println("CHESSPIECE: " + toString(killed) +  "WAS KILLED by: " + toString(this));
+			//was set to type chesspiece but we cant initialize for static using subclass silly 
+            ReturnPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
+			//toString if shit goes wrong       
+			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
         StorageBoard.storageBoard[rank-1][file.ordinal()-1] = this;
         this.pieceFile = file;
@@ -151,8 +153,8 @@ class Bishop extends ChessPiece {
 	*/
 	
 		if (Math.abs(horizontal) == Math.abs(vertical)) {
-			if (horizontal > 0 && vertical > 0) {
 
+			if (horizontal > 0 && vertical > 0) {
 				// Top-right diagonal
 				for (int i = 1; i < horizontal; i++) {
 					if (StorageBoard.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
@@ -438,9 +440,9 @@ class King extends ChessPiece {
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
             StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
-			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile].isEmpty)) {
-				ChessPiece killed = StorageBoard.storageBoard[rank-1][file];                
-				System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
+			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile] == null)) {
+				ReturnPiece killed = StorageBoard.storageBoard[rank-1][file];                
+				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
 				}
 			StorageBoard.storageBoard[rank-1][file] = this;
 			this.pieceFile = file;
