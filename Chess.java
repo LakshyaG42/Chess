@@ -45,8 +45,10 @@ class ChessPiece extends ReturnPiece {
 	public void moveTo(PieceFile file, int rank) {
         StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
         if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
-            ChessPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];                
-			System.out.println("CHESSPIECE: " + toString(killed) +  "WAS KILLED by: " + toString(this));
+			//was set to type chesspiece but we cant initialize for static using subclass silly 
+            ReturnPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
+			//toString if shit goes wrong       
+			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
         StorageBoard.storageBoard[rank-1][file.ordinal()-1] = this;
         this.pieceFile = file;
