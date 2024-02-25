@@ -144,6 +144,26 @@ class Pawn extends ChessPiece {
     }
 }
 
+public class Bishop extends ChessPiece {
+
+    public Bishop(PieceFile file, int rank, boolean isWhite) {
+        super(); 
+        this.pieceFile = file;
+        this.pieceRank = rank;
+        this.pieceType = isWhite ? PieceType.WB : PieceType.BB;
+    }
+
+    public boolean isValid(PieceFile file, int rank) {
+        int vertical = rank - this.pieceRank;
+        int horizontal = file.ordinal() - this.pieceFile.ordinal();
+        
+        if (Math.abs(vertical) == Math.abs(horizontal)) {
+            return true;
+        }
+        return false;
+    }
+}
+
 class Rook extends ChessPiece {
 	public Rook() {
 		this.pieceType = WR;
