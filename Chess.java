@@ -46,7 +46,7 @@ class ChessPiece extends ReturnPiece {
         StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
         if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
 			//was set to type chesspiece but we cant initialize for static using subclass silly 
-            ReturnPiece killed = StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
+            ChessPiece killed = (ChessPiece)StorageBoard.storageBoard[rank-1][file.ordinal()-1];         
 			//toString if shit goes wrong       
 			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
@@ -441,7 +441,7 @@ class King extends ChessPiece {
         if (this.isValid(file, rank)) {
             StorageBoard.storageBoard[pieceRank-1][pieceFile] = null;
 			if(!(StorageBoard.storageBoard[pieceRank-1][pieceFile] == null)) {
-				ReturnPiece killed = StorageBoard.storageBoard[rank-1][file];                
+				ChessPiece killed = (ChessPiece)StorageBoard.storageBoard[rank-1][file];                
 				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
 				}
 			StorageBoard.storageBoard[rank-1][file] = this;
