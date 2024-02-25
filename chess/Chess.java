@@ -504,6 +504,7 @@ public class Chess {
 														
 	chessPieces.add(BK2);
 
+	
 
 		//readInputs();
 		//check if the move is valid then readinputs again. Make sure to check 
