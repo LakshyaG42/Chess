@@ -325,10 +325,12 @@ class Storage {
 		}
 		return false;
 	}
+
 	////REVIEW
+	 
 	public static boolean simulateMovetoCheck() {
 
-    boolean isInCheckBeforeMove = isChecked(Storage.currPlayer);
+    boolean isInCheckBeforeMove = Storage.isChecked();
     if (!isInCheckBeforeMove) {
         return false;
     }
@@ -363,7 +365,7 @@ class Storage {
                             piece.pieceFile = file;
                             
                             //isChecked? 
-                            boolean isInCheckAfterMove = isChecked(Storage.currPlayer);
+                            boolean isInCheckAfterMove = Storage.isChecked();
                             
                             //put piece back to og pos
                             piece.pieceFile = originalFile;
@@ -373,7 +375,7 @@ class Storage {
                             
                             if (!isInCheckAfterMove) {
                                 //not a checkmate we good 
-                                return false;
+                                return true;
                             }
                         }
                     }
@@ -383,9 +385,11 @@ class Storage {
     }
     
     //uh oh update the checkmate status
-    return true;
+    return false;
 	}
 }
+
+
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
