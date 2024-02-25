@@ -122,7 +122,7 @@ class Pawn extends ChessPiece {
     }
 }
 
-public class Bishop extends ChessPiece {
+class Bishop extends ChessPiece {
 
 	public Bishop() {
 		this.pieceType = PieceType.WR;
@@ -190,16 +190,15 @@ public class Bishop extends ChessPiece {
 		return false; // boo not clear
 	}
 	
-
-    }
-
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
             super.moveTo(file, rank); 
             this.timesMoved++;
         }
     }
-}
+
+    }
+
 
 class Queen extends ChessPiece {
 
