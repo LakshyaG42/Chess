@@ -43,8 +43,9 @@ class Storage {
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 	static Player currPlayer = Player.white;
 	public static HashMap<Character, PieceFile> fileMap = new HashMap<>();
+	public static HashMap<Integer, PieceFile> fileMap2 = new HashMap<>();
     static {
-        fileMap.put('a', PieceFile.a);
+        fileMap.put('a', PieceFile.a); 
         fileMap.put('b', PieceFile.b);
         fileMap.put('c', PieceFile.c);
         fileMap.put('d', PieceFile.d);
@@ -52,7 +53,18 @@ class Storage {
         fileMap.put('f', PieceFile.f);
         fileMap.put('g', PieceFile.g);
         fileMap.put('h', PieceFile.h);
+		fileMap2.put(0, PieceFile.a); //Can use ordinal when converting from PieceFile to int but have to use hashmap when converting from int to piecefile.
+        fileMap2.put(1, PieceFile.b);
+        fileMap2.put(2, PieceFile.c);
+        fileMap2.put(3, PieceFile.d);
+        fileMap2.put(4, PieceFile.e);
+        fileMap2.put(5, PieceFile.f);
+        fileMap2.put(6, PieceFile.g);
+        fileMap2.put(6, PieceFile.h);
     }
+		
+
+
 	static ArrayList<PieceType> whites = new ArrayList<>();
 	static {
 		whites.add(PieceType.WP);
@@ -65,6 +77,40 @@ class Storage {
 	
 	public static boolean isWhite(ReturnPiece rp){
 		return whites.contains(rp.pieceType);
+	}
+	static PieceFile whitefile;
+	static int whiterank;
+	static PieceFile blackfile;
+	static int blackrank;
+	static PieceFile attackFile;
+	static int attackRank;
+	public static boolean isChecked() {
+		for (int i = 0; i < storageBoard.length; i++) {
+			for (int j = 0; j < storageBoard.length; j++) {
+				if(storageBoard[i][j] != null) {
+					ReturnPiece RP = storageBoard[i][j];
+					if(currPlayer == Player.white) {
+						if(RP.pieceType == PieceType.WK) {
+							whitefile = 1 + i;
+							whiterank = 1 + j;
+						}
+					} else {
+
+					}
+				}
+			}
+		}
+		for (ReturnPiece[] row : Storage.storageBoard) {
+			for (ReturnPiece returnPiece : row) {
+				ChessPiece CP = (ChessPiece)returnPiece;
+				if() {
+					if(CP.isValid(file, rank)) { //CHECK CONDITION
+						
+					}
+				}
+
+			}
+		}
 	}
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
