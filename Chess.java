@@ -11,7 +11,7 @@ import java.util.Scanner;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 
-public static class StorageBoard {
+public class StorageBoard {
     // Static field to contain inputs
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 
