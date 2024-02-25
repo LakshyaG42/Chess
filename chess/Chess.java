@@ -700,7 +700,7 @@ public class Chess {
 	//White Knight 1
 	ReturnPiece WK1 = new Knight(); 
 
-	WK1.pieceType = PieceType.WK; 
+	WK1.pieceType = PieceType.WN; 
 	WK1.pieceFile = PieceFile.b; 
 	WK1.pieceRank = 1;
 														
@@ -709,7 +709,7 @@ public class Chess {
 	//White Knight 2
 	ReturnPiece WK2 = new Knight(); 
 
-	WK2.pieceType = PieceType.WK; 
+	WK2.pieceType = PieceType.WN; 
 	WK2.pieceFile = PieceFile.g; 
 	WK2.pieceRank = 1;
 														
@@ -718,7 +718,7 @@ public class Chess {
 	//Black Knight 1
 	ReturnPiece BK1 = new Knight(); 
 
-	BK1.pieceType = PieceType.BK; 
+	BK1.pieceType = PieceType.BN; 
 	BK1.pieceFile = PieceFile.b; 
 	BK1.pieceRank = 8;
 														
@@ -726,7 +726,7 @@ public class Chess {
 	//Black Knight 2
 	ReturnPiece BK2 = new Knight(); 
 
-	BK2.pieceType = PieceType.BK; 
+	BK2.pieceType = PieceType.BN; 
 	BK2.pieceFile = PieceFile.g; 
 	BK2.pieceRank = 8;
 
@@ -735,38 +735,76 @@ public class Chess {
 	//Black Bishop 1
 	ReturnPiece BB1 = new Bishop(); 
 
-	BK1.pieceType = PieceType.BB; 
-	BK1.pieceFile = PieceFile.c; 		
-	BK1.pieceRank = 8;
+	BB1.pieceType = PieceType.BB; 
+	BB1.pieceFile = PieceFile.c; 		
+	BB1.pieceRank = 8;
 															
 	chessPieces.add(BB1);
 
 	//Black Bishop 2
 	ReturnPiece BB2 = new Bishop(); 
 	
-	BK2.pieceType = PieceType.BB; 
-	BK2.pieceFile = PieceFile.f; 
-	BK2.pieceRank = 8;
+	BB2.pieceType = PieceType.BB; 
+	BB2.pieceFile = PieceFile.f; 
+	BB2.pieceRank = 8;
 
 	chessPieces.add(BB2);
 
 	//White Bishop 1
 	ReturnPiece WB1 = new Bishop(); 
 
-	BK1.pieceType = PieceType.WB; 
-	BK1.pieceFile = PieceFile.c; 		
-	BK1.pieceRank = 1;
+	WB1.pieceType = PieceType.WB; 
+	WB1.pieceFile = PieceFile.c; 		
+	WB1.pieceRank = 1;
 															
-	chessPieces.add(BB1);
+	chessPieces.add(WB1);
 
 	//White Bishop 2
 	ReturnPiece WB2 = new Bishop(); 
 	
-	BK2.pieceType = PieceType.WB; 
-	BK2.pieceFile = PieceFile.f; 
-	BK2.pieceRank = 1;
+	WB2.pieceType = PieceType.WB; 
+	WB2.pieceFile = PieceFile.f; 
+	WB2.pieceRank = 1;
 
-	chessPieces.add(BB2);
+	chessPieces.add(WB2);
+
+	//White Queen
+	ReturnPiece WQX = new Queen(); 
+
+	WQX.pieceType = PieceType.WQ; 
+	WQX.pieceFile = PieceFile.e; 		
+	WQX.pieceRank = 1;
+															
+	chessPieces.add(WQX);
+
+	//Black Queen
+	ReturnPiece BQX = new Queen(); 
+
+	BQX.pieceType = PieceType.BQ; 
+	BQX.pieceFile = PieceFile.d; 		
+	BQX.pieceRank = 8;
+															
+	chessPieces.add(BQX);
+
+	//Black King
+	ReturnPiece BKX = new King(); 
+
+	BKX.pieceType = PieceType.BK; 
+	BKX.pieceFile = PieceFile.e; 		
+	BKX.pieceRank = 8;
+															
+	chessPieces.add(WQX);
+
+	//Black King
+	ReturnPiece WKX = new King(); 
+
+	WKX.pieceType = PieceType.WK; 
+	WKX.pieceFile = PieceFile.d; 		
+	WKX.pieceRank = 1;
+															
+	chessPieces.add(WKX);
+
+	
 	
 													
 	
