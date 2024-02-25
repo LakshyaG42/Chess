@@ -11,10 +11,11 @@ import java.util.Scanner;
 import chess.ReturnPiece.PieceFile;
 import chess.ReturnPiece.PieceType;
 
-public static class StorageBoard {
+public class GlobalClass {
     // Static field to contain inputs
-    static ReturnPiece[][] storageBoard; 
-
+    public static string startpos;
+	public static string endpos;
+	public static string thirdword;
 }
 
 class ReturnPiece {
@@ -45,12 +46,12 @@ class ReturnPiece {
 class ChessPiece extends ReturnPiece {
 	public void moveTo(PieceFile file, int rank) {
         if(this.isValid(file, rank)) {
-            StorageBoard.storageBoard[pieceRank][pieceFile] = null;
-            if(!(StorageBoard.storageBoard[pieceRank][pieceFile].isEmpty)) {
-                ChessPiece killed = StorageBoard.storageBoard[rank][file];
+            board[pieceRank][pieceFile] = null;
+            if(!(board[pieceRank][pieceFile].isEmpty)) {
+                ChessPiece killed = board[rank][file];
                 System.out.println("CHESSPIECE " + toString(killed) +  "WAS KILLED by: " + toString(this));
             }
-            StorageBoard.storageBoard[rank][file] = this;
+            board[rank][file] = this;
             this.pieceFile = file;
 			this.pieceRank = rank;
         }
@@ -82,38 +83,58 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if((vertical == 1 && horizontal == 0) && timesMoved == 0) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if((vertical == 1 && horizontal == 0)) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if(vertical == 1 && horizontal == 1) {
-                return true;
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
             }
             if(vertical == 1 && horizontal == -1) {
-                return true;
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
             }
             return false;
         } else {
             int vertical = rank - this.pieceRank; //negative for black
             int horizontal = file.ordinal()-this.pieceFile.ordinal();
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if((vertical == -1 && horizontal == 0) && timesMoved == 0) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if((vertical == -1 && horizontal == 0)) {
-                return true;
+                if(board[rank][file].isEmpty) {
+                    return true;
+                }
             }
             if(vertical == -1 && horizontal == 1) {
-                return true;
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
             }
             if(vertical == -1 && horizontal == -1) {
-                return true;
+                if(!(board[rank][file].isEmpty)) {
+                    return true;
+                }
             }
             return false;
         }
