@@ -378,13 +378,15 @@ class Storage {
 	public static boolean quickSimulate(PieceFile startFile, int startRank, PieceFile endFile, int endRank) {
 
 	}
+
+
 	////REVIEW
 	
 	public static boolean simulateMovetoCheck() {
 
     boolean isInCheckBeforeMove = Storage.isChecked();
     if (!isInCheckBeforeMove) {
-        return false;
+        return true;
     }
 
     for (int i = 0; i < Storage.storageBoard.length; i++) {
@@ -472,10 +474,6 @@ class Storage {
 	}
 	
 	}
-	
-
-
-
 
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
 class ChessPiece extends ReturnPiece {
@@ -1186,7 +1184,7 @@ public class Chess {
 	ReturnPiece BP8 = new Pawn(); 
 
 	BP8.pieceType = PieceType.BP; 
-	BP8.pieceFile = PieceFile.h; 
+	BP8.pieceFile = PieceFile.h; 	
 	BP8.pieceRank = 7;
 														
 	chessPieces.add(BP8);
