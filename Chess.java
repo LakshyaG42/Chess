@@ -222,8 +222,6 @@ class Queen extends ChessPiece {
 				return true;
 			}
 		}
-
-        return isDiagonalMove || isStraightMove;
     }
 
     public void moveTo(PieceFile file, int rank) {
