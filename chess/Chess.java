@@ -13,9 +13,9 @@ import chess.ReturnPiece.PieceType;
 
 public class GlobalClass {
     // Static field to contain inputs
-    public static String startpos;
-	public static String endpos;
-	public static String thirdword;
+    public static string startpos;
+	public static string endpos;
+	public static string thirdword;
 }
 
 class ReturnPiece {
@@ -162,25 +162,6 @@ public class Bishop extends ChessPiece {
             return true;
         }
         return false;
-    }
-}
-
-public class Queen extends ChessPiece {
-	public Queen(PieceFile file, int rank, boolean isWhite) { 
-		super(); 
-		this.pieceFile = file; 
-		this.pieceRank = rank; 
-		this.pieceType = isWhite ? PieceType.WQ : PieceType.BQ; 
-	}
-
-    public boolean isValid(PieceFile file, int rank) {
-        int fileDiff = Math.abs(file.ordinal() - this.pieceFile.ordinal());
-        int rankDiff = Math.abs(rank - this.pieceRank);
-        
-        boolean straightMove = file == this.pieceFile || rank == this.pieceRank;
-        boolean diagonalMove = fileDiff == rankDiff;
-        
-        return straightMove || diagonalMove;
     }
 }
 
