@@ -522,7 +522,7 @@ public class Chess {
 	chessPieces.add(BK2);
 	
 	for(ReturnPiece piece : chessPieces) {
-		StorageBoard.storageBoard[piece.pieceRank][piece.PieceFile.ordinal()] = piece;
+		StorageBoard.storageBoard[piece.pieceRank - 1][piece.PieceFile.ordinal()] = piece;
 	}
 	
 
