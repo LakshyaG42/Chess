@@ -492,15 +492,15 @@ public class Chess {
 	public static void readInputs() {
 		Scanner inputs = new Scanner(System.in);
 		System.out.print("What's the move!?: "); //asks for input
-		String line = scanner.nextLine();
+		String line = inputs.nextLine();
 		Scanner lineScan = new Scanner(line);
 		int count = 0; 
-		String word = lineScanner.next();
+		String word = lineScan.next();
         GlobalClass.startpos = word;
-    	if(lineScanner.hasNext()) {word = lineScanner.next(); GlobalClass.endpos = word;} // if there is a second word it will read it
-		if(lineScanner.hasNext()) {word = lineScanner.next(); GlobalClass.thirdword = word;} //if asks for a draw 
-		scanner.close();
-        lineScanner.close();
+    	if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.endpos = word;} // if there is a second word it will read it
+		if(lineScan.hasNext()) {word = lineScan.next(); StorageBoard.thirdword = word;} //if asks for a draw 
+		inputs.close();
+        lineScan.close();
 	}
 	/**
 	 * This method should reset the game, and start from scratch.
