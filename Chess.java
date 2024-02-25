@@ -387,7 +387,7 @@ class King extends ChessPiece {
 		if(timesMoved == 0){ //castling
 			if(horizontal > 1) { //right
 				if(this.pieceType == PieceType.WK) {
-					if(StorageBoard.storageBoard[0][7].timesMoved == 0) {
+					if((ChessPiece)StorageBoard.storageBoard[0][7].timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[0][3+i] != null) {
 								return false;
@@ -395,7 +395,7 @@ class King extends ChessPiece {
 						}
 					}
 				} else {
-					if(StorageBoard.storageBoard[7][7].timesMoved == 0) {
+					if((ChessPiece)StorageBoard.storageBoard[7][7].timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[7][4+i] != null) {
 								return false;
@@ -406,7 +406,7 @@ class King extends ChessPiece {
 			}
 			if(horizontal < -1) { //left
 				if(this.pieceType == PieceType.WK) {
-					if(StorageBoard.storageBoard[0][0].timesMoved == 0) {
+					if((ChessPiece)StorageBoard.storageBoard[0][0].timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[0][3-i] != null) {
 								return false;
@@ -414,7 +414,7 @@ class King extends ChessPiece {
 						}
 					}
 				} else {
-					if(StorageBoard.storageBoard[7][0].timesMoved == 0) {
+					if((ChessPiece)StorageBoard.storageBoard[7][0].timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
 							if(StorageBoard.storageBoard[7][4-i] != null) {
 								return false;
