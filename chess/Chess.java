@@ -60,7 +60,7 @@ class Storage {
         fileMap2.put(4, PieceFile.e);
         fileMap2.put(5, PieceFile.f);
         fileMap2.put(6, PieceFile.g);
-        fileMap2.put(6, PieceFile.h);
+        fileMap2.put(7, PieceFile.h);
     }
 		
 
@@ -91,11 +91,12 @@ class Storage {
 					ReturnPiece RP = storageBoard[i][j];
 					if(currPlayer == Player.white) {
 						if(RP.pieceType == PieceType.WK) {
-							whitefile = 1 + i;
+							whitefile = fileMap2.get(i);
 							whiterank = 1 + j;
 						}
 					} else {
-
+						blackfile = fileMap2.get(i);
+						blackrank = 1 + j;
 					}
 				}
 			}
@@ -103,14 +104,18 @@ class Storage {
 		for (ReturnPiece[] row : Storage.storageBoard) {
 			for (ReturnPiece returnPiece : row) {
 				ChessPiece CP = (ChessPiece)returnPiece;
-				if() {
-					if(CP.isValid(file, rank)) { //CHECK CONDITION
-						
+				if(currPlayer == Player.white) {
+					if(CP.isValid(whitefile, whiterank)) { //CHECK CONDITION
+						return true;
+					}
+				} else {
+					if(CP.isValid(blackfile, blackrank)) { //CHECK CONDITION
+						return true;
 					}
 				}
-
 			}
 		}
+		return false;
 	}
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
