@@ -111,6 +111,9 @@ class Storage {
 		}
 		for (ReturnPiece[] row : Storage.storageBoard) {
 			for (ReturnPiece returnPiece : row) {
+				if (returnPiece == null) {
+					continue;
+				}
 				ChessPiece CP = (ChessPiece)returnPiece;
 				if(currPlayer == Player.white) {
 					if(CP.isValid(whitefile, whiterank) && !(isWhite(returnPiece))) { //CHECK CONDITION
@@ -1402,7 +1405,7 @@ public class Chess {
 															
 	chessPieces.add(WQX);
 
-	//Black King
+	//White King
 	ReturnPiece WKX = new King(); 
 
 	WKX.pieceType = PieceType.WK; 
