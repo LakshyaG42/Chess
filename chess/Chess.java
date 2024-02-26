@@ -957,8 +957,8 @@ public class Chess {
 			}
 		}
 		String[] moves = move.split(" "); //Splitting string into words
-		char[] first = moves[0].toCharArray();
-		char[] second = moves[1].toCharArray();
+		char[] first = moves[0].strip().toCharArray();
+		char[] second = moves[1].strip().toCharArray();
 		String third;
 		PieceFile start_file = Storage.fileMap.get(first[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
 		int start_rank = (int) first[1] - '0'; //Way to convert char into an integer
