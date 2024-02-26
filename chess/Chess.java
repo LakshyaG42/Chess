@@ -1253,6 +1253,7 @@ public class Chess {
 
 		//setBoard();
 		//Hold peices
+	Storage.currPlayer = Player.white;
 	Storage.chessPiecesAL.clear();
 	for (int i = 0; i < Storage.storageBoard.length; i++) {
         for (int j = 0; j < Storage.storageBoard.length; j++) {
