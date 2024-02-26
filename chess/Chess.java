@@ -1428,9 +1428,9 @@ public class Chess {
 	BKX.pieceFile = PieceFile.e; 		
 	BKX.pieceRank = 8;
 															
-	Storage.chessPiecesAL.add(WQX);
+	Storage.chessPiecesAL.add(BKX);
 
-	//Black King
+	//White King
 	ReturnPiece WKX = new King(); 
 
 	WKX.pieceType = PieceType.WK; 
