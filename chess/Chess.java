@@ -1397,7 +1397,7 @@ public class Chess {
 													
 	
 	for(ReturnPiece piece : chessPieces) {
-		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()-1] = piece;
+		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()] = piece;
 	}
 	
 
