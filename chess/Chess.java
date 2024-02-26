@@ -267,21 +267,26 @@ class Storage {
 				} 
 				for (ReturnPiece[] row : Storage.storageBoard) {
 					for (ReturnPiece returnPiece : row) {
-						ChessPiece CP = (ChessPiece)returnPiece;
-						if(CP.isValid(attackFile, attackRank) && (isWhite(returnPiece))) { //CHECK CONDITION
-							checkmated = false;
-							break;
-						}
-						if(CP.pieceType != PieceType.WK && (isWhite(CP))) {
-							for (int i = 0; i < attackMoves.size(); i++) {
-								int[] arr = attackMoves.get(i);
-								if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
-									checkmated = false;
-
+						if(returnPiece != null) {
+							ChessPiece CP = (ChessPiece)returnPiece;
+							if(CP.isValid(attackFile, attackRank) && (isWhite(returnPiece))) { //CHECK CONDITION
+								checkmated = false;
+							}
+							if(checkmated == false) {
+								break;
+							}
+							if(CP.pieceType != PieceType.WK && (isWhite(CP))) {
+								for (int i = 0; i < attackMoves.size(); i++) {
+									int[] arr = attackMoves.get(i);
+									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
+										checkmated = false;
+									}
+									if(checkmated == false) {
+										break;
+									}
 								}
 							}
 						}
-						
 					}
 				}
 				return checkmated;
