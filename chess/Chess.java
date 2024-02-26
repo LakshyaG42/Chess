@@ -1149,10 +1149,10 @@ public class Chess {
 						}
 						if(Storage.CheckM8()) { //checks if a checkmate is done
 							if(Storage.currPlayer == Player.white) {
-								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
 								ret.piecesOnBoard = Storage.chessPiecesAL;
 							} else {
-								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
 								ret.piecesOnBoard = Storage.chessPiecesAL;
 							}
 
