@@ -553,28 +553,28 @@ class Storage {
 		if ((piece instanceof Pawn) && ((piece.pieceRank == 1 && piece.pieceType == PieceType.BP) ||
 										(piece.pieceRank == 8 && piece.pieceType == PieceType.WP))) {
 			// promo piecetype
-			PieceType newType = null;
-
+			ChessPiece hehe = (ChessPiece)piece; 
+			int placeRank = piece.pieceRank;
+			PieceFile placeFile = piece.pieceFile;
+			int iLikeToMoveItMoveIt = hehe.timesMoved;
+			boolean rights = isWhite(hehe);
 			switch (promotionChar) {
-				case 'q':
-					newType = (piece.pieceType == PieceType.WP) ? PieceType.WQ : PieceType.BQ;
+				case 'Q':
+					piece = new Queen(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
-				case 'r':
-					newType = (piece.pieceType == PieceType.WP) ? PieceType.WR : PieceType.BR;
+				case 'R':
+					piece = new Rook(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
-				case 'b':
-					newType = (piece.pieceType == PieceType.WP) ? PieceType.WB : PieceType.BB;
+				case 'B':
+					piece = new Bishop(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
-				case 'n':
-					newType = (piece.pieceType == PieceType.WP) ? PieceType.WN : PieceType.BN;
+				case 'N':
+					piece = new Knight(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
 				default:
-					newType = (piece.pieceType == PieceType.WP) ? PieceType.WQ : PieceType.BQ;
+					piece = new Queen(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
 			}
-	
-			// promote
-			piece.pieceType = newType;
 		}
 	}
 	
@@ -590,7 +590,7 @@ class ChessPiece extends ReturnPiece {
             ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];    
 			Storage.chessPiecesAL.remove(Storage.storageBoard[rank-1][file.ordinal()]);     
 			//toString if shit goes wrong       
-			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
+			System.out.println("CHESSPIECE: " + killed +  " WAS taken by: " + this);
             }
         Storage.storageBoard[rank-1][file.ordinal()] = this;
         this.pieceFile = file;
@@ -609,13 +609,14 @@ class Pawn extends ChessPiece {
 		this.pieceRank = 0;
         this.timesMoved = 0;
     }
-    public Pawn(PieceFile file, int rank, boolean isWhite) {
+    public Pawn(PieceFile file, int rank, boolean isWhite, int timesMoved) {
+
         if(isWhite) {
 			this.pieceType = PieceType.WP;
 		} else {this.pieceType = PieceType.BP;}
         this.pieceFile = file;
 		this.pieceRank = rank;
-        this.timesMoved = 0;
+        this.timesMoved = timesMoved;
     }
     public boolean isValid(PieceFile file, int rank) {
         //attempt 2 will calculate the difference in the moves and if the algo is right it will be valid
@@ -686,12 +687,12 @@ class Bishop extends ChessPiece {
         this.timesMoved = 0;
     }
 
-    public Bishop(PieceFile file, int rank, boolean isWhite) {
+    public Bishop(PieceFile file, int rank, boolean isWhite, int timesMoved) {
         super(); 
         this.pieceFile = file;
         this.pieceRank = rank;
         this.pieceType = isWhite ? PieceType.WB : PieceType.BB;
-		this.timesMoved = 0; 
+		this.timesMoved = timesMoved; 
     }
 
     public boolean isValid(PieceFile file, int rank) {
@@ -764,12 +765,12 @@ class Queen extends ChessPiece {
         this.timesMoved = 0;
     }
 
-    public Queen(PieceFile file, int rank, boolean isWhite) {
+    public Queen(PieceFile file, int rank, boolean isWhite, int timesMoved) {
         super(); 
         this.pieceFile = file;
         this.pieceRank = rank;
         this.pieceType = isWhite ? PieceType.WQ : PieceType.BQ;
-        this.timesMoved = 0; 
+        this.timesMoved = timesMoved; 
     }
 
     public boolean isValid(PieceFile file, int rank) {
@@ -872,13 +873,13 @@ class Rook extends ChessPiece {
 		this.pieceRank = 0;
         this.timesMoved = 0;
     }
-    public Rook(PieceFile file, int rank, boolean isWhite) {
+    public Rook(PieceFile file, int rank, boolean isWhite, int timesMoved) {
         if(isWhite) {
 			this.pieceType = PieceType.WR;
 		} else {this.pieceType = PieceType.BR;}
         this.pieceFile = file;
 		this.pieceRank = rank;
-        this.timesMoved = 0;
+        this.timesMoved = timesMoved;
     }
 	public boolean isValid(PieceFile file, int rank) {
 		int vertical = rank - this.pieceRank; 
@@ -927,18 +928,18 @@ class Rook extends ChessPiece {
 
 class Knight extends ChessPiece {
 	public Knight() {
-		this.pieceType = PieceType.WK;
+		this.pieceType = PieceType.WN;
         this.pieceFile = PieceFile.b;
 		this.pieceRank = 0;
         this.timesMoved = 0;
     }
-    public Knight(PieceFile file, int rank, boolean isWhite) {
+    public Knight(PieceFile file, int rank, boolean isWhite, int timesMoved) {
         if(isWhite) {
-			this.pieceType = PieceType.WK;
-		} else {this.pieceType = PieceType.BK;}
+			this.pieceType = PieceType.WN;
+		} else {this.pieceType = PieceType.BN;}
         this.pieceFile = file;
 		this.pieceRank = rank;
-        this.timesMoved = 0;
+        this.timesMoved = timesMoved;
     }
 	public boolean isValid(PieceFile file, int rank) {
 		int vertical = rank - this.pieceRank; 
