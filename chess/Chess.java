@@ -413,11 +413,11 @@ class Storage {
 				if(!isChecked()) {
 					p.moveTo(startFile, startRank);
 					p.timesMoved = ogTimesMoved;
-					return true;
+					return false;
 				} else { 
 					p.moveTo(startFile, startRank);
 					p.timesMoved = ogTimesMoved;
-					return false;
+					return true;
 				}
 		}
 		return true;
