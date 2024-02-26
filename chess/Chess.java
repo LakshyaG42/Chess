@@ -966,7 +966,7 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		/* FILL IN THIS METHOD */
 		ReturnPlay ret = new ReturnPlay();
-		if(move == "resign") {  // Check for resign and return if it is
+		if(move.equals("resign")) {  // Check for resign and return if it is
 			if(Storage.currPlayer == Player.white) {
 				ret.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
 				return ret;
@@ -1413,11 +1413,9 @@ public class Chess {
 	WKX.pieceRank = 1;
 															
 	chessPieces.add(WKX);
-
-	
 	
 													
-	
+	System.out.println(chessPieces);
 	for(ReturnPiece piece : chessPieces) {
 		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()] = piece;
 	}
