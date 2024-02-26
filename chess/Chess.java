@@ -1403,7 +1403,7 @@ public class Chess {
 	BKX.pieceFile = PieceFile.e; 		
 	BKX.pieceRank = 8;
 															
-	chessPieces.add(BQX);
+	chessPieces.add(BKX);
 
 	//White King
 	ReturnPiece WKX = new King(); 
