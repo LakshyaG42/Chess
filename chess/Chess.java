@@ -86,10 +86,10 @@ class Storage {
 	public static boolean isWhite(ReturnPiece rp){
 		return whites.contains(rp.pieceType);
 	}
-	static PieceFile whitefile;
-	static int whiterank;
-	static PieceFile blackfile;
-	static int blackrank;
+	static PieceFile whitefile = PieceFile.d;
+	static int whiterank = 1;
+	static PieceFile blackfile = PieceFile.e;
+	static int blackrank = 8;
 	static PieceFile attackFile;
 	static int attackRank;
 
@@ -99,33 +99,31 @@ class Storage {
 			for (int j = 0; j < storageBoard.length; j++) {
 				if(storageBoard[i][j] != null) {
 					ReturnPiece RP = storageBoard[i][j];
-					if(currPlayer == Player.white) {
-						if(RP.pieceType == PieceType.WK) {
-							whitefile = fileMap2.get(i);
-							whiterank = 1 + j;
-						}
-					} else {
-						if(RP.pieceType == PieceType.BK) {
-							blackfile = fileMap2.get(i);
-							blackrank = 1 + j;
-						}
-						
+					if(RP.pieceType.ordinal() == PieceType.WK.ordinal()) {
+						whitefile = fileMap2.get(j);
+						whiterank = 1 + i;
 					}
+					if(RP.pieceType == PieceType.BK) {
+						blackfile = fileMap2.get(j);
+						blackrank = 1 + i;
+					}
+						
 				}
 			}
 		}
+		
 		for (ReturnPiece[] row : Storage.storageBoard) {
 			for (ReturnPiece returnPiece : row) {
 				if (returnPiece != null) {
 					ChessPiece CP = (ChessPiece)returnPiece;
 					if(currPlayer == Player.white) {
-						if(CP.isValid(whitefile, whiterank) && !(isWhite(returnPiece))) { //CHECK CONDITION
+						if(CP.isValid(whitefile, whiterank) && !(isWhite(CP))) { //CHECK CONDITION
 							attackFile = CP.pieceFile;
 							attackRank = CP.pieceRank;
 							result = true;
 						}
 					} else {
-						if(CP.isValid(blackfile, blackrank) && (isWhite(returnPiece))) { //CHECK CONDITION
+						if(CP.isValid(blackfile, blackrank) && (isWhite(CP))) { //CHECK CONDITION
 							attackFile = CP.pieceFile;
 							attackRank = CP.pieceRank;
 							result = true;
@@ -143,6 +141,24 @@ class Storage {
 				// WHITE
 				// first checks if the king can move anywhere
 				ChessPiece king = (ChessPiece)storageBoard[whiterank - 1][whitefile.ordinal()];
+				int[] dr = {1, -1, 0, 0, 1, -1, 1, -1};
+				int[] dc = {0, 0, -1, 1, 1, -1, -1, 1};
+
+				for (int k = 0; k < 8; k++) {
+					int newRow = blackrank + dr[k];
+					int newCol = blackfile.ordinal() + dc[k];
+					
+					// Check if the new position is within the bounds of the board
+					if (newRow >= 0 && newRow < storageBoard.length && newCol >= 0 && newCol < storageBoard[0].length) {
+						if (storageBoard[newRow][newCol] == null) {
+							// If the square is empty, check if the king can move there
+							if (king.isValid(fileMap2.get(newCol), newRow)) {
+								return true;
+							}
+						}
+					}
+				}
+				/* Uselesss LOop
 				if(storageBoard[whiterank][whitefile.ordinal()] == null) { //up
 					if(king.isValid(fileMap2.get(whitefile.ordinal()), whiterank)) {return false;}
 				}
@@ -167,6 +183,7 @@ class Storage {
 				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1] == null) { //bottomleft
 					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)){return false;}	
 				}
+				*/ 
 				//checks if any of the current players pieces can get rid of the attacking player
 				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()];
 				ArrayList<int[]> attackMoves = new ArrayList<>();
@@ -268,6 +285,28 @@ class Storage {
 
 				// BLACK
 				ChessPiece king = (ChessPiece)storageBoard[blackrank - 1][blackfile.ordinal()];
+				// Define the offsets for each direction
+				int[] dr = {1, -1, 0, 0, 1, -1, 1, -1};
+				int[] dc = {0, 0, -1, 1, 1, -1, -1, 1};
+
+				for (int k = 0; k < 8; k++) {
+					int newRow = blackrank + dr[k];
+					int newCol = blackfile.ordinal() + dc[k];
+					
+					// Check if the new position is within the bounds of the board
+					if (newRow >= 0 && newRow < storageBoard.length && newCol >= 0 && newCol < storageBoard[0].length) {
+						if (storageBoard[newRow][newCol] == null) {
+							// If the square is empty, check if the king can move there
+							if (king.isValid(fileMap2.get(newCol), newRow)) {
+								return true;
+							}
+						}
+					}
+				}
+
+
+
+				/* OLD USELESS WILL CAUSE INDEX OUT BOUNDS:
 				if(storageBoard[blackrank][blackfile.ordinal()] == null) { //up
 					if(king.isValid(fileMap2.get(blackfile.ordinal()), blackrank)) {return true;}
 				}
@@ -292,7 +331,7 @@ class Storage {
 				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1] == null) { //bottomleft
 					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank-1-1)){return true;}	
 				}
-
+				*/
 
 				//populate black array:
 				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()];
