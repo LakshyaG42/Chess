@@ -161,7 +161,7 @@ class Storage {
 					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)){return false;}	
 				}
 				//checks if any of the current players pieces can get rid of the attacking player
-				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
+				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()];
 				ArrayList<int[]> attackMoves = new ArrayList<>();
 				int horizontal = whiterank - attackRank;
 				int vertical = whitefile.ordinal() - attackFile.ordinal();
@@ -175,14 +175,14 @@ class Storage {
 								for (int i = 1; i < vertical; i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1 + i;
-									arr[1] = attackFile.ordinal()-1;
+									arr[1] = attackFile.ordinal();
 									attackMoves.add(arr);
 								}
 							} else {
 								for (int i = 1; i < Math.abs(vertical); i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1 - i;
-									arr[1] = attackFile.ordinal()-1;
+									arr[1] = attackFile.ordinal();
 									attackMoves.add(arr);
 								}
 							}
@@ -192,14 +192,14 @@ class Storage {
 								for (int i = 1; i < horizontal; i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1;
-									arr[1] = attackFile.ordinal()-1 + i;
+									arr[1] = attackFile.ordinal() + i;
 									attackMoves.add(arr);
 								}
 							} else {
 								for (int i = 1; i < Math.abs(horizontal); i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1;
-									arr[1] = attackFile.ordinal()-1 - i;
+									arr[1] = attackFile.ordinal() - i;
 									attackMoves.add(arr);
 								}
 							}
@@ -288,7 +288,7 @@ class Storage {
 
 
 				//populate black array:
-				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
+				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()];
 				ArrayList<int[]> attackMoves = new ArrayList<>();
 				int horizontal = whiterank - attackRank;
 				int vertical = whitefile.ordinal() - attackFile.ordinal();
@@ -300,14 +300,14 @@ class Storage {
 								for (int i = 1; i < vertical; i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1 + i;
-									arr[1] = attackFile.ordinal()-1;
+									arr[1] = attackFile.ordinal();
 									attackMoves.add(arr);
 								}
 							} else {
 								for (int i = 1; i < Math.abs(vertical); i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1 - i;
-									arr[1] = attackFile.ordinal()-1;
+									arr[1] = attackFile.ordinal();
 									attackMoves.add(arr);
 								}
 							}
@@ -317,14 +317,14 @@ class Storage {
 								for (int i = 1; i < horizontal; i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1;
-									arr[1] = attackFile.ordinal()-1 + i;
+									arr[1] = attackFile.ordinal() + i;
 									attackMoves.add(arr);
 								}
 							} else {
 								for (int i = 1; i < Math.abs(horizontal); i++) {
 									int[] arr = new int[2];
 									arr[0] = attackRank-1;
-									arr[1] = attackFile.ordinal()-1 - i;
+									arr[1] = attackFile.ordinal() - i;
 									attackMoves.add(arr);
 								}
 							}
@@ -386,11 +386,11 @@ class Storage {
 		if(!Storage.isChecked()) {
 			return true;
 		}
-		ChessPiece p = (ChessPiece) Storage.storageBoard[startRank-1][startFile.ordinal()-1];
+		ChessPiece p = (ChessPiece) Storage.storageBoard[startRank-1][startFile.ordinal()];
 		int ogTimesMoved = p.timesMoved;
 		if(p.isValid(endFile, endRank)){
-			if(storageBoard[endRank-1][endFile.ordinal()-1] != null) {
-				if(storageBoard[endRank-1][endFile.ordinal()-1] == storageBoard[attackRank-1][attackFile.ordinal()-1]) {
+			if(storageBoard[endRank-1][endFile.ordinal()] != null) {
+				if(storageBoard[endRank-1][endFile.ordinal()] == storageBoard[attackRank-1][attackFile.ordinal()]) {
 					return true;
 				}
 			} else {
@@ -505,14 +505,14 @@ class Storage {
 class ChessPiece extends ReturnPiece {
 	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
-        Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
-        if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
+        Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
+        if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] == null)) {
 			//was set to type chesspiece but we cant initialize for static using subclass silly 
-            ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()-1];         
+            ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];         
 			//toString if shit goes wrong       
 			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
-        Storage.storageBoard[rank-1][file.ordinal()-1] = this;
+        Storage.storageBoard[rank-1][file.ordinal()] = this;
         this.pieceFile = file;
 		this.pieceRank = rank;
     }
@@ -542,7 +542,7 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
             if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(!(Storage.storageBoard[this.pieceRank-1+1][this.pieceFile.ordinal()-1] == null)) {
+                if(!(Storage.storageBoard[this.pieceRank-1+1][this.pieceFile.ordinal()] == null)) {
 					return false;
 				}
 				return true;
@@ -561,7 +561,7 @@ class Pawn extends ChessPiece {
             int vertical = rank - this.pieceRank; //negative for black
             int horizontal = file.ordinal()-this.pieceFile.ordinal();
             if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                if(!(Storage.storageBoard[this.pieceRank-1-1][this.pieceFile.ordinal()-1] == null)) {
+                if(!(Storage.storageBoard[this.pieceRank-1-1][this.pieceFile.ordinal()] == null)) {
 					return false;
 				}
 				return true;
@@ -699,13 +699,13 @@ class Queen extends ChessPiece {
 			if(horizontal == 0 && vertical != 0){
 				if(vertical > 0) {
 					for (int i = 1; i < vertical; i++) {
-						if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()] == null)) {
 							return false;
 						}
 					}
 				} else {
 					for (int i = 1; i < Math.abs(vertical); i++) {
-						if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()] == null)) {
 							return false;						}
 					}
 				}
@@ -761,13 +761,13 @@ class Rook extends ChessPiece {
 		if(horizontal == 0 && vertical != 0){
 			if(vertical > 0) {
 				for (int i = 1; i < vertical; i++) {
-					if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()-1] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank-1 + i][this.pieceFile.ordinal()] == null)) {
 						return false;
 					}
 				}
 			} else {
 				for (int i = 1; i < Math.abs(vertical); i++) {
-					if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()-1] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank-1 - i][this.pieceFile.ordinal()] == null)) {
 						return false;
 					}
 				}
@@ -906,12 +906,12 @@ class King extends ChessPiece {
 	}
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
-            Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] = null;
-			if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()-1] == null)) {
-				ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()-1];                
+            Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
+			if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] == null)) {
+				ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];                
 				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
 				}
-			Storage.storageBoard[rank-1][file.ordinal()-1] = this;
+			Storage.storageBoard[rank-1][file.ordinal()] = this;
 			this.pieceFile = file;
 			this.pieceRank = rank;
             this.timesMoved++;
@@ -987,7 +987,7 @@ public class Chess {
 			}
 		}
 		if(Storage.isChecked()) { //yet to be implemented but checks if there is a check and if there is the move must be made so that it either ends with it no longer being threatened to be checked
-			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.black))){
+			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))){
 				if(Storage.quickSimulate(start_file, start_rank, end_file, end_rank)){
 					if(activePiece.isValid(end_file, end_rank)) {
 						activePiece.moveTo(end_file, end_rank);
@@ -1010,7 +1010,7 @@ public class Chess {
 					}
 			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
-			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()-1]) && Storage.currPlayer == Player.black))) {
+			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
 				if(activePiece.isValid(end_file, end_rank)) {
 					activePiece.moveTo(end_file, end_rank);
 					Storage.switchPlayer();
@@ -1042,7 +1042,7 @@ public class Chess {
 			}
 			if(pawnPromo) {
 				char c = third.charAt(0);
-				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], c);
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()], c);
 				if(Storage.isChecked()) {
 					ret.message = ReturnPlay.Message.CHECK;
 				}
@@ -1057,7 +1057,7 @@ public class Chess {
 			}
 		} else{
 			if(pawnPromo){
-				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()-1], 'Q');
+				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()], 'Q');
 				if(Storage.isChecked()) {
 					ret.message = ReturnPlay.Message.CHECK;
 				}
@@ -1397,7 +1397,7 @@ public class Chess {
 													
 	
 	for(ReturnPiece piece : chessPieces) {
-		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()-1] = piece;
+		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()] = piece;
 	}
 	
 
