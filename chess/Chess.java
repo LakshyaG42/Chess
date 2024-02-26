@@ -112,10 +112,10 @@ class Storage {
 			}
 		}
 		
-		for (ReturnPiece[] row : Storage.storageBoard) {
-			for (ReturnPiece returnPiece : row) {
-				if (returnPiece != null) {
-					ChessPiece CP = (ChessPiece)returnPiece;
+		for (int i = 0; i < storageBoard.length; i++) {
+			for (int j = 0; j < storageBoard.length; j++) {
+				if(storageBoard[i][j] != null) {
+					ChessPiece CP = (ChessPiece) storageBoard[i][j];
 					if(currPlayer == Player.white) {
 						if(CP.isValid(whitefile, whiterank) && !(isWhite(CP))) { //CHECK CONDITION
 							attackFile = CP.pieceFile;
@@ -553,6 +553,7 @@ class Storage {
 		if ((piece instanceof Pawn) && ((piece.pieceRank == 1 && piece.pieceType == PieceType.BP) ||
 										(piece.pieceRank == 8 && piece.pieceType == PieceType.WP))) {
 			// promo piecetype
+			int index = chessPiecesAL.indexOf(piece);
 			ChessPiece hehe = (ChessPiece)piece; 
 			int placeRank = piece.pieceRank;
 			PieceFile placeFile = piece.pieceFile;
@@ -575,6 +576,8 @@ class Storage {
 					piece = new Queen(placeFile, placeRank, rights, iLikeToMoveItMoveIt);
 					break;
 			}
+			chessPiecesAL.set(index, piece);
+			storageBoard[placeRank - 1][placeFile.ordinal()] = piece;
 		}
 	}
 	
@@ -705,7 +708,7 @@ class Bishop extends ChessPiece {
         }
         return false;
 	*/
-	
+		
 		if (Math.abs(horizontal) == Math.abs(vertical)) {
 
 			if (horizontal > 0 && vertical > 0) {
@@ -839,13 +842,13 @@ class Queen extends ChessPiece {
 			}
 			if(vertical == 0 && horizontal != 0){
 				if(horizontal > 0) {
-					for (int i =1 - 1; i < horizontal; i++) {
+					for (int i = 1; i < horizontal; i++) {
 						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  + i] == null)) {
 							return false;
 						}
 					}
 				} else {
-					for (int i =1 - 1; i < Math.abs(horizontal); i++) {
+					for (int i = 1; i < Math.abs(horizontal); i++) {
 						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  - i] == null)) {
 							return false;
 						}
@@ -902,13 +905,13 @@ class Rook extends ChessPiece {
 		}
 		if(vertical == 0 && horizontal != 0){
 			if(horizontal > 0) {
-				for (int i =1 - 1; i < horizontal; i++) {
+				for (int i = 1; i < horizontal; i++) {
 					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  + i] == null)) {
 						return false;
 					}
 				}
 			} else {
-				for (int i =1 - 1; i < Math.abs(horizontal); i++) {
+				for (int i = 1; i < Math.abs(horizontal); i++) {
 					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  - i] == null)) {
 						return false;
 					}
@@ -1113,10 +1116,10 @@ public class Chess {
 		*/
 		Boolean pawnPromo = false;
 		if(activePiece.pieceType == PieceType.WP || activePiece.pieceType == PieceType.BP) {
-			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()]) && end_rank == 7) {
+			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()]) && end_rank == 8) {
 				pawnPromo = true;
 			}
-			if(!(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()])) && end_rank == 0) {
+			if(!(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()])) && end_rank == 1) {
 				pawnPromo = true;
 			}
 		}
@@ -1222,6 +1225,7 @@ public class Chess {
 		} else{
 			if(pawnPromo){
 				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()], 'Q');
+
 				if(Storage.isChecked()) {
 					ret.message = ReturnPlay.Message.CHECK;
 					ret.piecesOnBoard = Storage.chessPiecesAL;
