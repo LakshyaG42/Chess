@@ -1048,8 +1048,9 @@ public class Chess {
 			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
+				System.out.println(activePiece);
+				System.out.println(activePiece.timesMoved);
 				if(activePiece.isValid(end_file, end_rank)) {
-					System.out.println("WOW YOU MADE IT TO LINE 1040 WE HAVE TIEMS MOVED: " + activePiece.timesMoved);
 					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
 						activePiece.moveTo(end_file, end_rank);
 						Storage.switchPlayer();
