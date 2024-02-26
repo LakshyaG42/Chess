@@ -136,7 +136,9 @@ class Storage {
 	}
 
 	public static boolean CheckM8() {
+		boolean checkmated = false; 
 		if(isChecked()) {
+			checkmated = true;
 			if(currPlayer == Player.white) {
 				// WHITE
 				// first checks if the king can move anywhere
@@ -152,8 +154,11 @@ class Storage {
 					if (newRow >= 0 && newRow < storageBoard.length && newCol >= 0 && newCol < storageBoard[0].length) {
 						if (storageBoard[newRow][newCol] == null) {
 							// If the square is empty, check if the king can move there
-							if (king.isValid(fileMap2.get(newCol), newRow)) {
-								return true;
+							if (king.isValid(fileMap2.get(newCol), newRow + 1)) {
+								checkmated = false;
+							}
+							if(checkmated == false) {
+								break;
 							}
 						}
 					}
@@ -264,20 +269,22 @@ class Storage {
 					for (ReturnPiece returnPiece : row) {
 						ChessPiece CP = (ChessPiece)returnPiece;
 						if(CP.isValid(attackFile, attackRank) && (isWhite(returnPiece))) { //CHECK CONDITION
-							return false;
+							checkmated = false;
+							break;
 						}
 						if(CP.pieceType != PieceType.WK && (isWhite(CP))) {
 							for (int i = 0; i < attackMoves.size(); i++) {
 								int[] arr = attackMoves.get(i);
 								if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
-									return false;
+									checkmated = false;
+
 								}
 							}
 						}
 						
 					}
 				}
-				return true;
+				return checkmated;
 				//check if any of the current players pieces can get in between 
 
 
@@ -290,22 +297,22 @@ class Storage {
 				int[] dc = {0, 0, -1, 1, 1, -1, -1, 1};
 
 				for (int k = 0; k < 8; k++) {
-					int newRow = blackrank + dr[k];
+					int newRow = blackrank - 1 + dr[k];
 					int newCol = blackfile.ordinal() + dc[k];
 					
 					// Check if the new position is within the bounds of the board
 					if (newRow >= 0 && newRow < storageBoard.length && newCol >= 0 && newCol < storageBoard[0].length) {
 						if (storageBoard[newRow][newCol] == null) {
 							// If the square is empty, check if the king can move there
-							if (king.isValid(fileMap2.get(newCol), newRow)) {
-								return true;
+							if (king.isValid(fileMap2.get(newCol), newRow + 1)) { //HAVE TO DO newRow + 1 because of the 
+								checkmated = false;
+							}
+							if(checkmated == false) {
+								break;
 							}
 						}
 					}
 				}
-
-
-
 				/* OLD USELESS WILL CAUSE INDEX OUT BOUNDS:
 				if(storageBoard[blackrank][blackfile.ordinal()] == null) { //up
 					if(king.isValid(fileMap2.get(blackfile.ordinal()), blackrank)) {return true;}
@@ -412,23 +419,29 @@ class Storage {
 						if(returnPiece != null) {
 							ChessPiece CP = (ChessPiece)returnPiece;
 							if(CP.isValid(attackFile, attackRank) && !(isWhite(returnPiece))) { //CHECK CONDITION
-								return false;
+								checkmated = false;
+							}
+							if(checkmated == false) {
+								break;
 							}
 							if(CP.pieceType != PieceType.BK && !(isWhite(CP))) {
 								for (int i = 0; i < attackMoves.size(); i++) {
 									int[] arr = attackMoves.get(i);
 									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
-										return false;
+										checkmated = false;
+									}
+									if(checkmated == false) {
+										break;
 									}
 								}
 							}
 						}
 					}
 				}
-				return true;
+				return checkmated;
 			}
 		}
-		return false;
+		return checkmated;
 	}
 	public static boolean quickSimulate(PieceFile startFile, int startRank, PieceFile endFile, int endRank) {
 		if(!Storage.isChecked()) {
@@ -448,6 +461,8 @@ class Storage {
 					p.timesMoved = ogTimesMoved;
 					return true;
 				}
+				p.moveTo(startFile, startRank);
+				p.timesMoved = ogTimesMoved;
 			}
 		}
 		return false;
@@ -570,9 +585,10 @@ class ChessPiece extends ReturnPiece {
 	public int timesMoved;
 	public void moveTo(PieceFile file, int rank) {
         Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
-        if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] == null)) {
+        if(!(Storage.storageBoard[rank-1][file.ordinal()] == null)) {
 			//was set to type chesspiece but we cant initialize for static using subclass silly 
-            ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];         
+            ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];    
+			Storage.chessPiecesAL.remove(Storage.storageBoard[rank-1][file.ordinal()]);     
 			//toString if shit goes wrong       
 			System.out.println("CHESSPIECE: " + killed +  "WAS KILLED by: " + this);
             }
