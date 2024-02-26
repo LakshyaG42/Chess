@@ -41,6 +41,7 @@ class ReturnPiece {
 }
 class Storage {
     // Static field to contain inputs
+	static ArrayList<ReturnPiece> chessPiecesAL = new ArrayList<>();
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 	static Player currPlayer = Player.white;
 	public static HashMap<Character, PieceFile> fileMap = new HashMap<>();
@@ -969,9 +970,11 @@ public class Chess {
 		if(move.equals("resign")) {  // Check for resign and return if it is
 			if(Storage.currPlayer == Player.white) {
 				ret.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+				ret.piecesOnBoard = Storage.chessPiecesAL;
 				return ret;
 			} else {
 				ret.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+				ret.piecesOnBoard = Storage.chessPiecesAL;
 				return ret;
 			}
 		}
@@ -1013,19 +1016,24 @@ public class Chess {
 						Storage.switchPlayer();
 						if(Storage.isChecked()) {
 							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
 						}
 						if(Storage.CheckM8()) { //checks if a checkmate is done
 							if(Storage.currPlayer == Player.white) {
 								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
 							} else {
 								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
 							}
 						}//checks if there is currently a check mate
 					} else {
 						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 					} else {
 						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
@@ -1036,12 +1044,15 @@ public class Chess {
 						Storage.switchPlayer();
 						if(Storage.isChecked()) {
 							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
 						}
 						if(Storage.CheckM8()) { //checks if a checkmate is done
 							if(Storage.currPlayer == Player.white) {
 								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
 							} else {
 								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
 							}
 
 						}//checks if there is currently a check mate
@@ -1049,11 +1060,13 @@ public class Chess {
 					
 				} else {
 					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+					ret.piecesOnBoard = Storage.chessPiecesAL;
 				}
 			}
 		}
 		//if the move doesnt work out then the code below will not run
 		if(ret.message == ReturnPlay.Message.ILLEGAL_MOVE) {
+			ret.piecesOnBoard = Storage.chessPiecesAL;
 			return ret;
 		}
 
@@ -1061,18 +1074,22 @@ public class Chess {
 			third = moves[2];
 			if(third == "draw?") {
 				ret.message = ReturnPlay.Message.DRAW;
+				ret.piecesOnBoard = Storage.chessPiecesAL;
 			}
 			if(pawnPromo) {
 				char c = third.charAt(0);
 				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()], c);
 				if(Storage.isChecked()) {
 					ret.message = ReturnPlay.Message.CHECK;
+					ret.piecesOnBoard = Storage.chessPiecesAL;
 				}
 				if(Storage.CheckM8()) { //checks if a checkmate is done
 					if(Storage.currPlayer == Player.white) {
 						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					} else {
 						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 
 				}//checks if there is currently a check mate
@@ -1082,12 +1099,15 @@ public class Chess {
 				Storage.pawnPromotion(Storage.storageBoard[end_rank-1][end_file.ordinal()], 'Q');
 				if(Storage.isChecked()) {
 					ret.message = ReturnPlay.Message.CHECK;
+					ret.piecesOnBoard = Storage.chessPiecesAL;
 				}
 				if(Storage.CheckM8()) { //checks if a checkmate is done
 					if(Storage.currPlayer == Player.white) {
 						ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					} else {
 						ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 
 				}//checks if there is currently a check mate
@@ -1096,6 +1116,7 @@ public class Chess {
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
+		ret.piecesOnBoard = Storage.chessPiecesAL;
 		return ret;
 	}
 	/**
@@ -1124,8 +1145,12 @@ public class Chess {
 
 		//setBoard();
 		//Hold peices
-	ArrayList<ReturnPiece> chessPieces = new ArrayList<>();
-
+	Storage.chessPiecesAL.clear();
+	for (int i = 0; i < Storage.storageBoard.length; i++) {
+        for (int j = 0; j < Storage.storageBoard.length; j++) {
+            Storage.storageBoard[i][j] = null; // or any other appropriate value
+        }
+    }
 	//White Pawn 1 ex (do for all 16 lol): 
 	ReturnPiece WP1 = new Pawn(); 
 
@@ -1133,7 +1158,7 @@ public class Chess {
 	WP1.pieceFile = PieceFile.a; 
 	WP1.pieceRank = 2;
 
-	chessPieces.add(WP1); 
+	Storage.chessPiecesAL.add(WP1); 
 
 	//White Pawn 2
 	ReturnPiece WP2 = new Pawn(); 
@@ -1142,7 +1167,7 @@ public class Chess {
 	WP2.pieceFile = PieceFile.b; 
 	WP2.pieceRank = 2;
 
-	chessPieces.add(WP2); 
+	Storage.chessPiecesAL.add(WP2); 
 
 	//White Pawn 3
 	ReturnPiece WP3 = new Pawn(); 
@@ -1151,7 +1176,7 @@ public class Chess {
 	WP3.pieceFile = PieceFile.c; 
 	WP3.pieceRank = 2;
 
-	chessPieces.add(WP3); 
+	Storage.chessPiecesAL.add(WP3); 
 
 	//White Pawn 4
 	ReturnPiece WP4 = new Pawn(); 
@@ -1160,7 +1185,7 @@ public class Chess {
 	WP4.pieceFile = PieceFile.d; 
 	WP4.pieceRank = 2;
 	
-	chessPieces.add(WP4); 
+	Storage.chessPiecesAL.add(WP4); 
 
 	//White Pawn 5
 	ReturnPiece WP5 = new Pawn(); 
@@ -1169,7 +1194,7 @@ public class Chess {
 	WP5.pieceFile = PieceFile.e; 
 	WP5.pieceRank = 2;
 				
-	chessPieces.add(WP5); 
+	Storage.chessPiecesAL.add(WP5); 
 
 	//White Pawn 6
 	ReturnPiece WP6 = new Pawn(); 
@@ -1178,7 +1203,7 @@ public class Chess {
 	WP6.pieceFile = PieceFile.f; 
 	WP6.pieceRank = 2;
 							
-	chessPieces.add(WP6); 
+	Storage.chessPiecesAL.add(WP6); 
 
 	//White Pawn 7
 	ReturnPiece WP7 = new Pawn(); 
@@ -1187,7 +1212,7 @@ public class Chess {
 	WP7.pieceFile = PieceFile.g; 
 	WP7.pieceRank = 2;
 										
-	chessPieces.add(WP7); 
+	Storage.chessPiecesAL.add(WP7); 
 
 	//White Pawn 7
 	ReturnPiece WP8 = new Pawn(); 
@@ -1196,7 +1221,7 @@ public class Chess {
 	WP8.pieceFile = PieceFile.h; 
 	WP8.pieceRank = 2;
 													
-	chessPieces.add(WP8); 
+	Storage.chessPiecesAL.add(WP8); 
 
 	//Black Pawn 1  
 	ReturnPiece BP1 = new Pawn(); 
@@ -1206,7 +1231,7 @@ public class Chess {
 	BP1.pieceRank = 7;
 ;
 
-	chessPieces.add(BP1); 
+	Storage.chessPiecesAL.add(BP1); 
 
 	//Black Pawn 2
 	ReturnPiece BP2 = new Pawn(); 
@@ -1215,7 +1240,7 @@ public class Chess {
 	BP2.pieceFile = PieceFile.b; 
 	BP2.pieceRank = 7;
 
-	chessPieces.add(BP2); 
+	Storage.chessPiecesAL.add(BP2); 
 
 	//Black Pawn 3
 	ReturnPiece BP3 = new Pawn(); 
@@ -1224,7 +1249,7 @@ public class Chess {
 	BP3.pieceFile = PieceFile.c; 
 	BP3.pieceRank = 7;
 
-	chessPieces.add(BP3); 
+	Storage.chessPiecesAL.add(BP3); 
 
 	//Black Pawn 4
 	ReturnPiece BP4 = new Pawn(); 
@@ -1233,7 +1258,7 @@ public class Chess {
 	BP4.pieceFile = PieceFile.d; 
 	BP4.pieceRank = 7;
 		
-	chessPieces.add(BP4); 
+	Storage.chessPiecesAL.add(BP4); 
 
 	//Black Pawn 5
 	ReturnPiece BP5 = new Pawn(); 
@@ -1242,7 +1267,7 @@ public class Chess {
 	BP5.pieceFile = PieceFile.e; 
 	BP5.pieceRank = 7;
 					
-	chessPieces.add(BP5); 
+	Storage.chessPiecesAL.add(BP5); 
 
 	//Black Pawn 6
 	ReturnPiece BP6 = new Pawn(); 
@@ -1251,7 +1276,7 @@ public class Chess {
 	BP6.pieceFile = PieceFile.f; 
 	BP6.pieceRank = 7;
 								
-	chessPieces.add(BP6); 
+	Storage.chessPiecesAL.add(BP6); 
 
 	//Black Pawn 7
 	ReturnPiece BP7 = new Pawn(); 
@@ -1260,7 +1285,7 @@ public class Chess {
 	BP7.pieceFile = PieceFile.g; 
 	BP7.pieceRank = 7;
 											
-	chessPieces.add(BP7); 
+	Storage.chessPiecesAL.add(BP7); 
 
 	//Black Pawn 8
 	ReturnPiece BP8 = new Pawn(); 
@@ -1269,7 +1294,7 @@ public class Chess {
 	BP8.pieceFile = PieceFile.h; 	
 	BP8.pieceRank = 7;
 														
-	chessPieces.add(BP8);
+	Storage.chessPiecesAL.add(BP8);
 			 
 	//White Rook 1
 	ReturnPiece WR1 = new Rook(); 
@@ -1278,7 +1303,7 @@ public class Chess {
 	WR1.pieceFile = PieceFile.a; 
 	WR1.pieceRank = 1;
 														
-	chessPieces.add(WR1);
+	Storage.chessPiecesAL.add(WR1);
 
 	//White Rook 2
 	ReturnPiece WR2 = new Rook(); 
@@ -1287,7 +1312,7 @@ public class Chess {
 	WR2.pieceFile = PieceFile.h; 
 	WR2.pieceRank = 1;
 														
-	chessPieces.add(WR2);
+	Storage.chessPiecesAL.add(WR2);
 
 	//Black Rook 1
 	ReturnPiece BR1 = new Rook(); 
@@ -1296,7 +1321,7 @@ public class Chess {
 	BR1.pieceFile = PieceFile.a; 
 	BR1.pieceRank = 8;
 														
-	chessPieces.add(BR1);
+	Storage.chessPiecesAL.add(BR1);
 
 	//Black Rook 2
 	ReturnPiece BR2 = new Rook(); 
@@ -1305,7 +1330,7 @@ public class Chess {
 	BR2.pieceFile = PieceFile.h; 
 	BR2.pieceRank = 8;
 														
-	chessPieces.add(BR2);
+	Storage.chessPiecesAL.add(BR2);
 
 	//White Knight 1
 	ReturnPiece WK1 = new Knight(); 
@@ -1314,7 +1339,7 @@ public class Chess {
 	WK1.pieceFile = PieceFile.b; 
 	WK1.pieceRank = 1;
 														
-	chessPieces.add(WK1);
+	Storage.chessPiecesAL.add(WK1);
 
 	//White Knight 2
 	ReturnPiece WK2 = new Knight(); 
@@ -1323,7 +1348,7 @@ public class Chess {
 	WK2.pieceFile = PieceFile.g; 
 	WK2.pieceRank = 1;
 														
-	chessPieces.add(WK2);
+	Storage.chessPiecesAL.add(WK2);
 
 	//Black Knight 1
 	ReturnPiece BK1 = new Knight(); 
@@ -1332,7 +1357,7 @@ public class Chess {
 	BK1.pieceFile = PieceFile.b; 
 	BK1.pieceRank = 8;
 														
-	chessPieces.add(BK1);
+	Storage.chessPiecesAL.add(BK1);
 	//Black Knight 2
 	ReturnPiece BK2 = new Knight(); 
 
@@ -1340,7 +1365,7 @@ public class Chess {
 	BK2.pieceFile = PieceFile.g; 
 	BK2.pieceRank = 8;
 
-	chessPieces.add(BK2);
+	Storage.chessPiecesAL.add(BK2);
 
 	//Black Bishop 1
 	ReturnPiece BB1 = new Bishop(); 
@@ -1349,7 +1374,7 @@ public class Chess {
 	BB1.pieceFile = PieceFile.c; 		
 	BB1.pieceRank = 8;
 															
-	chessPieces.add(BB1);
+	Storage.chessPiecesAL.add(BB1);
 
 	//Black Bishop 2
 	ReturnPiece BB2 = new Bishop(); 
@@ -1358,7 +1383,7 @@ public class Chess {
 	BB2.pieceFile = PieceFile.f; 
 	BB2.pieceRank = 8;
 
-	chessPieces.add(BB2);
+	Storage.chessPiecesAL.add(BB2);
 
 	//White Bishop 1
 	ReturnPiece WB1 = new Bishop(); 
@@ -1367,7 +1392,7 @@ public class Chess {
 	WB1.pieceFile = PieceFile.c; 		
 	WB1.pieceRank = 1;
 															
-	chessPieces.add(WB1);
+	Storage.chessPiecesAL.add(WB1);
 
 	//White Bishop 2
 	ReturnPiece WB2 = new Bishop(); 
@@ -1376,7 +1401,7 @@ public class Chess {
 	WB2.pieceFile = PieceFile.f; 
 	WB2.pieceRank = 1;
 
-	chessPieces.add(WB2);
+	Storage.chessPiecesAL.add(WB2);
 
 	//White Queen
 	ReturnPiece WQX = new Queen(); 
@@ -1385,7 +1410,7 @@ public class Chess {
 	WQX.pieceFile = PieceFile.e; 		
 	WQX.pieceRank = 1;
 															
-	chessPieces.add(WQX);
+	Storage.chessPiecesAL.add(WQX);
 
 	//Black Queen
 	ReturnPiece BQX = new Queen(); 
@@ -1394,7 +1419,7 @@ public class Chess {
 	BQX.pieceFile = PieceFile.d; 		
 	BQX.pieceRank = 8;
 															
-	chessPieces.add(BQX);
+	Storage.chessPiecesAL.add(BQX);
 
 	//Black King
 	ReturnPiece BKX = new King(); 
@@ -1403,7 +1428,7 @@ public class Chess {
 	BKX.pieceFile = PieceFile.e; 		
 	BKX.pieceRank = 8;
 															
-	chessPieces.add(WQX);
+	Storage.chessPiecesAL.add(WQX);
 
 	//Black King
 	ReturnPiece WKX = new King(); 
@@ -1412,11 +1437,11 @@ public class Chess {
 	WKX.pieceFile = PieceFile.d; 		
 	WKX.pieceRank = 1;
 															
-	chessPieces.add(WKX);
+	Storage.chessPiecesAL.add(WKX);
 	
 													
-	System.out.println(chessPieces);
-	for(ReturnPiece piece : chessPieces) {
+	System.out.println(Storage.chessPiecesAL);
+	for(ReturnPiece piece : Storage.chessPiecesAL) {
 		Storage.storageBoard[piece.pieceRank - 1][piece.pieceFile.ordinal()] = piece;
 	}
 	
