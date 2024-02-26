@@ -135,30 +135,30 @@ class Storage {
 			if(currPlayer == Player.white) {
 				// WHITE
 				// first checks if the king can move anywhere
-				ChessPiece king = (ChessPiece)storageBoard[whiterank - 1][whitefile.ordinal() - 1];
-				if(storageBoard[whiterank][whitefile.ordinal() - 1] == null) { //up
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank)) {return false;}
+				ChessPiece king = (ChessPiece)storageBoard[whiterank - 1][whitefile.ordinal()];
+				if(storageBoard[whiterank][whitefile.ordinal()] == null) { //up
+					if(king.isValid(fileMap2.get(whitefile.ordinal()), whiterank)) {return false;}
 				}
-				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1] == null) { //down
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)) {return false;}
+				if(storageBoard[whiterank-1-1][whitefile.ordinal()] == null) { //down
+					if(king.isValid(fileMap2.get(whitefile.ordinal()), whiterank-1-1)) {return false;}
 				}
-				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 - 1] == null) { //left
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1)){return false;}
+				if(storageBoard[whiterank-1][whitefile.ordinal() - 1] == null) { //left
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1)){return false;}
 				}
-				if(storageBoard[whiterank-1][whitefile.ordinal() - 1 + 1] == null) { //right
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1)){return false;}	
+				if(storageBoard[whiterank-1][whitefile.ordinal() + 1] == null) { //right
+					if(king.isValid(fileMap2.get(whitefile.ordinal() + 1), whiterank-1)){return false;}	
 				}
-				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 + 1] == null) { //topright
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank)){return false;}	
+				if(storageBoard[whiterank-1+1][whitefile.ordinal() + 1] == null) { //topright
+					if(king.isValid(fileMap2.get(whitefile.ordinal() + 1), whiterank)){return false;}	
 				}
-				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1 - 1] == null) { //topleft
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank)){return false;}	
+				if(storageBoard[whiterank-1+1][whitefile.ordinal() - 1] == null) { //topleft
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank)){return false;}	
 				}
-				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 + 1] == null) { //bottomright
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 + 1), whiterank-1-1)){return false;}	
+				if(storageBoard[whiterank-1-1][whitefile.ordinal() + 1] == null) { //bottomright
+					if(king.isValid(fileMap2.get(whitefile.ordinal() + 1), whiterank-1-1)){return false;}	
 				}
-				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1 - 1] == null) { //bottomleft
-					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1 - 1), whiterank-1-1)){return false;}	
+				if(storageBoard[whiterank-1-1][whitefile.ordinal() - 1] == null) { //bottomleft
+					if(king.isValid(fileMap2.get(whitefile.ordinal() - 1), whiterank-1-1)){return false;}	
 				}
 				//checks if any of the current players pieces can get rid of the attacking player
 				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()-1];
@@ -212,22 +212,22 @@ class Storage {
 						for (int i = 1; i < diagonalDistance; i++) {
 							// Top-right diagonal
 							if (attackRank < whiterank && attackFile.ordinal() < whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 + i};
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Top-left diagonal
 							else if (attackRank < whiterank && attackFile.ordinal() > whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 - i};
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
 							// Bottom-right diagonal
 							else if (attackRank > whiterank && attackFile.ordinal() < whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 + i};
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Bottom-left diagonal
 							else if (attackRank > whiterank && attackFile.ordinal() > whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 - i};
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
 						}
@@ -260,30 +260,30 @@ class Storage {
 			} else {
 
 				// BLACK
-				ChessPiece king = (ChessPiece)storageBoard[blackrank - 1][blackfile.ordinal() - 1];
-				if(storageBoard[blackrank][blackfile.ordinal() - 1] == null) { //up
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank)) {return true;}
+				ChessPiece king = (ChessPiece)storageBoard[blackrank - 1][blackfile.ordinal()];
+				if(storageBoard[blackrank][blackfile.ordinal()] == null) { //up
+					if(king.isValid(fileMap2.get(blackfile.ordinal()), blackrank)) {return true;}
 				}
-				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1] == null) { //down
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank-1-1)) {return true;}
+				if(storageBoard[blackrank-1-1][blackfile.ordinal()] == null) { //down
+					if(king.isValid(fileMap2.get(blackfile.ordinal()), blackrank-1-1)) {return true;}
 				}
-				if(storageBoard[blackrank-1][blackfile.ordinal() - 1 - 1] == null) { //left
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank-1)){return true;}
+				if(storageBoard[blackrank-1][blackfile.ordinal() - 1] == null) { //left
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank-1)){return true;}
 				}
-				if(storageBoard[blackrank-1][blackfile.ordinal() - 1 + 1] == null) { //right
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank-1)){return true;}	
+				if(storageBoard[blackrank-1][blackfile.ordinal() + 1] == null) { //right
+					if(king.isValid(fileMap2.get(blackfile.ordinal() + 1), blackrank-1)){return true;}	
 				}
-				if(storageBoard[blackrank-1+1][blackfile.ordinal() - 1 + 1] == null) { //topright
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank)){return true;}	
+				if(storageBoard[blackrank-1+1][blackfile.ordinal() + 1] == null) { //topright
+					if(king.isValid(fileMap2.get(blackfile.ordinal() + 1), blackrank)){return true;}	
 				}
-				if(storageBoard[blackrank-1+1][blackfile.ordinal() - 1 - 1] == null) { //topleft
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank)){return true;}	
+				if(storageBoard[blackrank-1+1][blackfile.ordinal() - 1] == null) { //topleft
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank)){return true;}	
 				}
-				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1 + 1] == null) { //bottomright
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 + 1), blackrank-1-1)){return true;}	
+				if(storageBoard[blackrank-1-1][blackfile.ordinal() + 1] == null) { //bottomright
+					if(king.isValid(fileMap2.get(blackfile.ordinal() + 1), blackrank-1-1)){return true;}	
 				}
-				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1 - 1] == null) { //bottomleft
-					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1 - 1), blackrank-1-1)){return true;}	
+				if(storageBoard[blackrank-1-1][blackfile.ordinal() - 1] == null) { //bottomleft
+					if(king.isValid(fileMap2.get(blackfile.ordinal() - 1), blackrank-1-1)){return true;}	
 				}
 
 
@@ -337,22 +337,22 @@ class Storage {
 						for (int i = 1; i < diagonalDistance; i++) {
 							// Top-right diagonal
 							if (attackRank < whiterank && attackFile.ordinal() < whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 + i};
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Top-left diagonal
 							else if (attackRank < whiterank && attackFile.ordinal() > whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - 1 - i};
+								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
 							// Bottom-right diagonal
 							else if (attackRank > whiterank && attackFile.ordinal() < whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 + i};
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Bottom-left diagonal
 							else if (attackRank > whiterank && attackFile.ordinal() > whitefile.ordinal()) {
-								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - 1 - i};
+								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
 						}
@@ -619,7 +619,7 @@ class Bishop extends ChessPiece {
 			if (horizontal > 0 && vertical > 0) {
 				// Top-right diagonal
 				for (int i = 1; i < horizontal; i++) {
-					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 + i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() + i] != null) {
 						return false;
 					}
 				}
@@ -627,7 +627,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal < 0 && vertical > 0) {
 				// Top-left diagonal
 				for (int i = 1; i < Math.abs(horizontal); i++) {
-					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - 1 - i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 + i][this.pieceFile.ordinal() - i] != null) {
 						return false;
 					}
 				}
@@ -635,7 +635,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal > 0 && vertical < 0) {
 				// Bottom-right diagonal
 				for (int i = 1; i < horizontal; i++) {
-					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 + i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() + i] != null) {
 						return false;
 					}
 				}
@@ -643,7 +643,7 @@ class Bishop extends ChessPiece {
 			} else if (horizontal < 0 && vertical < 0) {
 				// Bottom-left diagonal
 				for (int i = 1; i < Math.abs(horizontal); i++) {
-					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - 1 - i] != null) {
+					if (Storage.storageBoard[this.pieceRank - 1 - i][this.pieceFile.ordinal() - i] != null) {
 						return false;
 					}
 				}
@@ -714,13 +714,13 @@ class Queen extends ChessPiece {
 			if(vertical == 0 && horizontal != 0){
 				if(horizontal > 0) {
 					for (int i =1 - 1; i < horizontal; i++) {
-						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  + i] == null)) {
 							return false;
 						}
 					}
 				} else {
 					for (int i =1 - 1; i < Math.abs(horizontal); i++) {
-						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
+						if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  - i] == null)) {
 							return false;
 						}
 					}
@@ -777,13 +777,13 @@ class Rook extends ChessPiece {
 		if(vertical == 0 && horizontal != 0){
 			if(horizontal > 0) {
 				for (int i =1 - 1; i < horizontal; i++) {
-					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  + i] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  + i] == null)) {
 						return false;
 					}
 				}
 			} else {
 				for (int i =1 - 1; i < Math.abs(horizontal); i++) {
-					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal() - 1  - i] == null)) {
+					if(!(Storage.storageBoard[this.pieceRank - 1][this.pieceFile.ordinal()  - i] == null)) {
 						return false;
 					}
 				}
@@ -965,7 +965,7 @@ public class Chess {
 
 		PieceFile end_file = Storage.fileMap.get(second[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
 		int end_rank = (int) second[1] - '0'; //Way to convert char into an integer
-		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1];
+		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal()];
 		/* 
 		// for the method below we will have to definitely change it quite a bit after we figure how to 
 		figure out when to check if its checked and how to check for checkmate; at least for now I completed 
@@ -978,11 +978,11 @@ public class Chess {
 		we can just use the existing isvalid method
 		*/
 		Boolean pawnPromo = false;
-		if(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1].pieceType == PieceType.WP || Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1].pieceType == PieceType.BP) {
-			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1]) && end_rank == 7) {
+		if(Storage.storageBoard[start_rank - 1][start_file.ordinal()].pieceType == PieceType.WP || Storage.storageBoard[start_rank - 1][start_file.ordinal()].pieceType == PieceType.BP) {
+			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()]) && end_rank == 7) {
 				pawnPromo = true;
 			}
-			if(!(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal() - 1])) && end_rank == 0) {
+			if(!(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()])) && end_rank == 0) {
 				pawnPromo = true;
 			}
 		}
