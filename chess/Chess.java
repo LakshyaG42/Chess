@@ -405,7 +405,23 @@ class Storage {
 		return false;
 	}
 
-
+	public static boolean selfCheck(PieceFile startFile, int startRank, PieceFile endFile, int endRank) {
+		ChessPiece p = (ChessPiece) Storage.storageBoard[startRank-1][startFile.ordinal()];
+		int ogTimesMoved = p.timesMoved;
+		if(p.isValid(endFile, endRank)){
+				p.moveTo(endFile, endRank);
+				if(!isChecked()) {
+					p.moveTo(startFile, startRank);
+					p.timesMoved = ogTimesMoved;
+					return true;
+				} else { 
+					p.moveTo(startFile, startRank);
+					p.timesMoved = ogTimesMoved;
+					return false;
+				}
+		}
+		return true;
+	}
 	////REVIEW
 	
 	public static boolean simulateMovetoCheck() {
@@ -1012,19 +1028,22 @@ public class Chess {
 		} else {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
 				if(activePiece.isValid(end_file, end_rank)) {
-					activePiece.moveTo(end_file, end_rank);
-					Storage.switchPlayer();
-					if(Storage.isChecked()) {
-						ret.message = ReturnPlay.Message.CHECK;
-					}
-					if(Storage.CheckM8()) { //checks if a checkmate is done
-						if(Storage.currPlayer == Player.white) {
-							ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-						} else {
-							ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
+						activePiece.moveTo(end_file, end_rank);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
 						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+							}
 
-					}//checks if there is currently a check mate
+						}//checks if there is currently a check mate
+					}
+					
 				} else {
 					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 				}
