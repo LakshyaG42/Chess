@@ -409,7 +409,8 @@ class Storage {
 				//checks if any of the current players pieces can get rid of the attacking player
 				for (ReturnPiece[] row : Storage.storageBoard) {
 					for (ReturnPiece returnPiece : row) {
-						ChessPiece CP = (ChessPiece)returnPiece;
+						if(returnPiece != null) {
+							ChessPiece CP = (ChessPiece)returnPiece;
 							if(CP.isValid(attackFile, attackRank) && !(isWhite(returnPiece))) { //CHECK CONDITION
 								return false;
 							}
@@ -421,6 +422,7 @@ class Storage {
 									}
 								}
 							}
+						}
 					}
 				}
 				return true;
