@@ -94,6 +94,7 @@ class Storage {
 	static int attackRank;
 
 	public static boolean isChecked() {
+		boolean result = false;
 		for (int i = 0; i < storageBoard.length; i++) {
 			for (int j = 0; j < storageBoard.length; j++) {
 				if(storageBoard[i][j] != null) {
@@ -104,34 +105,36 @@ class Storage {
 							whiterank = 1 + j;
 						}
 					} else {
-						blackfile = fileMap2.get(i);
-						blackrank = 1 + j;
+						if(RP.pieceType == PieceType.BK) {
+							blackfile = fileMap2.get(i);
+							blackrank = 1 + j;
+						}
+						
 					}
 				}
 			}
 		}
 		for (ReturnPiece[] row : Storage.storageBoard) {
 			for (ReturnPiece returnPiece : row) {
-				if (returnPiece == null) {
-					continue;
-				}
-				ChessPiece CP = (ChessPiece)returnPiece;
-				if(currPlayer == Player.white) {
-					if(CP.isValid(whitefile, whiterank) && !(isWhite(returnPiece))) { //CHECK CONDITION
-						attackFile = CP.pieceFile;
-						attackRank = CP.pieceRank;
-						return true;
-					}
-				} else {
-					if(CP.isValid(blackfile, blackrank) && (isWhite(returnPiece))) { //CHECK CONDITION
-						attackFile = CP.pieceFile;
-						attackRank = CP.pieceRank;
-						return true;
+				if (returnPiece != null) {
+					ChessPiece CP = (ChessPiece)returnPiece;
+					if(currPlayer == Player.white) {
+						if(CP.isValid(whitefile, whiterank) && !(isWhite(returnPiece))) { //CHECK CONDITION
+							attackFile = CP.pieceFile;
+							attackRank = CP.pieceRank;
+							result = true;
+						}
+					} else {
+						if(CP.isValid(blackfile, blackrank) && (isWhite(returnPiece))) { //CHECK CONDITION
+							attackFile = CP.pieceFile;
+							attackRank = CP.pieceRank;
+							result = true;
+						}
 					}
 				}
 			}
 		}
-		return false;
+		return result;
 	}
 
 	public static boolean CheckM8() {
@@ -427,7 +430,7 @@ class Storage {
 		return true;
 	}
 	////REVIEW
-	
+	/*
 	public static boolean simulateMovetoCheck() {
 
     boolean isInCheckBeforeMove = Storage.isChecked();
@@ -487,7 +490,7 @@ class Storage {
     //uh oh update the checkmate status
     return false;
 	}
-
+	*/
 	public static void pawnPromotion(ReturnPiece piece, char promotionChar) {
 
 		// last rank and better be a pawn homie
@@ -535,7 +538,7 @@ class ChessPiece extends ReturnPiece {
         Storage.storageBoard[rank-1][file.ordinal()] = this;
         this.pieceFile = file;
 		this.pieceRank = rank;
-		this.timesMoved++;
+		
     }
     public boolean isValid(PieceFile file, int rank) {
 		return true; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
@@ -611,10 +614,9 @@ class Pawn extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            super.moveTo(file, rank); 
-            this.timesMoved++;
-        }
+        super.moveTo(file, rank); 
+        this.timesMoved++;
+		
     }
 }
 
@@ -920,10 +922,12 @@ class King extends ChessPiece {
 		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
 			for (ReturnPiece[] row : Storage.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
-					ChessPiece CP = (ChessPiece)returnPiece;
-					if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
-						if(CP.isValid(file, rank)) { //CHECK CONDITION
-							return false;
+					if(returnPiece != null) {
+						ChessPiece CP = (ChessPiece)returnPiece;
+						if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
+							if(CP.isValid(file, rank)) {//CHECK CONDITION
+								return false;
+							}	
 						}
 					}
 
@@ -998,6 +1002,12 @@ public class Chess {
 		PieceFile end_file = Storage.fileMap.get(second[0]); //uses the hashmap that we have in our storage to convert the character into a PieceFile
 		int end_rank = (int) second[1] - '0'; //Way to convert char into an integer
 		ChessPiece activePiece = (ChessPiece) Storage.storageBoard[start_rank - 1][start_file.ordinal()];
+		if(activePiece == null) {
+			ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			ret.piecesOnBoard = Storage.chessPiecesAL;
+			System.out.println("No Piece at FileRank Inputted");
+			return ret;
+		}
 		/* 
 		// for the method below we will have to definitely change it quite a bit after we figure how to 
 		figure out when to check if its checked and how to check for checkmate; at least for now I completed 
@@ -1010,7 +1020,7 @@ public class Chess {
 		we can just use the existing isvalid method
 		*/
 		Boolean pawnPromo = false;
-		if(Storage.storageBoard[start_rank - 1][start_file.ordinal()].pieceType == PieceType.WP || Storage.storageBoard[start_rank - 1][start_file.ordinal()].pieceType == PieceType.BP) {
+		if(activePiece.pieceType == PieceType.WP || activePiece.pieceType == PieceType.BP) {
 			if(Storage.isWhite(Storage.storageBoard[start_rank - 1][start_file.ordinal()]) && end_rank == 7) {
 				pawnPromo = true;
 			}
@@ -1045,14 +1055,18 @@ public class Chess {
 						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
+			} else {
+				System.out.println("Piece Selected Doesn't Match Players Turn");
+				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				ret.piecesOnBoard = Storage.chessPiecesAL;
 			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
-				System.out.println(activePiece);
-				System.out.println(activePiece.timesMoved);
+				
 				if(activePiece.isValid(end_file, end_rank)) {
 					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
 						activePiece.moveTo(end_file, end_rank);
+						
 						Storage.switchPlayer();
 						if(Storage.isChecked()) {
 							ret.message = ReturnPlay.Message.CHECK;
@@ -1068,12 +1082,19 @@ public class Chess {
 							}
 
 						}//checks if there is currently a check mate
+					} else {
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 					
 				} else {
 					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 					ret.piecesOnBoard = Storage.chessPiecesAL;
 				}
+			} else {
+				System.out.println("Piece Selected Doesn't Match Players Turn");
+				ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				ret.piecesOnBoard = Storage.chessPiecesAL;
 			}
 		}
 		//if the move doesnt work out then the code below will not run
