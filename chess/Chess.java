@@ -535,6 +535,7 @@ class ChessPiece extends ReturnPiece {
         Storage.storageBoard[rank-1][file.ordinal()] = this;
         this.pieceFile = file;
 		this.pieceRank = rank;
+		this.timesMoved++;
     }
     public boolean isValid(PieceFile file, int rank) {
 		return true; //MUST OVERRIDE ISVALID (WOULD LIKE TO MAKE RETURNPIECE ABSTRACT BUT CAN NOT)
@@ -561,42 +562,53 @@ class Pawn extends ChessPiece {
         if(this.pieceType == PieceType.WP) {
             int vertical = rank - this.pieceRank; //positive for white
             int horizontal = file.ordinal()-this.pieceFile.ordinal(); //fix horizontal
-            if((vertical == 2 && horizontal == 0) && timesMoved == 0) {
-                if(!(Storage.storageBoard[this.pieceRank-1+1][this.pieceFile.ordinal()] == null)) {
-					return false;
+            if (vertical == 2 && horizontal == 0 && this.timesMoved == 0) {
+				// Check if the squares between the current and target squares are empty
+				if (Storage.storageBoard[this.pieceRank][this.pieceFile.ordinal()] == null &&
+					Storage.storageBoard[this.pieceRank + 1][this.pieceFile.ordinal()] == null) {
+					return true;
 				}
-				return true;
-            } 
-            if((vertical == 1 && horizontal == 0)) {
-                return true;
-            }
-            if(vertical == 1 && horizontal == 1) {
-                return true;
-            }
-            if(vertical == 1 && horizontal == -1) {
-                return true;
-            }
-            return false;
-        } else {
+				return false;
+			} else if (vertical == 1 && horizontal == 0) {
+				// Regular pawn move of one square forward
+				if (Storage.storageBoard[rank - 1][file.ordinal()] == null) {
+					return true;
+				}
+				return false;
+			} else if (vertical == 1 && Math.abs(horizontal) == 1) {
+				// Pawn captures diagonally
+				if (Storage.storageBoard[rank - 1][file.ordinal()] != null) {
+					return true;
+				}
+				return false;
+			}
+			return false;
+        } else if (this.pieceType == PieceType.BP){
             int vertical = rank - this.pieceRank; //negative for black
             int horizontal = file.ordinal()-this.pieceFile.ordinal();
-            if((vertical == -2 && horizontal == 0) && timesMoved == 0) {
-                if(!(Storage.storageBoard[this.pieceRank-1-1][this.pieceFile.ordinal()] == null)) {
-					return false;
+            if (vertical == -2 && horizontal == 0 && this.timesMoved == 0) {
+				// Check if the squares between the current and target squares are empty
+				if (Storage.storageBoard[this.pieceRank - 2][this.pieceFile.ordinal()] == null &&
+					Storage.storageBoard[this.pieceRank - 3][this.pieceFile.ordinal()] == null) {
+					return true;
 				}
-				return true;
-            }
-            if((vertical == -1 && horizontal == 0)) {
-                return true;
-            }
-            if(vertical == -1 && horizontal == 1) {
-                return true;
-            }
-            if(vertical == -1 && horizontal == -1) {
-                return true;
-            }
-            return false;
+				return false;
+			} else if (vertical == -1 && horizontal == 0) {
+				// Regular pawn move of one square forward
+				if (Storage.storageBoard[rank - 1][file.ordinal()] == null) {
+					return true;
+				}
+				return false;
+			} else if (vertical == -1 && Math.abs(horizontal) == 1) {
+				// Pawn captures diagonally
+				if (Storage.storageBoard[rank - 1][file.ordinal()] != null) {
+					return true;
+				}
+				return false;
+			}
+			return false;
         }
+		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
@@ -838,12 +850,10 @@ class Knight extends ChessPiece {
 	public boolean isValid(PieceFile file, int rank) {
 		int vertical = rank - this.pieceRank; 
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
-		if((vertical == 3 || vertical == -3) && (horizontal==1 || horizontal ==-1)) {
-			return true;
-		}
-		if((horizontal == 3 || horizontal == -3) && (vertical==1 || vertical==-1)) {
-			return true;
-		}
+		if ((Math.abs(vertical) == 2 && Math.abs(horizontal) == 1) ||
+        (Math.abs(horizontal) == 2 && Math.abs(vertical) == 1)) {
+        return true;
+    	}
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
@@ -1039,6 +1049,7 @@ public class Chess {
 		} else {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
 				if(activePiece.isValid(end_file, end_rank)) {
+					System.out.println("WOW YOU MADE IT TO LINE 1040 WE HAVE TIEMS MOVED: " + activePiece.timesMoved);
 					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
 						activePiece.moveTo(end_file, end_rank);
 						Storage.switchPlayer();
