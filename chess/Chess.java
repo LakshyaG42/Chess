@@ -1126,6 +1126,7 @@ public class Chess {
 								
 							}
 						}
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 						return ret;
 					}
 				}
@@ -1149,6 +1150,7 @@ public class Chess {
 								
 							}
 						}
+						ret.piecesOnBoard = Storage.chessPiecesAL;
 						return ret;
 					}
 				}
