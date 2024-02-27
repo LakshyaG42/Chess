@@ -1542,7 +1542,7 @@ public class Chess {
 	ReturnPiece WQX = new Queen(); 
 
 	WQX.pieceType = PieceType.WQ; 
-	WQX.pieceFile = PieceFile.e; 		
+	WQX.pieceFile = PieceFile.d; 		
 	WQX.pieceRank = 1;
 															
 	Storage.chessPiecesAL.add(WQX);
@@ -1551,7 +1551,7 @@ public class Chess {
 	ReturnPiece BQX = new Queen(); 
 
 	BQX.pieceType = PieceType.BQ; 
-	BQX.pieceFile = PieceFile.d; 		
+	BQX.pieceFile = PieceFile.e; 		
 	BQX.pieceRank = 8;
 															
 	Storage.chessPiecesAL.add(BQX);
@@ -1560,7 +1560,7 @@ public class Chess {
 	ReturnPiece BKX = new King(); 
 
 	BKX.pieceType = PieceType.BK; 
-	BKX.pieceFile = PieceFile.e; 		
+	BKX.pieceFile = PieceFile.d; 		
 	BKX.pieceRank = 8;
 															
 	Storage.chessPiecesAL.add(BKX);
@@ -1569,7 +1569,7 @@ public class Chess {
 	ReturnPiece WKX = new King(); 
 
 	WKX.pieceType = PieceType.WK; 
-	WKX.pieceFile = PieceFile.d; 		
+	WKX.pieceFile = PieceFile.e; 		
 	WKX.pieceRank = 1;
 															
 	Storage.chessPiecesAL.add(WKX);
