@@ -982,7 +982,7 @@ class King extends ChessPiece {
 					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][7];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(Storage.storageBoard[0][3+i] != null) {
+							if(Storage.storageBoard[0][4+i] != null) {
 								return false;
 							}
 						}
@@ -991,7 +991,7 @@ class King extends ChessPiece {
 					ChessPiece piece = (ChessPiece)Storage.storageBoard[7][7];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(Storage.storageBoard[7][4+i] != null) {
+							if(Storage.storageBoard[7][3+i] != null) {
 								return false;
 							}
 						}
@@ -1003,7 +1003,7 @@ class King extends ChessPiece {
 					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][0];
 					if(piece.timesMoved == 0) {
 						for (int i = 1; i < horizontal; i++) {
-							if(Storage.storageBoard[0][3-i] != null) {
+							if(Storage.storageBoard[0][4-i] != null) {
 								return false;
 							}
 						}
@@ -1204,8 +1204,8 @@ public class Chess {
 		}
 
 		if(moves.length > 2) { //Third can either be pawn promotion or draw?
-			third = moves[2];
-			if(third == "draw?") {
+			third = moves[2].strip();
+			if(third.equals("draw?")) {
 				ret.message = ReturnPlay.Message.DRAW;
 				ret.piecesOnBoard = Storage.chessPiecesAL;
 			}
