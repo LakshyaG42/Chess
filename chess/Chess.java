@@ -755,10 +755,8 @@ class Bishop extends ChessPiece {
 	}
 	
 	public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            super.moveTo(file, rank); 
-            this.timesMoved++;
-        }
+        super.moveTo(file, rank); 
+        this.timesMoved++;
     }
 
     }
@@ -866,10 +864,8 @@ class Queen extends ChessPiece {
     }
 
     public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            super.moveTo(file, rank); 
-            this.timesMoved++;
-        }
+        super.moveTo(file, rank); 
+        this.timesMoved++;
     }
 }
 
@@ -927,10 +923,8 @@ class Rook extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            super.moveTo(file, rank); 
-            this.timesMoved++;
-        }
+        super.moveTo(file, rank); 
+        this.timesMoved++;
     }
 }
 
@@ -959,10 +953,8 @@ class Knight extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            super.moveTo(file, rank); 
-            this.timesMoved++;
-        }
+        super.moveTo(file, rank); 
+        this.timesMoved++;
     }
 }
 
@@ -976,6 +968,7 @@ class King extends ChessPiece {
 	public boolean isValid(PieceFile file, int rank) {
 		int vertical = rank - this.pieceRank; 
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
+		/* 
 		if(timesMoved == 0){ //castling
 			if(horizontal > 1) { //right
 				if(this.pieceType == PieceType.WK) {
@@ -1019,6 +1012,8 @@ class King extends ChessPiece {
 					}
 				}
 			}
+		}
+		*/
 		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
 			for (ReturnPiece[] row : Storage.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
@@ -1035,21 +1030,20 @@ class King extends ChessPiece {
 			}
 			return true;
 		}
-		}
+		
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        if (this.isValid(file, rank)) {
-            Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
-			if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] == null)) {
-				ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];                
-				System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
-				}
-			Storage.storageBoard[rank-1][file.ordinal()] = this;
-			this.pieceFile = file;
-			this.pieceRank = rank;
-            this.timesMoved++;
-        }
+        
+        Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
+		if(!(Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] == null)) {
+			ChessPiece killed = (ChessPiece)Storage.storageBoard[rank-1][file.ordinal()];                
+			System.out.println("CHESSPIECE " + killed +  "WAS KILLED by: " + this);
+			}
+		Storage.storageBoard[rank-1][file.ordinal()] = this;
+		this.pieceFile = file;
+		this.pieceRank = rank;
+        this.timesMoved++;
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________//
@@ -1108,6 +1102,109 @@ public class Chess {
 			System.out.println("No Piece at FileRank Inputted");
 			return ret;
 		}
+
+		//CASTLING
+		if(activePiece.pieceType == PieceType.WK) {
+			if(activePiece.timesMoved == 0) {
+				if((start_file == PieceFile.e && start_rank == 1) && (end_file == PieceFile.c && end_rank == 1)){ //Bottom Left 
+					ChessPiece rook = (ChessPiece) Storage.storageBoard[0][0];
+					if(rook.timesMoved == 0){
+						activePiece.moveTo(end_file, end_rank);
+						rook.moveTo(PieceFile.d, 1);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+								
+							}
+						}
+						return ret;
+					}
+				}
+				if((start_file == PieceFile.e && start_rank == 1) && (end_file == PieceFile.g && end_rank == 1)){ //Bottom Right
+					ChessPiece rook = (ChessPiece) Storage.storageBoard[0][7];
+					if(rook.timesMoved == 0){
+						activePiece.moveTo(end_file, end_rank);
+						rook.moveTo(PieceFile.f,1);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+								
+							}
+						}
+						return ret;
+					}
+				}
+			}
+		}
+		if(activePiece.pieceType == PieceType.BK) {
+			if (activePiece.timesMoved == 0) {
+				if((start_file == PieceFile.e && start_rank == 8) && (end_file == PieceFile.c && end_rank == 8)) { //TOP LEFT
+					ChessPiece rook = (ChessPiece) Storage.storageBoard[7][0];
+					if(rook.timesMoved == 0){
+						activePiece.moveTo(end_file, end_rank);
+						rook.moveTo(PieceFile.d,8);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+								
+							}
+						}
+						return ret;
+					}
+				}
+				if((start_file == PieceFile.e && start_rank == 8) && (end_file == PieceFile.g && end_rank == 8)) { //TOP RIGHT
+					ChessPiece rook = (ChessPiece) Storage.storageBoard[7][7];
+					if(rook.timesMoved == 0){
+						activePiece.moveTo(end_file, end_rank);
+						rook.moveTo(PieceFile.f,8);
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+								
+							}
+						}
+						return ret;
+					}
+				}
+			}
+		}
+		
 		/* 
 		// for the method below we will have to definitely change it quite a bit after we figure how to 
 		figure out when to check if its checked and how to check for checkmate; at least for now I completed 
@@ -1162,7 +1259,6 @@ public class Chess {
 			} // method that will make a copy of the board at current state and try and do move to check if the check is gone
 		} else {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
-				
 				if(activePiece.isValid(end_file, end_rank)) {
 					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
 						activePiece.moveTo(end_file, end_rank);
