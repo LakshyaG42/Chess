@@ -278,7 +278,7 @@ class Storage {
 							if(CP.pieceType != PieceType.WK && (isWhite(CP))) {
 								for (int i = 0; i < attackMoves.size(); i++) {
 									int[] arr = attackMoves.get(i);
-									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
+									if(CP.isValid(fileMap2.get(arr[1]), arr[0] + 1)) {
 										checkmated = false;
 									}
 									if(checkmated == false) {
@@ -348,8 +348,8 @@ class Storage {
 				//populate black array:
 				ChessPiece attacker = (ChessPiece)storageBoard[attackRank-1][attackFile.ordinal()];
 				ArrayList<int[]> attackMoves = new ArrayList<>();
-				int horizontal = whiterank - attackRank;
-				int vertical = whitefile.ordinal() - attackFile.ordinal();
+				int horizontal = blackrank - attackRank;
+				int vertical = blackfile.ordinal() - attackFile.ordinal();
 				if(Storage.isWhite(attacker)) {
 					//rook
 					if(attacker.pieceType == PieceType.WR || attacker.pieceType == PieceType.WQ) {
@@ -391,25 +391,25 @@ class Storage {
 					//bishop
 					if (attacker.pieceType == PieceType.WB || attacker.pieceType == PieceType.WQ) {
 
-						int diagonalDistance = Math.abs(attackRank - whiterank);
+						int diagonalDistance = Math.abs(attackRank - blackrank);
 						for (int i = 1; i < diagonalDistance; i++) {
 							// Top-right diagonal
-							if (attackRank < whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+							if (attackRank < whiterank && attackFile.ordinal() < blackfile.ordinal()) {
 								int[] arr = {attackRank - 1 + i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Top-left diagonal
-							else if (attackRank < whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+							else if (attackRank < whiterank && attackFile.ordinal() > blackfile.ordinal()) {
 								int[] arr = {attackRank - 1 + i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
 							// Bottom-right diagonal
-							else if (attackRank > whiterank && attackFile.ordinal() < whitefile.ordinal()) {
+							else if (attackRank > whiterank && attackFile.ordinal() < blackfile.ordinal()) {
 								int[] arr = {attackRank - 1 - i, attackFile.ordinal() + i};
 								attackMoves.add(arr);
 							}
 							// Bottom-left diagonal
-							else if (attackRank > whiterank && attackFile.ordinal() > whitefile.ordinal()) {
+							else if (attackRank > whiterank && attackFile.ordinal() > blackfile.ordinal()) {
 								int[] arr = {attackRank - 1 - i, attackFile.ordinal() - i};
 								attackMoves.add(arr);
 							}
@@ -432,7 +432,7 @@ class Storage {
 							if(CP.pieceType != PieceType.BK && !(isWhite(CP))) {
 								for (int i = 0; i < attackMoves.size(); i++) {
 									int[] arr = attackMoves.get(i);
-									if(CP.isValid(fileMap2.get(arr[1]), arr[0])) {
+									if(CP.isValid(fileMap2.get(arr[1]), arr[0]+1)) {
 										checkmated = false;
 									}
 									if(checkmated == false) {
