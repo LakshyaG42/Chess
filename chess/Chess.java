@@ -9,9 +9,6 @@ import java.io.InputStreamReader;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import javax.swing.border.StrokeBorder;
-
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -44,7 +41,6 @@ class ReturnPiece {
 }
 class Storage {
     // Static field to contain inputs
-	static boolean castling; 
 	static ArrayList<ReturnPiece> chessPiecesAL = new ArrayList<>();
     static ReturnPiece[][] storageBoard = new ReturnPiece[8][8]; 
 	static Player currPlayer = Player.white;
@@ -931,9 +927,10 @@ class Rook extends ChessPiece {
 		return false;
 	}
 	public void moveTo(PieceFile file, int rank) {
-        super.moveTo(file, rank); 
-        this.timesMoved++;
-
+        if (this.isValid(file, rank)) {
+            super.moveTo(file, rank); 
+            this.timesMoved++;
+        }
     }
 }
 
@@ -977,124 +974,51 @@ class King extends ChessPiece {
         this.timesMoved = 0;
     }
 	public boolean isValid(PieceFile file, int rank) {
-
 		int vertical = rank - this.pieceRank; 
         int horizontal = file.ordinal()-this.pieceFile.ordinal(); 
-		if(this.timesMoved == 0){ //castling
-			if((!Storage.isChecked()) && horizontal != 0) {
-				if(horizontal == 2) { //right
-					if(this.pieceType == PieceType.WK) {
-						ChessPiece piece = (ChessPiece)Storage.storageBoard[0][7];
-						if(piece != null) {
-							if(piece.timesMoved == 0) {
-								for (int i = 1; i < horizontal; i++) {
-									for (ReturnPiece[] row : Storage.storageBoard) {
-										for (ReturnPiece returnPiece : row) { 
-											if(returnPiece != null) {
-												ChessPiece CP = (ChessPiece)returnPiece;
-												if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
-													if(CP.isValid(Storage.fileMap2.get(5+i), 1)) {//CHECK CONDITION
-														return false;
-													}	
-												}
-											}
-						
-										}
-									}
-									if(Storage.storageBoard[0][4+i] != null) {
-										return false;
-									}
-								}
-								Storage.castling = true;
-								return true;
+		if(timesMoved == 0){ //castling
+			if(horizontal > 1) { //right
+				if(this.pieceType == PieceType.WK) {
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][7];
+					if(piece.timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(Storage.storageBoard[0][4+i] != null) {
+								return false;
 							}
 						}
-					} else {
-						ChessPiece piece = (ChessPiece)Storage.storageBoard[7][7];
-						if(piece != null) {
-							if(piece.timesMoved == 0) {
-								for (int i = 1; i < horizontal; i++) {
-									for (ReturnPiece[] row : Storage.storageBoard) {
-										for (ReturnPiece returnPiece : row) { 
-											if(returnPiece != null) {
-												ChessPiece CP = (ChessPiece)returnPiece;
-												if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
-													if(CP.isValid(Storage.fileMap2.get(5+i), 7)) {//CHECK CONDITION
-														return false;
-													}	
-												}
-											}
-						
-										}
-									}
-									if(Storage.storageBoard[7][4+i] != null) {
-										return false;
-									}
-								}
-								Storage.castling = true;
-								return true;
+					}
+				} else {
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[7][7];
+					if(piece.timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(Storage.storageBoard[7][3+i] != null) {
+								return false;
 							}
 						}
 					}
 				}
-				if(horizontal == -2) { //left
-					if(this.pieceType == PieceType.WK) {
-						ChessPiece piece = (ChessPiece)Storage.storageBoard[0][0];
-						if(piece != null) {
-							if(piece.timesMoved == 0) {
-								for (int i = 1; i < horizontal; i++) {
-									for (ReturnPiece[] row : Storage.storageBoard) {
-										for (ReturnPiece returnPiece : row) { 
-											if(returnPiece != null) {
-												ChessPiece CP = (ChessPiece)returnPiece;
-												if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
-													if(CP.isValid(Storage.fileMap2.get(5-i), 1)) {//CHECK CONDITION
-														return false;
-													}	
-												}
-											}
-						
-										}
-									}
-									if(Storage.storageBoard[0][4-i] != null) {
-										return false;
-									}
-								}
-								Storage.castling = true;
-								return true;
-							}
-						}
-					} else {
-						ChessPiece piece = (ChessPiece)Storage.storageBoard[7][0];
-						if(piece != null) {
-							if(piece.timesMoved == 0) {
-								for (int i = 1; i < horizontal; i++) {
-									for (ReturnPiece[] row : Storage.storageBoard) {
-										for (ReturnPiece returnPiece : row) { 
-											if(returnPiece != null) {
-												ChessPiece CP = (ChessPiece)returnPiece;
-												if((Storage.isWhite(this) && !(Storage.isWhite(CP))) || (Storage.isWhite(CP) && !(Storage.isWhite(this)))) {
-													if(CP.isValid(Storage.fileMap2.get(5-i), 8)) {//CHECK CONDITION
-														return false;
-													}	
-												}
-											}
-						
-										}
-									}
-									if(Storage.storageBoard[7][4-i] != null) {
-										return false;
-									}
-								}
-								Storage.castling = true;
-								return true;
-							}
-						}
-					}
-				}
-				
 			}
-		}
+			if(horizontal < -1) { //left
+				if(this.pieceType == PieceType.WK) {
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[0][0];
+					if(piece.timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(Storage.storageBoard[0][4-i] != null) {
+								return false;
+							}
+						}
+					}
+				} else {
+					ChessPiece piece = (ChessPiece)Storage.storageBoard[7][0];
+					if(piece.timesMoved == 0) {
+						for (int i = 1; i < horizontal; i++) {
+							if(Storage.storageBoard[7][4-i] != null) {
+								return false;
+							}
+						}
+					}
+				}
+			}
 		if(((vertical == 1 || vertical == -1) || (vertical == 0)) && ((horizontal==1 || horizontal ==-1) || (horizontal == 0))) {
 			for (ReturnPiece[] row : Storage.storageBoard) {
 				for (ReturnPiece returnPiece : row) {
@@ -1111,9 +1035,9 @@ class King extends ChessPiece {
 			}
 			return true;
 		}
+		}
 		return false;
 	}
-		
 	public void moveTo(PieceFile file, int rank) {
         if (this.isValid(file, rank)) {
             Storage.storageBoard[pieceRank-1][pieceFile.ordinal()] = null;
@@ -1224,11 +1148,11 @@ public class Chess {
 							}
 						}//checks if there is currently a check mate
 					} else {
-						ret.message = ReturnPlay.Message.ILLEGAL_MOVE; //move is invalid
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 					} else {
-						ret.message = ReturnPlay.Message.ILLEGAL_MOVE; //if it doesnt remove the check
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 			} else {
@@ -1240,74 +1164,31 @@ public class Chess {
 			if((Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.white) || (!(Storage.isWhite(Storage.storageBoard[start_rank-1][start_file.ordinal()]) && Storage.currPlayer == Player.black))) {
 				
 				if(activePiece.isValid(end_file, end_rank)) {
-					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) {//if move doesn't result in self check we do the move
-						if(Storage.castling) {
-							if(activePiece.pieceType == PieceType.WK) {
-								if(end_rank > start_rank) {
-									activePiece.moveTo(end_file, end_rank);
-									ChessPiece rook = (ChessPiece) Storage.storageBoard[0][7];
-									rook.moveTo(PieceFile.f, 1);
-								} else {
-									activePiece.moveTo(end_file, end_rank);
-									ChessPiece rook = (ChessPiece) Storage.storageBoard[0][0];
-									rook.moveTo(PieceFile.d, 1);
-								}
-							} 
-							if(activePiece.pieceType == PieceType.BK) {
-								if(end_rank > start_rank) {
-									activePiece.moveTo(end_file, end_rank);
-									ChessPiece rook = (ChessPiece) Storage.storageBoard[7][7];
-									rook.moveTo(PieceFile.f, 8);
-								} else {
-									activePiece.moveTo(end_file, end_rank);
-									ChessPiece rook = (ChessPiece) Storage.storageBoard[7][0];
-									rook.moveTo(PieceFile.d, 8);
-								}
-							}
-							Storage.castling = false;
-							Storage.switchPlayer();
-							if(Storage.isChecked()) {
-								ret.message = ReturnPlay.Message.CHECK;
-								ret.piecesOnBoard = Storage.chessPiecesAL;
-							}
-							if(Storage.CheckM8()) { //checks if a checkmate is done
-								if(Storage.currPlayer == Player.white) {
-									ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-									ret.piecesOnBoard = Storage.chessPiecesAL;
-								} else {
-									ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-									ret.piecesOnBoard = Storage.chessPiecesAL;
-								}
-
-							}
-						} else {
-							activePiece.moveTo(end_file, end_rank);
-							Storage.switchPlayer();
-							if(Storage.isChecked()) {
-								ret.message = ReturnPlay.Message.CHECK;
-								ret.piecesOnBoard = Storage.chessPiecesAL;
-							}
-							if(Storage.CheckM8()) { //checks if a checkmate is done
-								if(Storage.currPlayer == Player.white) {
-									ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-									ret.piecesOnBoard = Storage.chessPiecesAL;
-								} else {
-									ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-									ret.piecesOnBoard = Storage.chessPiecesAL;
-								}
-
-							}//checks if there is currently a check mate
-						}
+					if(!(Storage.selfCheck(activePiece.pieceFile, activePiece.pieceRank, end_file, end_rank))) { //if move doesn't result in self check we do the move
+						activePiece.moveTo(end_file, end_rank);
 						
+						Storage.switchPlayer();
+						if(Storage.isChecked()) {
+							ret.message = ReturnPlay.Message.CHECK;
+							ret.piecesOnBoard = Storage.chessPiecesAL;
+						}
+						if(Storage.CheckM8()) { //checks if a checkmate is done
+							if(Storage.currPlayer == Player.white) {
+								ret.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							} else {
+								ret.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								ret.piecesOnBoard = Storage.chessPiecesAL;
+							}
+
+						}//checks if there is currently a check mate
 					} else {
-						System.out.println("Move Causes Self Check");
-						ret.message = ReturnPlay.Message.ILLEGAL_MOVE; //Causes Self Check
+						ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 						ret.piecesOnBoard = Storage.chessPiecesAL;
 					}
 					
 				} else {
-					System.out.println("Move Isn't Valid");
-					ret.message = ReturnPlay.Message.ILLEGAL_MOVE; 
+					ret.message = ReturnPlay.Message.ILLEGAL_MOVE;
 					ret.piecesOnBoard = Storage.chessPiecesAL;
 				}
 			} else {
